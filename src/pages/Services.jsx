@@ -71,7 +71,7 @@ export default function Services() {
       </Typography>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
         <Grid item xs={6} md={6}>
-          <Card raised={0}>
+          <Card>
             <CardMedia
               height="300px"
               sx={{ objectFit: "contain" }}
@@ -93,7 +93,7 @@ export default function Services() {
           </Card>
         </Grid>
         <Grid item xs={6} md={6}>
-          <Card raised={0}>
+          <Card>
             <CardMedia
               height="300px"
               sx={{ objectFit: "contain" }}

@@ -3,6 +3,7 @@ import { Grid, Typography, Button, Stack } from "@mui/material";
 // import students from "../assets";
 import students from "../assets/students.webp";
 import Services from "./Services";
+import Classes from "./Classes";
 
 export default function Landing() {
   return (
@@ -47,6 +48,7 @@ export default function Landing() {
         </Grid>
       </Grid>
       <Services />
+      <Classes />
     </>
   );
 }
