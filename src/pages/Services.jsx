@@ -48,7 +48,7 @@ const tutorWriteUp = {
       icon: <Check />,
     },
     {
-      text: `Join a community of like-minded professionals and share your expertise`,
+      text: `Join a community of like-minded professionals`,
       icon: <Check />,
     },
   ],
@@ -71,13 +71,19 @@ export default function Services() {
       </Typography>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
         <Grid item xs={6} md={6}>
-          <Card raised={2}>
-            <CardMedia component="img" image={learn} alt="random" />
+          <Card raised={0}>
+            <CardMedia
+              height="300px"
+              sx={{ objectFit: "contain" }}
+              component="img"
+              image={learn}
+              alt="random"
+            />
             <CardContent>
               <List data={studentWriteUp} />
               <Button
                 endIcon={<ArrowOutward />}
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 sx={{ mt: "1rem" }}
               >
@@ -87,13 +93,19 @@ export default function Services() {
           </Card>
         </Grid>
         <Grid item xs={6} md={6}>
-          <Card raised={2}>
-            <CardMedia component="img" image={teach} alt="random" />
+          <Card raised={0}>
+            <CardMedia
+              height="300px"
+              sx={{ objectFit: "contain" }}
+              component="img"
+              image={teach}
+              alt="random"
+            />
             <CardContent>
               <List data={tutorWriteUp} />
               <Button
                 endIcon={<ArrowOutward />}
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 sx={{ mt: "1rem" }}
               >
