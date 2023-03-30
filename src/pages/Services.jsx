@@ -1,78 +1,108 @@
-import { Grid, Card, CardMedia, CardContent, Typography } from "@mui/material";
-import students from "../assets/students.webp";
+import {
+  Box,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+} from "@mui/material";
+import { Check, ArrowOutward } from "@mui/icons-material";
+import { List } from "../components";
+import { learn, teach } from "../assets";
 
+const studentWriteUp = {
+  title: "Students",
+  description: [
+    {
+      text: `Access a wide range of courses and study materials`,
+      icon: <Check />,
+    },
+    {
+      text: `Get personalized support and feedback from experienced tutors`,
+      icon: <Check />,
+    },
+    {
+      text: `Participate in group study sessions and connect with peers`,
+      icon: <Check />,
+    },
+    {
+      text: `Track your progress and see how you're improving over time`,
+      icon: <Check />,
+    },
+  ],
+};
+const tutorWriteUp = {
+  title: "Tutors",
+  description: [
+    {
+      text: `Work with motivated students from all around the world`,
+      icon: <Check />,
+    },
+    {
+      text: `Set your own schedule and work from anywhere in the world`,
+      icon: <Check />,
+    },
+    {
+      text: `Get paid for helping students achieve their goals`,
+      icon: <Check />,
+    },
+    {
+      text: `Join a community of like-minded professionals and share your expertise`,
+      icon: <Check />,
+    },
+  ],
+};
 // services section
 export default function Services() {
   return (
-    <Grid container sx={{ padding: "1rem" }}>
-      <Typography variant="h4" sx={{ fontWeight: 700 }}>
+    <Box sx={{ padding: "1rem" }}>
+      <Typography
+        gutterBottom
+        variant="h4"
+        sx={{ fontWeight: 700 }}
+        color={"primary"}
+      >
         Our Services
       </Typography>
-      <Typography variant="body1" sx={{ color: "text.secondary" }}>
+      <Typography variant="h6" sx={{ color: "text.secondary" }}>
         We provide you with the latest online learning system and material that
         help your knowledge grow.
       </Typography>
-      <Grid item xs={12} md={12}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="140"
-                image={students}
-                alt="random"
-              />
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Web Development
-                </Typography>
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam, quod.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="140"
-                image={students}
-                alt="random"
-              />
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Web Development
-                </Typography>
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam, quod.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="140"
-                image={students}
-                alt="random"
-              />
-              <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Web Development
-                </Typography>
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam, quod.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+      <Grid container sx={{ my: "1rem" }} spacing={2}>
+        <Grid item xs={6} md={6}>
+          <Card raised={2}>
+            <CardMedia component="img" image={learn} alt="random" />
+            <CardContent>
+              <List data={studentWriteUp} />
+              <Button
+                endIcon={<ArrowOutward />}
+                variant="outlined"
+                color="primary"
+                sx={{ mt: "1rem" }}
+              >
+                Get Started
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={6} md={6}>
+          <Card raised={2}>
+            <CardMedia component="img" image={teach} alt="random" />
+            <CardContent>
+              <List data={tutorWriteUp} />
+              <Button
+                endIcon={<ArrowOutward />}
+                variant="outlined"
+                color="primary"
+                sx={{ mt: "1rem" }}
+              >
+                Get Started
+              </Button>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }
