@@ -1,0 +1,27 @@
+{
+  "name": "elearn-backend",
+  "version": "1.0.0",
+  "description": "backend to the elearn project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwendwa99/elearn.git"
+  },
+  "keywords": [
+    "node",
+    "firebase"
+  ],
+  "author": "Brian Mwendwa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwendwa99/elearn/issues"
+  },
+  "homepage": "https://github.com/mwendwa99/elearn#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "firebase-admin": "^11.5.0"
+  }
+}
