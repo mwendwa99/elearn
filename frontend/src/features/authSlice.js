@@ -1,66 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, logout } from "../actions/authActions";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import { loginUser } from "../actions/authActions";
 
-const authSlice = createSlice({
+// Create slice to hold user information
+const userSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
-    loading: false,
+    currentUser: null,
+    isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.currentUser = action.payload;
+      state.isLoading = false;
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
+    clearUser: (state) => {
+      state.currentUser = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(register.pending, (state) => {
-        state.loading = true;
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
         state.error = null;
       })
-      .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.loading = false;
+      .addCase(loginUser.fulfilled, (state, action) => {
+        const uid = action.payload;
+        const userRef = collection(db, "users").doc(uid);
+        onSnapshot(userRef, (doc) => {
+          if (doc.exists()) {
+            state.currentUser = doc.data();
+          } else {
+            console.log("User not found");
+          }
+        });
+        state.isLoading = false;
       })
-      .addCase(register.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.loading = false;
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(logout.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.loading = false;
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.loading = false;
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-// listen to auth state changes and update user state
-export const listenToAuthChanges = () => (dispatch) => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(login.fulfilled(user));
-    } else {
-      dispatch(logout.fulfilled());
-    }
-  });
-};
+export const { setUser, setLoading, setError, clearUser } = userSlice.actions;
 
-export default authSlice.reducer;
+export default userSlice.reducer;

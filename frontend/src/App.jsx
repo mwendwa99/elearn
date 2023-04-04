@@ -1,4 +1,6 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "./actions/authActions";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
@@ -11,6 +13,13 @@ const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.currentUser);
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <Suspense
       fallback={

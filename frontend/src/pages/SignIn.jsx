@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listenToAuthChanges } from "../features/authSlice";
-import { login } from "../actions/authActions";
-import { auth } from "../firebase";
+import { loginUser } from "../actions/authActions";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,18 +20,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 function SignIn() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const user = useSelector((state) => state.auth.user);
-
-  console.log("usessssr", user);
-
-  useEffect(() => {
-    dispatch(listenToAuthChanges());
-  }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(login(formData));
-    console.log(formData);
+    dispatch(loginUser(formData));
   };
 
   const handleInputChange = (event) => {
