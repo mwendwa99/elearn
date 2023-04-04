@@ -24,32 +24,36 @@ const userSlice = createSlice({
     clearUser: (state) => {
       state.currentUser = null;
     },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        const uid = action.payload;
-        const userRef = collection(db, "users").doc(uid);
-        onSnapshot(userRef, (doc) => {
-          if (doc.exists()) {
-            state.currentUser = doc.data();
-          } else {
-            console.log("User not found");
-          }
-        });
-        state.isLoading = false;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(loginUser.pending, (state) => {
+  //       state.isLoading = true;
+  //       state.error = null;
+  //     })
+  //     .addCase(loginUser.fulfilled, (state, action) => {
+  //       const uid = action.payload;
+  //       const userRef = collection(db, "users").doc(uid);
+  //       onSnapshot(userRef, (doc) => {
+  //         if (doc.exists()) {
+  //           state.currentUser = doc.data();
+  //         } else {
+  //           console.log("User not found");
+  //         }
+  //       });
+  //       state.isLoading = false;
+  //     })
+  //     .addCase(loginUser.rejected, (state, action) => {
+  //       state.isLoading = false;
+  //       state.error = action.payload;
+  //     });
+  // },
 });
 
-export const { setUser, setLoading, setError, clearUser } = userSlice.actions;
+export const { setUser, setLoading, setError, clearUser, clearError } =
+  userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,4 +1,8 @@
 import * as React from "react";
+import { Link, Navigate } from "react-router-dom";
+import { logoutUser } from "../actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,12 +13,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { ButtonBase, Stack } from "@mui/material";
-import { Link, Navigate } from "react-router-dom";
-import { AccountCircle } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 const pages = ["Cohort", "Tutoring", "Co-curricular", "Start Learning"];
 const userPages = ["Profile", "Settings", "Sign Out"];
@@ -22,6 +23,17 @@ const userPages = ["Profile", "Settings", "Sign Out"];
 function ResponsiveAppBar({ isAuth, email }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (isAuth) {
+      setAnchorElUser(null);
+    }
+  }, [isAuth]);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -157,25 +169,16 @@ function ResponsiveAppBar({ isAuth, email }) {
                 >
                   <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
                   <MenuItem onClick={handleCloseUserMenu}>My account</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             )}
             {!isAuth && (
               <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  component={Link}
-                  to="/signin"
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
+                <Button variant="contained" component={Link} to="/signin">
                   Login
                 </Button>
-                <Button
-                  variant="contained"
-                  component={Link}
-                  to="/signup"
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
+                <Button variant="contained" component={Link} to="/signup">
                   Signup
                 </Button>
               </Stack>
