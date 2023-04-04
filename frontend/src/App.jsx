@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./actions/authActions";
 import "./App.css";
@@ -15,10 +15,26 @@ const SignUp = lazy(() => import("./pages/SignUp"));
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
+  const [email, setEmail] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     dispatch(getCurrentUser());
-  }, [dispatch]);
+
+    if (user) {
+      setIsAuthenticated(true);
+    }
+
+    return () => {
+      setIsAuthenticated(false);
+    };
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+    }
+  }, [user]);
 
   return (
     <Suspense
@@ -35,7 +51,7 @@ function App() {
         </Box>
       }
     >
-      <Appbar />
+      <Appbar isAuth={isAuthenticated} email={email} />
       <Routes>
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/signin" element={<SignIn />} />

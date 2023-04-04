@@ -14,10 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { ButtonBase, Stack } from "@mui/material";
 import { Link, Navigate } from "react-router-dom";
+import { AccountCircle } from "@mui/icons-material";
 
 const pages = ["Cohort", "Tutoring", "Co-curricular", "Start Learning"];
+const userPages = ["Profile", "Settings", "Sign Out"];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ isAuth, email }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -35,7 +37,6 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -127,24 +128,58 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Stack direction="row" spacing={2}>
-              <ButtonBase
-                component={Link}
-                to="signin"
-                variant="contained"
-                onClick={handleOpenUserMenu}
-              >
-                Login
-              </ButtonBase>
-              <ButtonBase
-                component={Link}
-                to="signup"
-                variant="contained"
-                onClick={handleOpenUserMenu}
-              >
-                Sign Up
-              </ButtonBase>
-            </Stack>
+            {isAuth && (
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenUserMenu}
+                  color="inherit"
+                >
+                  <Avatar>{email.charAt(0).toUpperCase()}</Avatar>
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>My account</MenuItem>
+                </Menu>
+              </div>
+            )}
+            {!isAuth && (
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/signin"
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/signup"
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Signup
+                </Button>
+              </Stack>
+            )}
           </Box>
         </Toolbar>
       </Container>
