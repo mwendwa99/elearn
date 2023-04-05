@@ -20,7 +20,7 @@ import { Stack } from "@mui/material";
 const pages = ["Cohort", "Tutoring", "Co-curricular", "Start Learning"];
 const userPages = ["Profile", "Settings", "Sign Out"];
 
-function ResponsiveAppBar({ isAuth, email }) {
+function ResponsiveAppBar({ isAuth, displayName }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
@@ -150,7 +150,15 @@ function ResponsiveAppBar({ isAuth, email }) {
                   onClick={handleOpenUserMenu}
                   color="inherit"
                 >
-                  <Avatar>{email.charAt(0).toUpperCase()}</Avatar>
+                  <Avatar>
+                    {
+                      // get first letters of name
+                      displayName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                    }
+                  </Avatar>
                 </IconButton>
                 <Menu
                   id="menu-appbar"

@@ -11,13 +11,24 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { Dropdown } from "../components";
+import { RadioButton } from "../components";
 
-const type = ["Tutor", "Student"];
-const country = ["Kenya", "United States"];
+// const type = ["Tutor", "Student"];
+// const country = ["KE", "US"];
+
+const country = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+];
+const type = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+];
 
 function Copyright(props) {
   return (
@@ -120,12 +131,15 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1" gutterBottom>
-                  Please select who you are and Country of origin
+                  Who are you:
                 </Typography>
-                <Stack direction={"row"} spacing={2}>
-                  <Dropdown text="Join us as a" options={type} />
-                  <Dropdown text="Country" options={country} />
-                </Stack>
+                <RadioButton options={country} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" gutterBottom>
+                  Please select country of origin
+                </Typography>
+                <Dropdown options={country} />
               </Grid>
             </Grid>
             <Button
