@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../actions/authActions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,6 +13,24 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress } from "@mui/material";
+
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Nexus School
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -108,6 +126,16 @@ function SignIn() {
               )}
             </Button>
           </Box>
+          <Typography
+            align="center"
+            color={"secondary"}
+            variant="body1"
+            component={Link}
+            to="/signup"
+          >
+            Don't have an account? Sign Up
+          </Typography>
+          <Copyright sx={{ mt: 5 }} />
         </Box>
       </Container>
     </ThemeProvider>

@@ -1,17 +1,22 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import { Dropdown } from "../components";
+
+const type = ["Tutor", "Student"];
+const country = ["Kenya", "United States"];
 
 function Copyright(props) {
   return (
@@ -23,7 +28,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Nexus School
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -111,12 +116,17 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                <Typography variant="body1">
+                  Please select who you are and Country of origin
+                </Typography>
+                <Stack
+                  direction={"row"}
+                  spacing={2}
+                  sx={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Dropdown text="Join us as a" options={type} />
+                  <Dropdown text="Country" options={country} />
+                </Stack>
               </Grid>
             </Grid>
             <Button
@@ -127,11 +137,16 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Typography
+                  color="secondary"
+                  variant="body1"
+                  component={Link}
+                  to="/signin"
+                >
                   Already have an account? Sign in
-                </Link>
+                </Typography>
               </Grid>
             </Grid>
           </Box>
