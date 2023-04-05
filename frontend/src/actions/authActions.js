@@ -43,15 +43,6 @@ export const loginUser = (email, password) => async (dispatch) => {
     dispatch(setError(error.message));
   }
 };
-// // authActions.js
-// export const loginUser = createAsyncThunk("auth/login", async (payload) => {
-//   const { email, password } = payload;
-//   const response = await auth.signInWithEmailAndPassword(auth, email, password);
-//   const tokenResult = await response.user.getIdTokenResult();
-//   const userType = tokenResult.claims.usertype;
-//   return response.user.uid; // return only the uid
-// });
-
 // Create async action to get current user on app load
 export const getCurrentUser = () => async (dispatch) => {
   try {

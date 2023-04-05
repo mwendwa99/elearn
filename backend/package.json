@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/mwendwa99/elearn#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "firebase-admin": "^11.5.0"
   }
 }

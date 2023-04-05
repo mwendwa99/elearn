@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -39,6 +40,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const { isLoading, error } = useSelector((state) => state.auth);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -60,6 +62,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
+          {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -116,14 +119,10 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body1">
+                <Typography variant="body1" gutterBottom>
                   Please select who you are and Country of origin
                 </Typography>
-                <Stack
-                  direction={"row"}
-                  spacing={2}
-                  sx={{ justifyContent: "center", alignItems: "center" }}
-                >
+                <Stack direction={"row"} spacing={2}>
                   <Dropdown text="Join us as a" options={type} />
                   <Dropdown text="Country" options={country} />
                 </Stack>
@@ -135,7 +134,11 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              {isLoading ? (
+                <CircularProgress size={20} sx={{ color: "white" }} />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
             <Grid container justifyContent="center">
               <Grid item>

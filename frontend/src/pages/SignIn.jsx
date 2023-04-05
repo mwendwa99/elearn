@@ -72,11 +72,7 @@ function SignIn() {
             alignItems: "center",
           }}
         >
-          {error && (
-            <Typography sx={{ color: "red" }}>
-              Error in email or password
-            </Typography>
-          )}
+          {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
