@@ -1,3 +1,5 @@
-export { default as students } from "./students.webp";
-export { default as teach } from "./teach.webp";
-export { default as learn } from "./learn.webp";
+import students from "./students.webp";
+import teach from "./teach.webp";
+import learn from "./learn.webp";
+
+export { students, teach, learn };
