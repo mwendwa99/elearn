@@ -12,23 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
-import Stack from "@mui/material/Stack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { Dropdown } from "../components";
-import { RadioButton } from "../components";
+import { RadioButton, CountrySelector } from "../components";
 
-// const type = ["Tutor", "Student"];
-// const country = ["KE", "US"];
-
-const country = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-];
-const type = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-];
+const type = ["Tutor", "Student"];
 
 function Copyright(props) {
   return (
@@ -52,12 +40,28 @@ const theme = createTheme();
 
 export default function SignUp() {
   const { isLoading, error } = useSelector((state) => state.auth);
+  const [radioValue, setRadioValue] = React.useState("student");
+  const [selectedCountry, setSelectedCountry] = React.useState(null);
+
+  const handleRadioChange = (value) => {
+    setRadioValue(value);
+  };
+
+  const handleCountryChange = (country) => {
+    setSelectedCountry(country);
+    // do something with the selected country
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      type: radioValue,
+      country: selectedCountry.code,
     });
   };
 
@@ -133,13 +137,13 @@ export default function SignUp() {
                 <Typography variant="body1" gutterBottom>
                   Who are you:
                 </Typography>
-                <RadioButton options={country} />
+                <RadioButton onChange={handleRadioChange} options={type} />
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1" gutterBottom>
                   Please select country of origin
                 </Typography>
-                <Dropdown options={country} />
+                <CountrySelector onCountryChange={handleCountryChange} />
               </Grid>
             </Grid>
             <Button

@@ -32,9 +32,17 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 };
 
-export default function UseRadioGroup() {
+export default function UseRadioGroup(props) {
+  const handleChange = (e) => {
+    props.onChange(e.target.value);
+  };
   return (
-    <RadioGroup row name="use-radio-group" defaultValue="student">
+    <RadioGroup
+      row
+      name="use-radio-group"
+      defaultValue="student"
+      onChange={handleChange}
+    >
       <MyFormControlLabel value="student" label="Student" control={<Radio />} />
       <MyFormControlLabel value="tutor" label="Tutor" control={<Radio />} />
     </RadioGroup>
