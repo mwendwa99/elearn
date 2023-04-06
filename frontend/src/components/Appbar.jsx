@@ -1,8 +1,11 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { logoutUser } from "../actions/authActions";
+import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { logoutUser } from "../actions/authActions";
+import theme from "./theme";
+
+import { ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,10 +20,16 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Stack } from "@mui/material";
 
-const pages = ["Cohort", "Tutoring", "Co-curricular", "Start Learning"];
+const pages = [
+  "About",
+  "Cohort",
+  "Tutoring",
+  "Co-curricular",
+  "Start Learning",
+];
 const userPages = ["Profile", "Settings", "Sign Out"];
 
-function ResponsiveAppBar({ isAuth, displayName }) {
+function ResponsiveAppBar({ isAuth, email }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
@@ -50,151 +59,176 @@ function ResponsiveAppBar({ isAuth, displayName }) {
     setAnchorElUser(null);
   };
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+    <ThemeProvider theme={theme}>
+      <AppBar color="transparent" elevation={0} position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component={RouterLink}
+              to="/"
               sx={{
-                display: { xs: "block", md: "none" },
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+              LOGO
+            </Typography>
 
-          <Box sx={{ flexGrow: 0 }}>
-            {isAuth && (
-              <div>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenUserMenu}
-                  color="inherit"
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <AdbIcon
+              color="primary"
+              sx={{
+                display: { xs: "flex", md: "none" },
+                mr: 1,
+              }}
+            />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              color="primary"
+              sx={{
+                color: "#000 !important",
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                textDecoration: "none",
+              }}
+            >
+              LOGO
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map((page) => (
+                <Typography
+                  key={page}
+                  sx={{ p: 1, textDecoration: "none" }}
+                  color="primary"
+                  variant="h6"
+                  component={RouterLink}
+                  to="/"
                 >
-                  <Avatar>
-                    {
-                      // get first letters of name
-                      displayName
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                    }
-                  </Avatar>
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>My account</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-              </div>
-            )}
-            {!isAuth && (
-              <Stack direction="row" spacing={2}>
-                <Button variant="contained" component={Link} to="/signin">
-                  Login
-                </Button>
-                <Button variant="contained" component={Link} to="/signup">
-                  Signup
-                </Button>
-              </Stack>
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+                  {page}
+                </Typography>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              {isAuth && (
+                <div>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenUserMenu}
+                    color="inherit"
+                    // randomize color
+                  >
+                    <Avatar
+                      sx={{
+                        background: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                      }}
+                    >
+                      {
+                        // get first letters of name from email
+                        email
+                          .split("@")[0]
+                          .split(".")
+                          .map((name) => name[0].toUpperCase())
+                          .join("")
+                      }
+                    </Avatar>
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
+                </div>
+              )}
+              {!isAuth && (
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/signin"
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    component={RouterLink}
+                    to="/signup"
+                  >
+                    Signup
+                  </Button>
+                </Stack>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </ThemeProvider>
   );
 }
 export default ResponsiveAppBar;

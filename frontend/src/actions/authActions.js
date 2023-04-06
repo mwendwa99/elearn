@@ -1,9 +1,10 @@
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import axios from "axios";
+
 import {
   setLoading,
   setError,
@@ -14,19 +15,24 @@ import {
 import { auth } from "../firebase";
 
 // Create async action to register a user
-export const registerUser = (email, password) => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    dispatch(setUser(userCredential.user));
-  } catch (error) {
-    dispatch(setError(error.message));
-  }
-};
+
+export const registerUser =
+  (email, password, firstName, lastName, type, country) => async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      const response = await axios.post("http://localhost:3000/signup/users", {
+        email,
+        password,
+        firstName,
+        lastName,
+        country,
+        type,
+      });
+      dispatch(setUser(response.data.user));
+    } catch (error) {
+      dispatch(setError(error.message));
+    }
+  };
 
 // Create async action to log in a user
 export const loginUser = (email, password) => async (dispatch) => {

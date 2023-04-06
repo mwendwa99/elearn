@@ -15,7 +15,7 @@ const SignUp = lazy(() => import("./pages/SignUp"));
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      setDisplayName(user.displayName);
+      setEmail(user.email);
     }
   }, [user]);
 
@@ -51,7 +51,7 @@ function App() {
         </Box>
       }
     >
-      <Appbar isAuth={isAuthenticated} displayName={displayName} />
+      <Appbar isAuth={isAuthenticated} email={email} />
       <Routes>
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/signin" element={<SignIn />} />

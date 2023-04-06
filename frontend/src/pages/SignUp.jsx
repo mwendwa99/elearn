@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../actions/authActions";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -39,9 +40,17 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { isLoading, error, currentUser } = useSelector((state) => state.auth);
   const [radioValue, setRadioValue] = React.useState("student");
   const [selectedCountry, setSelectedCountry] = React.useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (currentUser) {
+      return navigate("/");
+    }
+  }, [currentUser]);
 
   const handleRadioChange = (value) => {
     setRadioValue(value);
@@ -55,14 +64,16 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      type: radioValue,
-      country: selectedCountry.code,
-    });
+    dispatch(
+      registerUser(
+        data.get("email"),
+        data.get("password"),
+        data.get("firstName"),
+        data.get("lastName"),
+        radioValue,
+        selectedCountry.code
+      )
+    );
   };
 
   return (

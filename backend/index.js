@@ -33,12 +33,12 @@ app.get("/users", async (req, res) => {
 
 // route to add new user
 app.post("/signup/users", async (req, res) => {
-  const { email, password, displayName, country, type } = req.body;
+  const { email, password, firstName, lastName, type, country } = req.body;
   try {
     const userCredential = await admin.auth().createUser({
       email,
       password,
-      displayName,
+      displayName: `${firstName} ${lastName}`,
     });
 
     // Set custom claims
@@ -51,7 +51,7 @@ app.post("/signup/users", async (req, res) => {
     const user = {
       uid: userCredential.uid,
       email,
-      displayName,
+      displayName: `${firstName} ${lastName}`,
       country,
       type,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
