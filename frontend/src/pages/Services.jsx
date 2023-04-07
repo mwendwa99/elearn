@@ -60,7 +60,7 @@ export default function Services() {
   return (
     <Box sx={{ padding: "1rem", minHeight: "100vh" }}>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <Card>
             <CardMedia
               height="200px"
@@ -82,7 +82,7 @@ export default function Services() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <Card>
             <CardMedia
               height="200px"

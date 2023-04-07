@@ -47,8 +47,6 @@ export default function Slider() {
     <swiper-container
       ref={swiperElRef}
       slides-per-view="3"
-      // navigation="true"
-      // pagination="true"
       loop="true"
       rewind="true"
       autoplay="true"

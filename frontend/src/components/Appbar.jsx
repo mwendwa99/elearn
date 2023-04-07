@@ -28,7 +28,6 @@ const pages = [
   "Co-curricular",
   "Start Learning",
 ];
-const userPages = ["Profile", "Settings", "Sign Out"];
 
 function ResponsiveAppBar({ isAuth, email }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -66,7 +65,7 @@ function ResponsiveAppBar({ isAuth, email }) {
           <Toolbar disableGutters>
             <IconButton
               sx={{
-                maxWidth: "150px",
+                maxWidth: { xs: "100px", md: "100px" },
                 background: "#2e9cdb",
                 borderRadius: "5px",
               }}
@@ -74,24 +73,6 @@ function ResponsiveAppBar({ isAuth, email }) {
             >
               <img height="100%" width="100%" src={logo} alt="logo" />
             </IconButton>
-            {/* <Typography
-              variant="h6"
-              noWrap
-              component={RouterLink}
-              to="/"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 600,
-                letterSpacing: ".3rem",
-                color: "#2e9cdb",
-                textDecoration: "none",
-              }}
-            >
-              Nexus
-            </Typography> */}
-
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -101,7 +82,11 @@ function ResponsiveAppBar({ isAuth, email }) {
                 onClick={handleOpenNavMenu}
                 color="inherit"
               >
-                <MenuIcon />
+                <MenuIcon
+                  sx={{
+                    color: "#2e9cdb",
+                  }}
+                />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -119,6 +104,7 @@ function ResponsiveAppBar({ isAuth, email }) {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: "block", md: "none" },
+                  color: "#2e9cdb",
                 }}
               >
                 {pages.map((page) => (
@@ -128,31 +114,6 @@ function ResponsiveAppBar({ isAuth, email }) {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon
-              color="primary"
-              sx={{
-                display: { xs: "flex", md: "none" },
-                mr: 1,
-              }}
-            />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href=""
-              color="primary"
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                textDecoration: "none",
-              }}
-            >
-              Nexus
-            </Typography>
             <Box
               sx={{
                 flexGrow: 1,
