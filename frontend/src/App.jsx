@@ -5,7 +5,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
 // components
-import { Appbar } from "./components";
+import { Appbar, Footer } from "./components";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
@@ -57,6 +57,7 @@ function App() {
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
       </Routes>
+      <Footer />
     </Suspense>
   );
 }

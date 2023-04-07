@@ -19,7 +19,7 @@ export default function Landing() {
       >
         <Grid item xs={12} md={6}>
           <Typography
-            variant="h2"
+            variant="h3"
             sx={{ fontWeight: 700, color: "primary.main" }}
             align="left"
           >
@@ -47,8 +47,34 @@ export default function Landing() {
           <img src={students} alt="landing" width="100%" height="100%" />
         </Grid>
       </Grid>
-      <Services />
-      <Classes />
+      <Grid container sx={{ padding: "1rem", minHeight: "100vh" }}>
+        <Grid item xs={12} md={12}>
+          <Typography gutterBottom variant="h4" color={"primary"}>
+            Our Services
+          </Typography>
+          <Typography variant="h6" sx={{ color: "text.secondary" }}>
+            We provide you with the latest online learning system and material
+            that help your knowledge grow.
+          </Typography>
+          <Services />
+        </Grid>
+      </Grid>
+      <Grid container sx={{ padding: "1rem" }}>
+        <Grid item xs={12} md={12}>
+          <Typography variant="h4" sx={{ color: "primary.main" }}>
+            Our Classes
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="h6"
+            sx={{ color: "text.secondary" }}
+          >
+            We provide you with the latest online learning system and material
+            that help your knowledge grow.
+          </Typography>
+          <Classes />
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -8,8 +8,10 @@ import {
   Button,
 } from "@mui/material";
 import { Check, ArrowOutward } from "@mui/icons-material";
+
 import { List } from "../components";
-import { learn, teach } from "../assets";
+import teach from "../assets/teach.webp";
+import learn from "../assets/learn.webp";
 
 const studentWriteUp = {
   title: "Students",
@@ -56,24 +58,12 @@ const tutorWriteUp = {
 // services section
 export default function Services() {
   return (
-    <Box sx={{ padding: "1rem" }}>
-      <Typography
-        gutterBottom
-        variant="h4"
-        sx={{ fontWeight: 700 }}
-        color={"primary"}
-      >
-        Our Services
-      </Typography>
-      <Typography variant="h6" sx={{ color: "text.secondary" }}>
-        We provide you with the latest online learning system and material that
-        help your knowledge grow.
-      </Typography>
+    <Box sx={{ padding: "1rem", minHeight: "100vh" }}>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
         <Grid item xs={6} md={6}>
           <Card>
             <CardMedia
-              height="300px"
+              height="200px"
               sx={{ objectFit: "contain" }}
               component="img"
               image={learn}
@@ -95,7 +85,7 @@ export default function Services() {
         <Grid item xs={6} md={6}>
           <Card>
             <CardMedia
-              height="300px"
+              height="200px"
               sx={{ objectFit: "contain" }}
               component="img"
               image={teach}

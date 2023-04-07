@@ -1,8 +1,32 @@
 import { useRef, useEffect } from "react";
 import { register } from "swiper/element/bundle";
-import { learn, teach } from "../assets";
+
+import Card from "./Card";
 
 register();
+
+const cardArray = [
+  {
+    id: 1,
+    component: <Card />,
+  },
+  {
+    id: 2,
+    component: <Card />,
+  },
+  {
+    id: 3,
+    component: <Card />,
+  },
+  {
+    id: 4,
+    component: <Card />,
+  },
+  {
+    id: 5,
+    component: <Card />,
+  },
+];
 
 export default function Slider() {
   const swiperElRef = useRef(null);
@@ -22,28 +46,20 @@ export default function Slider() {
   return (
     <swiper-container
       ref={swiperElRef}
-      slides-per-view="2"
-      navigation="true"
-      pagination="true"
+      slides-per-view="3"
+      // navigation="true"
+      // pagination="true"
       loop="true"
       rewind="true"
       autoplay="true"
-      speed="500"
-      space-between="0"
-      delay="1000"
+      speed="1000"
+      space-between="10"
+      delay="2000"
+      autoHeight="true"
     >
-      <swiper-slide>
-        <img src={learn} alt="learn" />
-      </swiper-slide>
-      <swiper-slide>
-        <img src={teach} alt="teach" />
-      </swiper-slide>
-      <swiper-slide>
-        <img src={learn} alt="learn" />
-      </swiper-slide>
-      <swiper-slide>
-        <img src={teach} alt="teach" />
-      </swiper-slide>
+      {cardArray.map((card) => (
+        <swiper-slide key={card.id}>{card.component}</swiper-slide>
+      ))}
     </swiper-container>
   );
 }
