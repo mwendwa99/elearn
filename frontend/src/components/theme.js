@@ -7,12 +7,14 @@ const theme = createTheme({
     },
   },
   components: {
-    MuiTypography: {
+    MuiButton: {
       styleOverrides: {
         root: {
           "&:hover": {
-            borderBottom: "2px solid #2196f3",
+            borderBottom: "0.5px solid #2196f3",
           },
+          textDecoration: "none",
+          textTransform: "capitalize",
         },
       },
     },

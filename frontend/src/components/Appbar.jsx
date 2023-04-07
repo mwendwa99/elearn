@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { logoutUser } from "../actions/authActions";
 import theme from "./theme";
+import logo from "../assets/logo.svg";
 
 import { ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -63,8 +64,17 @@ function ResponsiveAppBar({ isAuth, email }) {
       <AppBar color="transparent" elevation={0} position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-            <Typography
+            <IconButton
+              sx={{
+                maxWidth: "150px",
+                background: "#2e9cdb",
+                borderRadius: "5px",
+              }}
+              aria-label="delete"
+            >
+              <img height="100%" width="100%" src={logo} alt="logo" />
+            </IconButton>
+            {/* <Typography
               variant="h6"
               noWrap
               component={RouterLink}
@@ -73,14 +83,14 @@ function ResponsiveAppBar({ isAuth, email }) {
                 mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
-                fontWeight: 700,
+                fontWeight: 600,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "#2e9cdb",
                 textDecoration: "none",
               }}
             >
-              LOGO
-            </Typography>
+              Nexus
+            </Typography> */}
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -132,7 +142,6 @@ function ResponsiveAppBar({ isAuth, email }) {
               href=""
               color="primary"
               sx={{
-                color: "#000 !important",
                 mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
@@ -142,20 +151,26 @@ function ResponsiveAppBar({ isAuth, email }) {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              Nexus
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "center",
+              }}
+            >
               {pages.map((page) => (
-                <Typography
+                <Button
                   key={page}
-                  sx={{ p: 1, textDecoration: "none" }}
                   color="primary"
-                  variant="h6"
+                  sx={{ p: 1, mr: 2 }}
+                  variant="text"
                   component={RouterLink}
                   to="/"
                 >
                   {page}
-                </Typography>
+                </Button>
               ))}
             </Box>
 
@@ -209,14 +224,14 @@ function ResponsiveAppBar({ isAuth, email }) {
               {!isAuth && (
                 <Stack direction="row" spacing={2}>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     component={RouterLink}
                     to="/signin"
                   >
                     Login
                   </Button>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     component={RouterLink}
                     to="/signup"
                   >
