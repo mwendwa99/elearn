@@ -57,7 +57,13 @@ const Cohorts = () => {
             <img
               src={cohort.image}
               alt={`${cohort.name} at ${cohort.school}`}
-              style={{ width: "25%", marginRight: "1rem" }}
+              style={{
+                width: "90%",
+                marginRight: "1rem",
+                borderRadius: "5px",
+                objectFit: "contain",
+                height: "100%",
+              }}
             />
           </Box>
           <div>

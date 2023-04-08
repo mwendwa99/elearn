@@ -9,17 +9,19 @@ import { Appbar, Footer } from "./components";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
-const SignIn = lazy(() => import("./pages/SignIn"));
-const SignUp = lazy(() => import("./pages/SignUp"));
-const About = lazy(() => import("./pages/About"));
+const SignIn = lazy(() => import("./pages/SignInPage"));
+const SignUp = lazy(() => import("./pages/SignUpPage"));
+const Profile = lazy(() => import("./pages/ProfilePage"));
+const About = lazy(() => import("./pages/AboutPage"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
 const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -35,7 +37,13 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      setEmail(user.email);
+      setDisplayName(user.displayName);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.uid);
     }
   }, [user]);
 
@@ -54,11 +62,12 @@ function App() {
         </Box>
       }
     >
-      <Appbar isAuth={isAuthenticated} email={email} />
+      <Appbar isAuth={isAuthenticated} displayName={displayName} />
       <Routes>
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/profile" element={<Profile uid={userId} />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />
         <Route path="*" element={<Error404 />} />

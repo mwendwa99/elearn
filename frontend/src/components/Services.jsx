@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Check, ArrowOutward } from "@mui/icons-material";
 
-import { List } from "../components";
+import { List } from ".";
 import teach from "../assets/teach.webp";
 import learn from "../assets/learn.webp";
 

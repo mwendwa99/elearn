@@ -28,7 +28,7 @@ const pages = [
   "Start Learning",
 ];
 
-function ResponsiveAppBar({ isAuth, email }) {
+function ResponsiveAppBar({ isAuth, displayName }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
@@ -37,10 +37,6 @@ function ResponsiveAppBar({ isAuth, email }) {
     if (isAuth) {
       setAnchorElUser(null);
     }
-
-    return () => {
-      setAnchorElUser(null);
-    };
   }, [isAuth]);
 
   const handleLogout = () => {
@@ -83,7 +79,7 @@ function ResponsiveAppBar({ isAuth, email }) {
               <IconButton
                 size="large"
                 aria-label="account of current user"
-                aria-controls="menu-appbar"
+                aria-controls="nav-menu"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
@@ -95,7 +91,7 @@ function ResponsiveAppBar({ isAuth, email }) {
                 />
               </IconButton>
               <Menu
-                id="menu-appbar"
+                id="nav-menu"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
                   vertical: "bottom",
@@ -134,6 +130,7 @@ function ResponsiveAppBar({ isAuth, email }) {
             >
               {pages.map((page) => (
                 <Button
+                  id="main-nav"
                   key={page}
                   color="primary"
                   sx={{ p: 1, mr: 2 }}
@@ -152,7 +149,7 @@ function ResponsiveAppBar({ isAuth, email }) {
                   <IconButton
                     size="large"
                     aria-label="account of current user"
-                    aria-controls="menu-appbar"
+                    aria-controls="profile-menu"
                     aria-haspopup="true"
                     onClick={handleOpenUserMenu}
                     color="inherit"
@@ -163,18 +160,14 @@ function ResponsiveAppBar({ isAuth, email }) {
                         background: `hsl(${Math.random() * 360}, 100%, 50%)`,
                       }}
                     >
-                      {
-                        // get first letters of name from email
-                        email
-                          .split("@")[0]
-                          .split(".")
-                          .map((name) => name[0].toUpperCase())
-                          .join("")
-                      }
+                      {displayName
+                        .split(" ")
+                        .map((name) => name[0].toUpperCase())
+                        .join("")}
                     </Avatar>
                   </IconButton>
                   <Menu
-                    id="menu-appbar"
+                    id="profile-menu"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
                       vertical: "top",
@@ -186,9 +179,15 @@ function ResponsiveAppBar({ isAuth, email }) {
                       horizontal: "right",
                     }}
                     open={Boolean(anchorElUser)}
-                    onClose={handleCloseNavMenu}
+                    onClose={handleCloseUserMenu}
                   >
-                    <MenuItem onClick={handleCloseNavMenu}>Profile</MenuItem>
+                    <MenuItem
+                      component={RouterLink}
+                      to="/profile"
+                      onClick={handleCloseUserMenu}
+                    >
+                      Profile
+                    </MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>

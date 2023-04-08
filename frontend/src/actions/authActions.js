@@ -9,13 +9,13 @@ import {
   setLoading,
   setError,
   setUser,
+  setUserProfile,
   clearUser,
   clearError,
 } from "../features/authSlice";
 import { auth } from "../firebase";
 
 // Create async action to register a user
-
 export const registerUser =
   (email, password, firstName, lastName, type, country) => async (dispatch) => {
     try {
@@ -49,6 +49,7 @@ export const loginUser = (email, password) => async (dispatch) => {
     dispatch(setError(error.message));
   }
 };
+
 // Create async action to get current user on app load
 export const getCurrentUser = () => async (dispatch) => {
   try {
@@ -58,6 +59,18 @@ export const getCurrentUser = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch(setError(error.message));
+  }
+};
+
+export const getUserProfile = (uid) => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const response = await axios.get(`http://localhost:3000/user/${uid}`);
+    dispatch(setUserProfile(response.data));
+  } catch (error) {
+    dispatch(setError(error.message));
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
@@ -71,3 +84,24 @@ export const logoutUser = () => async (dispatch) => {
     dispatch(setError(error.message));
   }
 };
+
+export const updateUserProfile =
+  ({ firstName, lastName, country, type }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch(setLoading(true));
+      const { uid } = getState().auth.user;
+      const response = await axios.put(
+        `http://localhost:3000/user/${uid}`,
+        { firstName, lastName, country, type },
+        {
+          headers: {
+            Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+          },
+        }
+      );
+      dispatch(setUser(response.data.user));
+    } catch (error) {
+      dispatch(setError(error.message));
+    }
+  };
