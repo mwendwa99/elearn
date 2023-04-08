@@ -13,6 +13,7 @@ const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const About = lazy(() => import("./pages/About"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
+const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />
     </Suspense>

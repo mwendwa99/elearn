@@ -37,6 +37,10 @@ function ResponsiveAppBar({ isAuth, email }) {
     if (isAuth) {
       setAnchorElUser(null);
     }
+
+    return () => {
+      setAnchorElUser(null);
+    };
   }, [isAuth]);
 
   const handleLogout = () => {
@@ -52,6 +56,10 @@ function ResponsiveAppBar({ isAuth, email }) {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return (
