@@ -11,6 +11,8 @@ import { Appbar, Footer } from "./components";
 const Landing = lazy(() => import("./pages/Landing"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
+const About = lazy(() => import("./pages/About"));
+const Cohort = lazy(() => import("./pages/CohortPage"));
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +58,8 @@ function App() {
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/about" element={<About />} />
+        <Route exact path="/cohort" element={<Cohort />} />
       </Routes>
       <Footer />
     </Suspense>

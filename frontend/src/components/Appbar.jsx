@@ -18,7 +18,6 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Stack } from "@mui/material";
 
 const pages = [
@@ -55,9 +54,6 @@ function ResponsiveAppBar({ isAuth, email }) {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
   return (
     <ThemeProvider theme={theme}>
       <AppBar color="transparent" elevation={0} position="static">
@@ -70,6 +66,8 @@ function ResponsiveAppBar({ isAuth, email }) {
                 borderRadius: "5px",
               }}
               aria-label="delete"
+              component={RouterLink}
+              to="/"
             >
               <img height="100%" width="100%" src={logo} alt="logo" />
             </IconButton>
@@ -108,7 +106,12 @@ function ResponsiveAppBar({ isAuth, email }) {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    component={RouterLink}
+                    to={page.toLowerCase()}
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
@@ -128,7 +131,7 @@ function ResponsiveAppBar({ isAuth, email }) {
                   sx={{ p: 1, mr: 2 }}
                   variant="text"
                   component={RouterLink}
-                  to="/"
+                  to={page.toLowerCase()}
                 >
                   {page}
                 </Button>
@@ -175,9 +178,9 @@ function ResponsiveAppBar({ isAuth, email }) {
                       horizontal: "right",
                     }}
                     open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
+                    onClose={handleCloseNavMenu}
                   >
-                    <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>Profile</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>
