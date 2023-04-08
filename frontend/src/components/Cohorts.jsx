@@ -8,6 +8,7 @@ const cohorts = [
     duration: "12 weeks",
     startDate: "October 1, 2022",
     tutor: "David J. Malan",
+    path: "/cohort/cs",
     image:
       "https://images.pexels.com/photos/5429947/pexels-photo-5429947.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   },
@@ -17,6 +18,7 @@ const cohorts = [
     duration: "10 weeks",
     startDate: "November 1, 2022",
     tutor: "Andrew Ng",
+    path: "/cohort/ml",
     image:
       "https://images.pexels.com/photos/5678042/pexels-photo-5678042.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   },
@@ -26,6 +28,7 @@ const cohorts = [
     duration: "8 weeks",
     startDate: "December 1, 2022",
     tutor: "Jogesh K. Muppala",
+    path: "/cohort/react-native",
     image:
       "https://images.pexels.com/photos/1065085/pexels-photo-1065085.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   },
@@ -59,7 +62,8 @@ const Cohorts = () => {
           </Box>
           <div>
             <Link
-              to={`/cohorts/${cohort.name.replace(/ /g, "-").toLowerCase()}`}
+              //   to={`/cohorts/${cohort.name.replace(/ /g, "-").toLowerCase()}`}
+              to={cohort.path}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Typography
