@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { logoutUser } from "../actions/authActions";
@@ -32,6 +32,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (isAuth) {
@@ -41,6 +42,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
 
   const handleLogout = () => {
     dispatch(logoutUser());
+    navigate("/");
   };
 
   const handleOpenNavMenu = (event) => {
