@@ -15,6 +15,23 @@ admin.initializeApp({
 app.use(express.json());
 // Allow requests from any origin
 app.use(cors());
+// Verify Firebase ID token middleware
+const verifyIdToken = async (req, res, next) => {
+  const authorizationHeader = req.headers.authorization;
+  if (authorizationHeader && authorizationHeader.startsWith("Bearer ")) {
+    const idToken = authorizationHeader.split("Bearer ")[1];
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      req.user = decodedToken;
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
 
 // Get the user's UID that you want to add custom claims to
 const uid = process.env.UID; // Replace with your UID
@@ -70,6 +87,43 @@ app.post("/signup/users", async (req, res) => {
   }
 });
 
+// Get current user endpoint
+// app.get("/user", verifyIdToken, async (req, res) => {
+//   try {
+//     const uid = req.user.uid;
+//     const user = await admin.auth().getUser(uid);
+//     const customClaims = user.customClaims || {};
+//     res.json({
+//       uid: user.uid,
+//       email: user.email,
+//       displayName: user.displayName,
+//       photoURL: user.photoURL,
+//       isAdmin: customClaims.admin || false,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+app.get("/user/:uid", async (req, res) => {
+  const { uid } = req.params;
+
+  try {
+    const userRecord = await admin.auth().getUser(uid);
+    const user = {
+      uid: userRecord.uid,
+      email: userRecord.email,
+      displayName: userRecord.displayName,
+      photoURL: userRecord.photoURL,
+      customClaims: userRecord.customClaims,
+    };
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user data" });
+  }
+});
+
 // route to update user custom claims
 app.put("/users/:userId/customClaims", async (req, res) => {
   const userId = req.params.userId;
@@ -85,38 +139,30 @@ app.put("/users/:userId/customClaims", async (req, res) => {
   }
 });
 
+// Update user profile endpoint
+app.put("/users/:userId/profile", async (req, res) => {
+  const { userId } = req.params;
+  const { name, email, bio } = req.body;
+
+  try {
+    // Check if user exists
+    const userRecord = await admin.auth().getUser(userId);
+
+    // Update user's name and email in Firebase Auth
+    await admin.auth().updateUser(userId, { displayName: name, email });
+
+    // Update user's bio in Firestore
+    await admin.firestore().collection("users").doc(userId).update({ bio });
+
+    res.status(200).send("User profile updated successfully.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating user profile.");
+  }
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`server is running on: ${PORT}`);
 });
-
-// // Set custom claims
-// const customClaims = {
-//   admin: true, // Replace with your custom claims
-// };
-
-// // Set the custom claims to the user's token
-// // admin
-// //   .auth()
-// //   .setCustomUserClaims(uid, customClaims)
-// //   .then(() => {
-// //     console.log("Custom claims added to the user successfully!");
-// //   })
-// //   .catch((error) => {
-// //     console.error(error);
-// //   });
-
-// admin
-//   .auth()
-//   .listUsers()
-//   .then((userRecords) => {
-//     if (userRecords && typeof userRecords === "object") {
-//       Object.values(userRecords).forEach((user) => {
-//         console.log(user);
-//       });
-//     }
-//   })
-//   .catch((error) => {
-//     console.log(`Error fetching user data: ${error}`);
-//   });
