@@ -1,15 +1,7 @@
-import {
-  Box,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
 import { Check, ArrowOutward } from "@mui/icons-material";
 
-import { List } from ".";
+import List from "./List";
 import teach from "../assets/teach.webp";
 import learn from "../assets/learn.webp";
 

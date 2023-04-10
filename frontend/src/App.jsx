@@ -4,8 +4,9 @@ import { getCurrentUser } from "./actions/authActions";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
-// components
-import { Appbar, Footer } from "./components";
+//
+import Appbar from "./components/AppBar";
+import Footer from "./components/Footer";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
@@ -14,6 +15,7 @@ const SignUp = lazy(() => import("./pages/SignUpPage"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
+const Tutor = lazy(() => import("./pages/TutorPage"));
 const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
@@ -70,6 +72,7 @@ function App() {
         <Route exact path="/profile" element={<Profile uid={userId} />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />
+        <Route exact path="/tutoring" element={<Tutor />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />
