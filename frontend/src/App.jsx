@@ -16,6 +16,8 @@ const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
 const Tutor = lazy(() => import("./pages/TutorPage"));
+const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
+const StartLearning = lazy(() => import("./pages/StartLearningPage"));
 const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
@@ -73,6 +75,8 @@ function App() {
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />
         <Route exact path="/tutoring" element={<Tutor />} />
+        <Route exact path="/co-curricular" element={<CocCurricular />} />
+        <Route exact path="/start_learning" element={<StartLearning />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />

@@ -114,7 +114,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                 {pages.map((page) => (
                   <MenuItem
                     component={RouterLink}
-                    to={page.toLowerCase()}
+                    to={page.trim().toLowerCase().replace(/\s+/g, "_")}
                     key={page}
                     onClick={handleCloseNavMenu}
                   >
@@ -138,7 +138,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                   sx={{ p: 1, mr: 2 }}
                   variant="text"
                   component={RouterLink}
-                  to={page.toLowerCase()}
+                  to={page.trim().toLowerCase().replace(/\s+/g, "_")}
                 >
                   {page}
                 </Button>
