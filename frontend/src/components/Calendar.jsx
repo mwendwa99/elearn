@@ -17,28 +17,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
 
-const classes = [
-  {
-    title: "Introduction to React",
-    tutor: "John Doe",
-    start: new Date("2023-05-01T09:00:00"),
-    end: new Date("2023-05-01T11:00:00"),
-  },
-  {
-    title: "Intermediate React",
-    tutor: "Jane Smith",
-    start: new Date("2023-05-08T10:00:00"),
-    end: new Date("2023-05-08T12:00:00"),
-  },
-  {
-    title: "Advanced React",
-    tutor: "Bob Johnson",
-    start: new Date("2023-05-15T11:00:00"),
-    end: new Date("2023-05-15T13:00:00"),
-  },
-];
-
-function CalendarComponent() {
+function CalendarComponent({ classes }) {
   const [selectedClass, setSelectedClass] = useState(null);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -74,7 +53,7 @@ function CalendarComponent() {
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
-        style={{ height: 500 }}
+        style={{ height: 600 }}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Class to Schedule</DialogTitle>

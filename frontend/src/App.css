@@ -4,3 +4,9 @@
   padding: 0;
   text-align: left;
 }
+.rbc-header {
+  color: black !important;
+}
+.rbc-label {
+  color: black !important;
+}

@@ -13,16 +13,16 @@ const classes = [
   {
     title: "Introduction to React",
     tutor: "John Doe",
-    date: "2023-05-01",
-    time: "09:00 AM",
+    start: new Date("2023-05-01T09:00:00"),
+    end: new Date("2023-05-01T11:00:00"),
     price: "$50",
     description: "Learn the basics of React and build a simple web app.",
   },
   {
     title: "Intermediate React",
     tutor: "Jane Smith",
-    date: "2023-05-08",
-    time: "10:00 AM",
+    start: new Date("2023-05-01T09:00:00"),
+    end: new Date("2023-05-01T11:00:00"),
     price: "$75",
     description:
       "Build on your React knowledge and create more complex components.",
@@ -30,8 +30,8 @@ const classes = [
   {
     title: "Advanced React",
     tutor: "Bob Johnson",
-    date: "2023-05-15",
-    time: "11:00 AM",
+    start: new Date("2023-05-15T11:00:00"),
+    end: new Date("2023-05-15T13:00:00"),
     price: "$100",
     description:
       "Take your React skills to the next level and learn about performance optimization.",
@@ -55,7 +55,7 @@ function ClassList() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Calendar />
+        <Calendar classes={classes} />
       </Grid>
       {classes.map((c, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
@@ -65,13 +65,25 @@ function ClassList() {
                 {c.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {c.tutor}
+                Tutor:{c.tutor}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {c.date} {c.time}
+                Starts: {/* {c.start} {c.time} */}
+                {c.start.toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }) +
+                  " " +
+                  c.start.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  })}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {c.price}
+                Price: {c.price}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {c.description}
