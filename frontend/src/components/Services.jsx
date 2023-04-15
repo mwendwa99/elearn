@@ -1,5 +1,6 @@
 import { Box, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
 import { Check, ArrowOutward } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 
 import List from "./List";
 import teach from "../assets/teach.webp";
@@ -68,6 +69,8 @@ export default function Services() {
                 variant="contained"
                 color="primary"
                 sx={{ mt: "1rem" }}
+                component={RouterLink}
+                to="/signup"
               >
                 Get Started
               </Button>
@@ -90,6 +93,8 @@ export default function Services() {
                 variant="contained"
                 color="primary"
                 sx={{ mt: "1rem" }}
+                component={RouterLink}
+                to="/signup"
               >
                 Get Started
               </Button>

@@ -87,24 +87,6 @@ app.post("/signup/users", async (req, res) => {
   }
 });
 
-// Get current user endpoint
-// app.get("/user", verifyIdToken, async (req, res) => {
-//   try {
-//     const uid = req.user.uid;
-//     const user = await admin.auth().getUser(uid);
-//     const customClaims = user.customClaims || {};
-//     res.json({
-//       uid: user.uid,
-//       email: user.email,
-//       displayName: user.displayName,
-//       photoURL: user.photoURL,
-//       isAdmin: customClaims.admin || false,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
 app.get("/user/:uid", async (req, res) => {
   const { uid } = req.params;
 

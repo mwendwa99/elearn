@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Typography, Button, Stack } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 // import students from "../assets";
 import students from "../assets/students.webp";
 import Services from "../components/Services";
@@ -35,10 +36,20 @@ export default function Landing() {
             that help your knowledge grow.
           </Typography>
           <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-            <Button variant="contained" color="primary">
+            <Button
+              component={RouterLink}
+              to="/signup"
+              variant="contained"
+              color="primary"
+            >
               Get Started
             </Button>
-            <Button variant="outlined" color="primary">
+            <Button
+              component={RouterLink}
+              to="/about"
+              variant="outlined"
+              color="primary"
+            >
               Learn More
             </Button>
           </Stack>
