@@ -130,19 +130,24 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                 justifyContent: "center",
               }}
             >
-              {pages.map((page) => (
-                <Button
-                  id="main-nav"
-                  key={page}
-                  color="primary"
-                  sx={{ p: 1, mr: 2 }}
-                  variant="text"
-                  component={RouterLink}
-                  to={page.trim().toLowerCase().replace(/\s+/g, "_")}
-                >
-                  {page}
-                </Button>
-              ))}
+              {pages.map((page) => {
+                if (page === "Start Learning" && !isAuth) {
+                  return null; // Skip rendering the 'Start Learning' button
+                }
+                return (
+                  <Button
+                    id="main-nav"
+                    key={page}
+                    color="primary"
+                    sx={{ p: 1, mr: 2 }}
+                    variant="text"
+                    component={RouterLink}
+                    to={page.trim().toLowerCase().replace(/\s+/g, "_")}
+                  >
+                    {page}
+                  </Button>
+                );
+              })}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
