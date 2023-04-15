@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, Box } from "@mui/material";
 import Cohorts from "../components/Cohorts";
 
 const CohortStudies = () => {
@@ -45,17 +45,28 @@ const CohortStudies = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ p: 2 }}>
-          <img
-            src="https://images.pexels.com/photos/8055832/pexels-photo-8055832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="Students in a classroom"
-            style={{
+          <Box
+            sx={{
+              position: "relative",
               width: "100%",
-              height: "100%",
-              borderRadius: 4,
-              objectFit: "contain",
+              height: 0,
+              pb: "80%",
             }}
-            loading="lazy"
-          />
+          >
+            <img
+              src="https://images.pexels.com/photos/8055832/pexels-photo-8055832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="Students in a classroom"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                borderRadius: "8px",
+              }}
+              loading="lazy"
+            />
+          </Box>
         </Grid>
         <Grid item xs={12} sx={{ p: 2 }}>
           <Cohorts />

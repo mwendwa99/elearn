@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, Box } from "@mui/material";
 
 const AboutPage = () => {
   return (
@@ -55,14 +55,25 @@ const AboutPage = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
-          <img
-            src="https://images.pexels.com/photos/1078982/pexels-photo-1078982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Students studying"
-            width="100%"
-            height="auto"
-            style={{ marginBottom: "1rem" }}
-            loading="lazy"
-          />
+          <Box
+            sx={{ position: "relative", width: "100%", height: 0, pb: "80%" }}
+          >
+            <img
+              src="https://images.pexels.com/photos/1078982/pexels-photo-1078982.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              alt="Students studying"
+              width="100%"
+              height="auto"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                borderRadius: "8px",
+              }}
+              loading="lazy"
+            />
+          </Box>
         </Grid>
       </Grid>
     </Container>

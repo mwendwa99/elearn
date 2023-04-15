@@ -29,8 +29,8 @@ const CoCurricularPage = () => {
 
       <Box sx={{ my: 4 }}>
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Sports Programme" />
-          <Tab label="Exchange Programme" />
+          <Tab label="Sports Programme" sx={{ color: "black" }} />
+          <Tab label="Exchange Programme" sx={{ color: "black" }} />
         </Tabs>
         <TabPanel value={value} index={0}>
           <Grid component={"div"} container spacing={4}>
@@ -75,7 +75,9 @@ const CoCurricularPage = () => {
                     left: 0,
                     width: "100%",
                     height: "100%",
+                    borderRadius: "8px",
                   }}
+                  loading="lazy"
                 />
               </Box>
             </Grid>
@@ -135,7 +137,9 @@ const CoCurricularPage = () => {
                     left: 0,
                     width: "100%",
                     height: "100%",
+                    borderRadius: "8px",
                   }}
+                  loading="lazy"
                 />
               </Box>
             </Grid>
