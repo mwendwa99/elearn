@@ -10,21 +10,21 @@ import {
 export const getClasses = () => async (dispatch) => {
   dispatch(getClassesStart());
 
-  try {
-    const classesRef = collection(db, "classes");
-    const snapshot = await classesRef.get();
+  // try {
+  //   const classesRef = collection(db, "classes");
+  //   const snapshot = await classesRef.get();
 
-    const classes = snapshot.docs.map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data(),
-      };
-    });
+  //   const classes = snapshot.docs.map((doc) => {
+  //     return {
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     };
+  //   });
 
-    dispatch(getClassesSuccess(classes));
-  } catch (error) {
-    dispatch(getClassesFailure(error.message));
-  }
+  //   dispatch(getClassesSuccess(classes));
+  // } catch (error) {
+  //   dispatch(getClassesFailure(error.message));
+  // }
 };
 
 export const addClass = (classData) => async (dispatch) => {

@@ -1,46 +1,72 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  classes: [
+    {
+      title: "Intermediate React",
+      tutor: "Jane Smith",
+      start: new Date("2023-05-01T09:00:00"),
+      end: new Date("2023-05-01T11:00:00"),
+      price: "$75",
+      description:
+        "Build on your React knowledge and create more complex components.",
+    },
+    {
+      title: "Advanced React",
+      tutor: "Bob Johnson",
+      start: new Date("2023-05-15T11:00:00"),
+      end: new Date("2023-05-15T13:00:00"),
+      price: "$100",
+      description:
+        "Take your React skills to the next level and learn about performance optimization.",
+    },
+  ],
+  status: "idle",
+  error: null,
+};
+
+export const getClass = createAsyncThunk("class/getClass", async () => {
+  return initialState;
+});
+
+export const addClass = createAsyncThunk(
+  "class/addClass",
+  async (classData) => {
+    // add toexisting list of classes
+    return classData;
+  }
+);
 
 export const classSlice = createSlice({
   name: "class",
-  initialState: {
-    classes: [],
-    isLoading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    getClassesStart: (state) => {
-      state.isLoading = true;
-    },
-    getClassesSuccess: (state, action) => {
-      state.classes = action.payload;
-      state.isLoading = false;
-      state.error = null;
-    },
-    getClassesFailure: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    addClassStart: (state) => {
-      state.isLoading = true;
-    },
-    addClassSuccess: (state) => {
-      state.isLoading = false;
-      state.error = null;
-    },
-    addClassFailure: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    // add your reducers here
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getClass.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getClass.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.classes = action.payload.classes;
+      })
+      .addCase(getClass.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(addClass.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addClass.fulfilled, (state, action) => {
+        state.classes.push(action.payload);
+      })
+      .addCase(addClass.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
-
-export const {
-  getClassesStart,
-  getClassesSuccess,
-  getClassesFailure,
-  addClassStart,
-  addClassSuccess,
-  addClassFailure,
-} = classSlice.actions;
 
 export default classSlice.reducer;

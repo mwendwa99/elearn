@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getClass, addClass } from "../features/classSlice";
 import {
   Card,
   CardContent,
@@ -9,36 +12,18 @@ import {
 
 import Calendar from "../components/Calendar";
 
-const classes = [
-  {
-    title: "Introduction to React",
-    tutor: "John Doe",
-    start: new Date("2023-05-01T09:00:00"),
-    end: new Date("2023-05-01T11:00:00"),
-    price: "$50",
-    description: "Learn the basics of React and build a simple web app.",
-  },
-  {
-    title: "Intermediate React",
-    tutor: "Jane Smith",
-    start: new Date("2023-05-01T09:00:00"),
-    end: new Date("2023-05-01T11:00:00"),
-    price: "$75",
-    description:
-      "Build on your React knowledge and create more complex components.",
-  },
-  {
-    title: "Advanced React",
-    tutor: "Bob Johnson",
-    start: new Date("2023-05-15T11:00:00"),
-    end: new Date("2023-05-15T13:00:00"),
-    price: "$100",
-    description:
-      "Take your React skills to the next level and learn about performance optimization.",
-  },
-];
-
 function ClassList() {
+  const { classes } = useSelector((state) => state.class);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getClass());
+  }, []);
+
+  const handleAddClass = (newClass) => {
+    dispatch(addClass(newClass));
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -55,7 +40,7 @@ function ClassList() {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Calendar classes={classes} />
+        <Calendar onAddClass={handleAddClass} classes={classes} />
       </Grid>
       {classes.map((c, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>

@@ -8,25 +8,35 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
 
-function CalendarComponent({ classes }) {
+function CalendarComponent({ classes, onAddClass }) {
   const [selectedClass, setSelectedClass] = useState(null);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [tutor, setTutor] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSelectEvent = (event) => {
     setSelectedClass(event);
+    setOpen(true);
+  };
+
+  const handleSelectSlot = ({ start, end }) => {
+    setSelectedClass(null);
+    setTitle("");
+    setTutor("");
+    setStart(moment(start).format("YYYY-MM-DDTHH:mm"));
+    setEnd(moment(end).format("YYYY-MM-DDTHH:mm"));
+    setPrice(0);
+    setDescription("");
     setOpen(true);
   };
 
@@ -36,12 +46,15 @@ function CalendarComponent({ classes }) {
   };
 
   const handleAddToSchedule = () => {
-    classes.push({
+    const newClass = {
       title,
       tutor,
       start: new Date(start),
       end: new Date(end),
-    });
+      price,
+      description,
+    };
+    onAddClass(newClass);
     handleClose();
   };
 
@@ -53,9 +66,11 @@ function CalendarComponent({ classes }) {
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
-        style={{ height: 600 }}
+        selectable={true}
+        onSelectSlot={handleSelectSlot}
+        style={{ height: 600, cursor: "pointer", color: "black" }}
       />
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog maxWidth="md" fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Add Class to Schedule</DialogTitle>
         <DialogContent>
           <FormControl fullWidth>
@@ -85,6 +100,22 @@ function CalendarComponent({ classes }) {
               type="datetime-local"
               value={end}
               onChange={(e) => setEnd(e.target.value)}
+            />
+            <TextField
+              margin="dense"
+              label="Price"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              inputProps={{ min: 0 }}
+            />
+            <TextField
+              margin="dense"
+              label="Description"
+              multiline
+              rows={4}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </FormControl>
         </DialogContent>
