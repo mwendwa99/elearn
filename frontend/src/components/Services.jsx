@@ -51,7 +51,7 @@ const tutorWriteUp = {
 // services section
 export default function Services() {
   return (
-    <Box sx={{ padding: "1rem", minHeight: "100vh" }}>
+    <Box sx={{ padding: "1rem" }}>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
         <Grid item xs={12} md={6}>
           <Card>

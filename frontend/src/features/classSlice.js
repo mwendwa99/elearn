@@ -20,6 +20,15 @@ const initialState = {
       description:
         "Take your React skills to the next level and learn about performance optimization.",
     },
+    {
+      title: "French",
+      tutor: "Belmont Smith",
+      start: new Date("2023-04-15T11:00:00"),
+      end: new Date("2023-05-15T13:00:00"),
+      price: "$80",
+      description:
+        "Learn French with a native speaker. We will cover basic grammar and vocabulary.",
+    },
   ],
   status: "idle",
   error: null,

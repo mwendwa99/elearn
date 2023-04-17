@@ -164,7 +164,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                   >
                     <Avatar
                       sx={{
-                        background: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                        background: "#2e9cdb",
                       }}
                     >
                       {displayName

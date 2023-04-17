@@ -1,14 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getClass, addClass } from "../features/classSlice";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Typography,
-  Grid,
-} from "@mui/material";
+import ClassesCarousel from "../components/Carousel";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import Calendar from "../components/Calendar";
 
@@ -42,44 +37,9 @@ function ClassList() {
       <Grid item xs={12}>
         <Calendar onAddClass={handleAddClass} classes={classes} />
       </Grid>
-      {classes.map((c, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index}>
-          <Card sx={{ maxWidth: 500, mb: 2 }}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {c.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Tutor:{c.tutor}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Starts: {/* {c.start} {c.time} */}
-                {c.start.toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }) +
-                  " " +
-                  c.start.toLocaleTimeString("en-US", {
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                  })}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Price: {c.price}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {c.description}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Add to Schedule</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
+      <Grid item xs={12}>
+        <ClassesCarousel classes={classes} />
+      </Grid>
     </Grid>
   );
 }

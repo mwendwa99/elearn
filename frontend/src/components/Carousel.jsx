@@ -5,30 +5,7 @@ import Card from "./Card";
 
 register();
 
-const cardArray = [
-  {
-    id: 1,
-    component: <Card />,
-  },
-  {
-    id: 2,
-    component: <Card />,
-  },
-  {
-    id: 3,
-    component: <Card />,
-  },
-  {
-    id: 4,
-    component: <Card />,
-  },
-  {
-    id: 5,
-    component: <Card />,
-  },
-];
-
-export default function Slider() {
+export default function Slider({ classes }) {
   const swiperElRef = useRef(null);
 
   useEffect(() => {
@@ -55,8 +32,16 @@ export default function Slider() {
       delay="2000"
       autoHeight="true"
     >
-      {cardArray.map((card) => (
-        <swiper-slide key={card.id}>{card.component}</swiper-slide>
+      {classes.map((c, index) => (
+        <swiper-slide key={index}>
+          <Card
+            title={c.title}
+            tutor={c.tutor}
+            start={c.start}
+            price={c.price}
+            description={c.description}
+          />
+        </swiper-slide>
       ))}
     </swiper-container>
   );

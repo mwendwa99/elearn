@@ -1,12 +1,27 @@
-import React from "react";
-import { Grid, Typography, Button, Stack } from "@mui/material";
+import { useEffect } from "react";
+
 import { Link as RouterLink } from "react-router-dom";
-// import students from "../assets";
+import { useDispatch, useSelector } from "react-redux";
+
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+
+import { getClass } from "../features/classSlice";
+
 import students from "../assets/students.webp";
 import Services from "../components/Services";
-import Classes from "../components/Carousel";
+import ClassesCarousel from "../components/Carousel";
 
 export default function Landing() {
+  const { classes } = useSelector((state) => state.class);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getClass());
+  }, [dispatch]);
+
   return (
     <>
       <Grid
@@ -83,7 +98,7 @@ export default function Landing() {
             Let's join our famous class, the knowledge provided will definitely
             be useful for you.
           </Typography>
-          <Classes />
+          <ClassesCarousel classes={classes} />
         </Grid>
       </Grid>
     </>

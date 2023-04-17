@@ -1,4 +1,5 @@
-import * as React from "react";
+import { Link as RouterLink } from "react-router-dom";
+
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,28 +9,54 @@ import Typography from "@mui/material/Typography";
 
 import online from "../assets/online.webp";
 
-export default function MediaCard() {
+export default function MediaCard({ title, tutor, start, price, description }) {
+  // check if current page is the landing page
+  const isLandingPage = window.location.pathname === "/";
+
   return (
-    <Card
-      elevation={0}
-      sx={{
-        maxWidth: 345,
-        boxShadow: `0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)`,
-      }}
-    >
-      <CardMedia sx={{ height: 140 }} image={online} title="green iguana" />
+    <Card sx={{ maxWidth: 500, mb: 2 }}>
       <CardContent>
+        <CardMedia
+          component="img"
+          height="100%"
+          image={online}
+          alt="Online Learning"
+          sx={{ objectFit: "cover", borderRadius: "8px" }}
+        />
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          Tutor:{tutor}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Starts: {/* {start} {time} */}
+          {start.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }) +
+            " " +
+            start.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+            })}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Price: {price}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        {isLandingPage ? (
+          <Button component={RouterLink} to="start_learning" size="small">
+            learn more
+          </Button>
+        ) : null}
       </CardActions>
     </Card>
   );

@@ -17,8 +17,10 @@ const SubjectSelect = () => {
         id="subject-select"
         label="Subject"
       >
-        {subjects.map((subject) => (
-          <MenuItem value={subject}>{subject}</MenuItem>
+        {subjects.map((subject, index) => (
+          <MenuItem key={index} value={subject}>
+            {subject}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
