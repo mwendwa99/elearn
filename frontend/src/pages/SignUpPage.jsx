@@ -65,12 +65,20 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    //   lName: data.get("lastName"),
+    //   fname: data.get("firstName"),
+    //   type: radioValue,
+    //   country: selectedCountry.code,
+    // });
     dispatch(
       registerUser(
         data.get("email"),
         data.get("password"),
-        data.get("firstName"),
         data.get("lastName"),
+        data.get("firstName"),
         radioValue,
         selectedCountry.code
       )

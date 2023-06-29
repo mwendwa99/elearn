@@ -167,10 +167,10 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                         background: "#2e9cdb",
                       }}
                     >
-                      {displayName
+                      {/* {displayName
                         .split(" ")
                         .map((name) => name[0].toUpperCase())
-                        .join("")}
+                        .join("")} */}
                     </Avatar>
                   </IconButton>
                   <Menu

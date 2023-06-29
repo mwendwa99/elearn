@@ -2,6 +2,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import axios from "axios";
 
@@ -13,24 +14,55 @@ import {
   clearUser,
   clearError,
 } from "../features/authSlice";
-import { auth } from "../firebase";
+import { auth, storage, db } from "../firebase";
+import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-// Create async action to register a user
 export const registerUser =
-  (email, password, firstName, lastName, type, country) => async (dispatch) => {
+  (email, password, lastName, firstName, type, country, photoURL) =>
+  async (dispatch) => {
     try {
-      dispatch(setLoading(true));
-      const response = await axios.post("http://localhost:3000/signup/users", {
+      // Register user with email and password
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
         email,
-        password,
-        firstName,
+        password
+      );
+
+      // Get user ID
+      const userId = user.uid;
+
+      // // Upload profile image to Firebase Storage
+      // const storageRef = ref(storage, `users/${userId}/${profileImage.name}`);
+      // await uploadString(storageRef, profileImage, "data_url");
+
+      // // Get the download URL of the uploaded image
+      // const downloadURL = await getDownloadURL(storageRef);
+
+      // Save user details to Firestore
+      const userDocRef = doc(db, "users", userId);
+      await setDoc(userDocRef, {
         lastName,
-        country,
+        firstName,
+        email,
         type,
+        country,
+        photoURL: photoURL || null,
+        displayName: `${firstName} ${lastName}`,
+        createdAt: Timestamp.fromDate(new Date()),
       });
-      dispatch(setUser(response.data.user));
+
+      // Dispatch any additional actions or update state as needed
+      dispatch(setUser(user.uid));
+
+      // Return success or any relevant data
+      return { success: true };
     } catch (error) {
-      dispatch(setError(error.message));
+      // Handle and log any errors
+      console.error("Error registering user:", error);
+
+      // Return failure or any relevant data
+      return { success: false, error: error.message };
     }
   };
 
@@ -65,8 +97,12 @@ export const getCurrentUser = () => async (dispatch) => {
 export const getUserProfile = (uid) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const response = await axios.get(`http://localhost:3000/user/${uid}`);
-    dispatch(setUserProfile(response.data));
+    // const response = await axios.get(`http://localhost:3000/user/${uid}`);
+    // const response = auth.currentUser;
+    const userDocRef = doc(db, "users", uid);
+    const userDoc = await getDoc(userDocRef);
+    const response = userDoc.data();
+    dispatch(setUserProfile(response));
   } catch (error) {
     dispatch(setError(error.message));
   } finally {
@@ -86,7 +122,7 @@ export const logoutUser = () => async (dispatch) => {
 };
 
 export const updateUserProfile =
-  ({ firstName, lastName, country, type }) =>
+  ({ email, password, lastName, firstName, type, country, photoURL }) =>
   async (dispatch, getState) => {
     try {
       dispatch(setLoading(true));

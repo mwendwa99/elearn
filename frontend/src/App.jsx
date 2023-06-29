@@ -18,6 +18,7 @@ const Cohort = lazy(() => import("./pages/CohortPage"));
 const Tutor = lazy(() => import("./pages/TutorPage"));
 const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
 const StartLearning = lazy(() => import("./pages/StartLearningPage"));
+const Classroom = lazy(() => import("./pages/ClassroomPage"));
 const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         <Route exact path="/tutoring" element={<Tutor />} />
         <Route exact path="/co-curricular" element={<CocCurricular />} />
         <Route exact path="/start_learning" element={<StartLearning />} />
+        <Route exact path="/classroom" element={<Classroom />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />

@@ -7,11 +7,13 @@ import { Edit } from "@mui/icons-material";
 
 const ProfilePage = ({ uid }) => {
   const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.auth.userProfile);
+  const { userProfile } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getUserProfile(uid));
-  }, [dispatch, uid]);
+  }, [dispatch]);
+
+  console.log("profile", userProfile);
 
   return (
     <Paper sx={{ p: 4 }}>
@@ -29,10 +31,9 @@ const ProfilePage = ({ uid }) => {
           <Avatar
             sx={{ width: 200, height: 200 }}
             alt={userProfile?.displayName}
-            src={userProfile?.photoUrl}
+            src={userProfile?.profileUrl}
           >
             <Typography variant="h1">
-              {/* get every first letter and join both */}
               {userProfile?.displayName
                 .split(" ")
                 .map((name) => name[0].toUpperCase())
@@ -59,11 +60,10 @@ const ProfilePage = ({ uid }) => {
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
             Country:{" "}
-            {userProfile?.customClaims.country ||
-              "No Country Information Available."}
+            {userProfile?.country || "No Country Information Available."}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
-            Registered as: {userProfile?.customClaims.type || "Anonymous"}
+            Registered as: {userProfile?.type || "Anonymous"}
           </Typography>
           <Button variant="contained" startIcon={<Edit />} sx={{ mb: 2 }}>
             Edit Profile
