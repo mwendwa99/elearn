@@ -26,7 +26,6 @@ function App() {
   const user = useSelector((state) => state.auth.currentUser);
   const [displayName, setDisplayName] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -43,12 +42,6 @@ function App() {
   useEffect(() => {
     if (user) {
       setDisplayName(user.displayName);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      setUserId(user.uid);
     }
   }, [user]);
 
@@ -72,7 +65,7 @@ function App() {
         <Route exact path="/" element={<Landing />} />
         <Route exact path="/signin" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/profile" element={<Profile uid={userId} />} />
+        <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />
         <Route exact path="/tutoring" element={<Tutor />} />

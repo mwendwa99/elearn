@@ -40,7 +40,7 @@ export default function UseRadioGroup(props) {
     <RadioGroup
       row
       name="use-radio-group"
-      defaultValue="student"
+      defaultValue={props.defaultValue ? props.defaultValue : "student"}
       onChange={handleChange}
     >
       <MyFormControlLabel value="student" label="Student" control={<Radio />} />
