@@ -11,8 +11,8 @@ const Footer = () => {
               About Us
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
-              The Nexus School is a leading global online school that provides
-              students with an excellent education, regardless of their
+              The Starry Dreams School is a leading global online school that
+              provides students with an excellent education, regardless of their
               location. We aim to create a platform that enables parents and
               students to receive proper educational guidance from the comfort
               of their homes.
@@ -65,7 +65,7 @@ const Footer = () => {
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
-                  href="https://twitter.com/nexusschool"
+                  href="https://twitter.com/StarryDreamsschool"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -75,7 +75,7 @@ const Footer = () => {
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
-                  href="https://www.facebook.com/nexusschool"
+                  href="https://www.facebook.com/StarryDreamsschool"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -85,7 +85,7 @@ const Footer = () => {
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
-                  href="https://www.linkedin.com/company/nexus-school"
+                  href="https://www.linkedin.com/company/StarryDreams-school"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -95,7 +95,7 @@ const Footer = () => {
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
-                  href="https://www.instagram.com/nexusschool"
+                  href="https://www.instagram.com/StarryDreamsschool"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -107,7 +107,8 @@ const Footer = () => {
         </Grid>
         <Box mt={4}>
           <Typography variant="body2" align="center">
-            © {new Date().getFullYear()} The Nexus School. All rights reserved.
+            © {new Date().getFullYear()} The Starry Dreams School. All rights
+            reserved.
           </Typography>
         </Box>
       </Container>

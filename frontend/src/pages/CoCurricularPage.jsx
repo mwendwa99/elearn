@@ -22,7 +22,7 @@ const CoCurricularPage = () => {
         Co-curricular Development
       </Typography>
       <Typography sx={{ color: "text.secondary" }}>
-        Nexus Academy provides a variety of opportunities for students to
+        Starry Dreams provides a variety of opportunities for students to
         explore their interests and develop their skills outside of the
         classroom.
       </Typography>
@@ -46,10 +46,11 @@ const CoCurricularPage = () => {
             >
               <div>
                 <Typography variant="body1" color="text.secondary" gutterBottom>
-                  At Nexus Academy, we believe that physical fitness is an
-                  important aspect of overall well-being. Our sports programme
-                  provides opportunities for students to stay active and healthy
-                  while developing teamwork and sportsmanship skills.
+                  At Starry Dreams Academy, we believe that physical fitness is
+                  an important aspect of overall well-being. Our sports
+                  programme provides opportunities for students to stay active
+                  and healthy while developing teamwork and sportsmanship
+                  skills.
                 </Typography>
               </div>
               <div style={{ alignSelf: "flex-start", mt: 2 }}>
@@ -97,11 +98,12 @@ const CoCurricularPage = () => {
             >
               <div>
                 <Typography variant="body1" color="text.secondary">
-                  Nexus Academy is proud to partner with Solidrock Academy in
-                  the UK to offer exchange programmes for our students. This
-                  programme provides an opportunity for students to travel to
-                  the UK for Easter and summer camps, and experience a new
-                  culture while developing their skills and making new friends.
+                  Starry Dreams Academy is proud to partner with Solidrock
+                  Academy in the UK to offer exchange programmes for our
+                  students. This programme provides an opportunity for students
+                  to travel to the UK for Easter and summer camps, and
+                  experience a new culture while developing their skills and
+                  making new friends.
                 </Typography>
                 <Typography color="text.secondary" sx={{ mt: 2 }}>
                   Our partnership with Solidrock Academy ensures that students

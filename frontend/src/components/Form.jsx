@@ -28,7 +28,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Nexus School
+        Starry Dreams
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -37,7 +37,14 @@ function Copyright(props) {
 }
 
 const Form = ({
-  handleSubmit,
+  firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword,
+  country,
+  handleUpdateProfile,
+  handleSignup,
   handleRadioChange,
   handleCountryChange,
   isLoading,
@@ -45,6 +52,8 @@ const Form = ({
   type,
 }) => {
   const location = useLocation();
+
+  // console.log("email", email);
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +90,11 @@ const Form = ({
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={
+              location.pathname === "/signup"
+                ? handleSignup
+                : handleUpdateProfile
+            }
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -93,6 +106,7 @@ const Form = ({
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  defaultValue={firstName ? firstName : ""}
                   autoFocus
                 />
               </Grid>
@@ -104,6 +118,7 @@ const Form = ({
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  defaultValue={lastName ? lastName : ""}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -114,31 +129,86 @@ const Form = ({
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  defaultValue={email ? email : ""}
                 />
               </Grid>
+              {
+                // if location is signup then show password field
+                location.pathname === "/signup" && (
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        defaultValue={password ? password : ""}
+                        disabled={
+                          location.pathname === "/profile" ? true : false
+                        }
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="new-password"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        defaultValue={confirmPassword ? confirmPassword : ""}
+                        disabled={
+                          location.pathname === "/profile" ? true : false
+                        }
+                        required
+                        fullWidth
+                        name="confirm_password"
+                        label="Confirm Password"
+                        type="password"
+                        id="confirm_password"
+                        autoComplete="confirm-password"
+                      />
+                    </Grid>
+                  </>
+                )
+              }
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                {location.pathname === "/signup" ? (
+                  <>
+                    <Typography variant="body1" gutterBottom>
+                      Who are you:
+                    </Typography>
+                    <RadioButton onChange={handleRadioChange} options={type} />
+                  </>
+                ) : (
+                  <TextField
+                    label="type"
+                    disabled
+                    fullWidth
+                    defaultValue={type}
+                  />
+                )}
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" gutterBottom>
-                  Who are you:
-                </Typography>
-                <RadioButton onChange={handleRadioChange} options={type} />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" gutterBottom>
-                  Please select country of origin
-                </Typography>
-                <CountrySelector onCountryChange={handleCountryChange} />
-              </Grid>
+              {location.pathname === "/signup" && (
+                <Grid item xs={12}>
+                  <Typography variant="body1" gutterBottom>
+                    Country of origin
+                  </Typography>
+                  <CountrySelector onCountryChange={handleCountryChange} />
+                </Grid>
+              )}
+              {location.pathname === "/profile" && (
+                <Grid item xs={12}>
+                  <TextField
+                    defaultValue={country ? country : ""}
+                    disabled
+                    required
+                    fullWidth
+                    name="country"
+                    label="Country of origin"
+                    type="text"
+                    id="country"
+                    autoComplete="country"
+                  />
+                </Grid>
+              )}
             </Grid>
             <Button
               type="submit"
@@ -148,22 +218,26 @@ const Form = ({
             >
               {isLoading ? (
                 <CircularProgress size={20} sx={{ color: "white" }} />
-              ) : (
+              ) : location.pathname === "/signup" ? (
                 "Sign Up"
+              ) : (
+                "Update"
               )}
             </Button>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <Typography
-                  color="secondary"
-                  variant="body1"
-                  component={Link}
-                  to="/signin"
-                >
-                  Already have an account? Sign in
-                </Typography>
+            {location.pathname === "/signup" && (
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Typography
+                    color="secondary"
+                    variant="body1"
+                    component={Link}
+                    to="/signin"
+                  >
+                    Already have an account? Sign in
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
+            )}
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

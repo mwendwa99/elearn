@@ -4,7 +4,7 @@ const AboutPage = () => {
   return (
     <Container sx={{ py: 8 }}>
       <Typography color="primary" variant="h4" align="center" gutterBottom>
-        About Nexus School
+        About Starry Dreams School
       </Typography>
       <Typography
         color="text.secondary"
@@ -24,13 +24,13 @@ const AboutPage = () => {
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            At The Nexus School, our mission is to provide high-quality academic
-            and extra-curricular learning opportunities to students worldwide,
-            catering to multiple curriculums. Through our online platform, we
-            aim to create a global community of learners who can socialize and
-            learn from each other. We strive to offer flexible, accessible, and
-            personalized education that enables students to reach their full
-            potential.
+            At The Starry Dreams School, our mission is to provide high-quality
+            academic and extra-curricular learning opportunities to students
+            worldwide, catering to multiple curriculums. Through our online
+            platform, we aim to create a global community of learners who can
+            socialize and learn from each other. We strive to offer flexible,
+            accessible, and personalized education that enables students to
+            reach their full potential.
           </Typography>
           <Typography color="primary" variant="body1" sx={{ fontWeight: 600 }}>
             Vision Statement
@@ -40,8 +40,8 @@ const AboutPage = () => {
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            Our vision at The Nexus School is to become a leading global online
-            school that provides students with an excellent education,
+            Our vision at The Starry Dreams School is to become a leading global
+            online school that provides students with an excellent education,
             regardless of their location. We envision a world where every
             student has access to high-quality education that is tailored to
             their needs, interests, and learning styles. We aim to create a

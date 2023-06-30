@@ -45,7 +45,7 @@ export default function SignUp() {
     // do something with the selected country
   };
 
-  const handleSubmit = (event) => {
+  const handleSignUp = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     dispatch(
@@ -62,7 +62,7 @@ export default function SignUp() {
 
   return (
     <Form
-      handleSubmit={handleSubmit}
+      handleSignUp={handleSignUp}
       handleRadioChange={handleRadioChange}
       handleCountryChange={handleCountryChange}
       isLoading={isLoading}

@@ -23,7 +23,7 @@ function ClassList() {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography color="primary" variant="h4" align="center" gutterBottom>
-          Nexus Classroom
+          Starry Dreams Classroom
         </Typography>
         <Typography
           color="text.secondary"

@@ -18,14 +18,15 @@ const CohortStudies = () => {
       <Grid container sx={{ mt: 6 }}>
         <Grid item xs={12} md={6} sx={{ p: 2 }}>
           <Typography color="primary" variant="h5" gutterBottom>
-            Joining a Cohort at The Nexus School
+            Joining a Cohort at The Starry Dreams School
           </Typography>
           <Typography color="text.secondary" variant="body1" gutterBottom>
-            Joining a cohort at The Nexus School can be an excellent way to
-            enhance your learning experience. Our cohort studies allow students
-            to be part of a group of learners in the same level, providing a
-            supportive learning environment where they can grow through group
-            discussions, share their ideas and gain insights from their peers.
+            Joining a cohort at The Starry Dreams School can be an excellent way
+            to enhance your learning experience. Our cohort studies allow
+            students to be part of a group of learners in the same level,
+            providing a supportive learning environment where they can grow
+            through group discussions, share their ideas and gain insights from
+            their peers.
           </Typography>
           <Typography color="text.secondary" variant="body1" gutterBottom>
             By working with a consistent group of students, students can build
@@ -36,12 +37,12 @@ const CohortStudies = () => {
             to meet the specific needs of the group.
           </Typography>
           <Typography color="text.secondary" variant="body1" gutterBottom>
-            Joining a cohort at The Nexus School is an investment in your
-            academic and personal growth that can yield lifelong benefits. With
-            increased motivation, exposure to diverse ideas and perspectives,
-            improved critical thinking, and enhanced social and emotional
-            skills, students will be better prepared for success in all areas of
-            their lives.
+            Joining a cohort at The Starry Dreams School is an investment in
+            your academic and personal growth that can yield lifelong benefits.
+            With increased motivation, exposure to diverse ideas and
+            perspectives, improved critical thinking, and enhanced social and
+            emotional skills, students will be better prepared for success in
+            all areas of their lives.
           </Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ p: 2 }}>

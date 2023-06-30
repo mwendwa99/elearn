@@ -17,6 +17,7 @@ import Form from "../components/Form";
 
 const ProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [modalData, setModalData] = useState({
     firstName: "",
     lastName: "",
@@ -41,7 +42,28 @@ const ProfilePage = () => {
     setOpenModal(false);
   };
 
-  console.log("modalData", modalData);
+  const handleUpdateProfile = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+      lastName: data.get("lastName"),
+      firstName: data.get("firstName"),
+    });
+    // dispatch(
+    //   registerUser(
+    //     data.get("email"),
+    //     data.get("password"),
+    //     data.get("lastName"),
+    //     data.get("firstName"),
+    //     radioValue,
+    //     selectedCountry.code
+    //   )
+    // );
+  };
+
+  console.log("userProfile", userProfile);
 
   const handleSaveChanges = () => {
     if (
@@ -65,18 +87,22 @@ const ProfilePage = () => {
   return (
     <Paper sx={{ p: 4 }}>
       <Modal
-        firstName={userProfile?.firstName}
-        lastName={userProfile?.lastName}
-        country={userProfile?.country}
-        email={userProfile?.email}
-        type={userProfile?.type}
         modalData={modalData}
         setModalData={setModalData}
         handleSaveChanges={handleSaveChanges}
         open={openModal}
         onClose={handleModalClose}
       >
-        <Form />
+        <Form
+          firstName={userProfile?.firstName}
+          lastName={userProfile?.lastName}
+          country={userProfile?.country}
+          email={userProfile?.email}
+          type={userProfile?.type}
+          password={userProfile?.password}
+          confirmPassword={confirmPassword}
+          handleUpdateProfile={handleUpdateProfile}
+        />
         {/* <div style={{ height: "500px" }}>This is child</div> */}
       </Modal>
       <Grid container spacing={4}>
