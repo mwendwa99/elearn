@@ -66,6 +66,36 @@ export const registerUser =
     }
   };
 
+// Action to update user profile, document, and password
+export const updateUserProfileAndPassword = async (
+  uid,
+  profileData,
+  newPassword
+) => {
+  try {
+    const auth = getAuth();
+    const firestore = getFirestore();
+
+    // Update user profile
+    await updateDoc(doc(firestore, "users", uid), profileData);
+
+    // Update document in the collection
+    await updateDoc(doc(firestore, "user_documents", uid), {
+      ...profileData,
+    });
+
+    // Update user password
+    const user = auth.currentUser;
+    await updatePassword(user, newPassword);
+
+    // Return success response if needed
+    // return { success: true };
+  } catch (error) {
+    // Return error response if needed
+    // return { success: false, error };
+  }
+};
+
 // Create async action to log in a user
 export const loginUser = (email, password) => async (dispatch) => {
   try {
