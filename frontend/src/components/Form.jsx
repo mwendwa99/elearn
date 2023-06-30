@@ -50,6 +50,7 @@ const Form = ({
   isLoading,
   error,
   type,
+  formError,
 }) => {
   const location = useLocation();
 
@@ -91,16 +92,15 @@ const Form = ({
             component="form"
             noValidate
             onSubmit={
-              location.pathname === "/signup"
-                ? handleSignup
-                : handleUpdateProfile
+              location.pathname === "/profile"
+                ? handleUpdateProfile
+                : handleSignup
             }
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
@@ -108,6 +108,8 @@ const Form = ({
                   label="First Name"
                   defaultValue={firstName ? firstName : ""}
                   autoFocus
+                  error={formError.firstName ? true : false}
+                  helperText={formError.firstName ? formError.firstName : ""}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -117,8 +119,9 @@ const Form = ({
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
                   defaultValue={lastName ? lastName : ""}
+                  error={formError.lastName ? true : false}
+                  helperText={formError.lastName ? formError.lastName : ""}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,42 +131,43 @@ const Form = ({
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
                   defaultValue={email ? email : ""}
+                  error={formError.email ? true : false}
+                  helperText={formError.email ? formError.email : ""}
                 />
               </Grid>
               {
                 // if location is signup then show password field
-                location.pathname === "/signup" && (
+                location.pathname !== "/signup" && (
                   <>
                     <Grid item xs={12}>
                       <TextField
                         required
                         fullWidth
                         defaultValue={password ? password : ""}
-                        disabled={
-                          location.pathname === "/profile" ? true : false
-                        }
                         name="password"
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="new-password"
+                        error={formError.password ? true : false}
+                        helperText={
+                          formError.password ? formError.password : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         defaultValue={confirmPassword ? confirmPassword : ""}
-                        disabled={
-                          location.pathname === "/profile" ? true : false
-                        }
                         required
                         fullWidth
-                        name="confirm_password"
+                        name="confirmPassword"
                         label="Confirm Password"
                         type="password"
-                        id="confirm_password"
-                        autoComplete="confirm-password"
+                        id="confirmPassword"
+                        error={formError.password ? true : false}
+                        helperText={
+                          formError.password ? formError.password : ""
+                        }
                       />
                     </Grid>
                   </>
@@ -171,12 +175,19 @@ const Form = ({
               }
               <Grid item xs={12}>
                 {location.pathname === "/signup" ? (
-                  <>
+                  <Stack direction="column">
                     <Typography variant="body1" gutterBottom>
                       Who are you:
                     </Typography>
-                    <RadioButton onChange={handleRadioChange} options={type} />
-                  </>
+                    <RadioButton
+                      error={formError.firstName ? true : false}
+                      helperText={
+                        formError.firstName ? formError.firstName : ""
+                      }
+                      onChange={handleRadioChange}
+                      options={type}
+                    />
+                  </Stack>
                 ) : (
                   <TextField
                     label="type"
@@ -205,7 +216,6 @@ const Form = ({
                     label="Country of origin"
                     type="text"
                     id="country"
-                    autoComplete="country"
                   />
                 </Grid>
               )}

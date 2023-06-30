@@ -42,6 +42,7 @@ export default function UseRadioGroup(props) {
       name="use-radio-group"
       defaultValue={props.defaultValue ? props.defaultValue : "student"}
       onChange={handleChange}
+      aria-required="true"
     >
       <MyFormControlLabel value="student" label="Student" control={<Radio />} />
       <MyFormControlLabel value="tutor" label="Tutor" control={<Radio />} />

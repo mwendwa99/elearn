@@ -18,15 +18,29 @@ import Form from "../components/Form";
 const ProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [modalData, setModalData] = useState({
+  const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    // password: "",
+    confirmPassword: "",
     country: "",
     type: "",
-    profileUrl: "",
+    displayName: "",
+    photoURL: "",
+    updatedAt: null,
+  });
+  const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState({
+    name: "",
+    email: "",
+    password: "",
+    country: "",
+    type: "",
   });
   const dispatch = useDispatch();
+
+  const profilePassword = "";
   const { userProfile, currentUser, isLoading } = useSelector(
     (state) => state.auth
   );
@@ -40,17 +54,99 @@ const ProfilePage = () => {
   const handleModalClose = () => {
     // Close the modal
     setOpenModal(false);
+    setFormError("");
   };
 
   const handleUpdateProfile = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      lastName: data.get("lastName"),
-      firstName: data.get("firstName"),
-    });
+
+    // ensure every field is filled
+    if (!data.get("firstName")) {
+      setFormError({
+        ...formError,
+        firstName: "Please fill in first name",
+      });
+    } else if (!data.get("lastName")) {
+      setFormError({
+        ...formError,
+        lastName: "Please fill in last name",
+      });
+    } else if (!data.get("email")) {
+      setFormError({
+        ...formError,
+        email: "Please fill in email field",
+      });
+    } else if (!data.get("password")) {
+      setFormError({
+        ...formError,
+        password: "Please fill in password field",
+      });
+    } else if (!data.get("confirmPassword")) {
+      setFormError({
+        ...formError,
+        password: "Please fill in confirm password field",
+      });
+    }
+    if (data.get("password") !== data.get("confirmPassword")) {
+      setFormError({
+        ...formError,
+        password: "Passwords do not match",
+      });
+    } else {
+      setFormError({
+        ...formError,
+        password: "",
+      });
+    }
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    //   lastName: data.get("lastName"),
+    //   firstName: data.get("firstName"),
+    //   country: userProfile?.country,
+    //   type: userProfile?.type,
+    // });
+
+    console.log("formError", formError);
+
+    // if there are no errors in the form update the profileData object
+    if (!formError) {
+      setProfileData(() => ({
+        ...profileData,
+        email: data.get("email"),
+        // password: data.get("password"),
+        lastName: data.get("lastName"),
+        firstName: data.get("firstName"),
+        country: userProfile?.country,
+        type: userProfile?.type,
+        displayName: `${data.get("firstName")} ${data.get("lastName")}`,
+        photoURL: "",
+        updatedAt: new Date(),
+      }));
+
+      setPassword(data.get("password"));
+
+      // profileData.email = data.get("email");
+      // // profileData.password = data.get("password");
+      // profilePassword = data.get("password");
+      // profileData.lastName = data.get("lastName");
+      // profileData.firstName = data.get("firstName");
+      // profileData.country = userProfile?.country;
+      // profileData.type = userProfile?.type;
+      // profileData.displayName = `${data.get("firstName")} ${data.get(
+      //   "lastName"
+      // )}`;
+      // profileData.photoURL = "";
+      // profileData.updatedAt = new Date();
+    }
+    // console.log({
+    //   id: currentUser.uid,
+    //   profDataObj: profileData,
+    //   password: data.get("password"),
+    // });
+    // dispatch(updateUserProfile(currentUser.uid, profileData));
+
     // dispatch(
     //   registerUser(
     //     data.get("email"),
@@ -63,33 +159,20 @@ const ProfilePage = () => {
     // );
   };
 
-  console.log("userProfile", userProfile);
+  console.log("ss", {
+    id: currentUser.uid,
+    profDataObj: profileData,
+    password: password,
+  });
 
-  const handleSaveChanges = () => {
-    if (
-      !modalData.firstName ||
-      !modalData.lastName ||
-      !modalData.email ||
-      !modalData.country ||
-      !modalData.type
-    ) {
-      return alert("Please fill all the fields");
-    } else {
-      console.log("modalData", modalData);
-    }
-
-    // Save the changes
-    // dispatch(updateUserProfile(currentUser.uid, modalData));
-    // Close the modal
-    setOpenModal(false);
-  };
+  // console.log("formError", formError);
 
   return (
     <Paper sx={{ p: 4 }}>
       <Modal
-        modalData={modalData}
-        setModalData={setModalData}
-        handleSaveChanges={handleSaveChanges}
+        // modalData={modalData}
+        // setModalData={setModalData}
+        // handleSaveChanges={handleSaveChanges}
         open={openModal}
         onClose={handleModalClose}
       >
@@ -102,6 +185,7 @@ const ProfilePage = () => {
           password={userProfile?.password}
           confirmPassword={confirmPassword}
           handleUpdateProfile={handleUpdateProfile}
+          formError={formError}
         />
         {/* <div style={{ height: "500px" }}>This is child</div> */}
       </Modal>
