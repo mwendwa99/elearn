@@ -38,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VerticalTabs() {
+export default function VerticalTabs({ sideTabs, children }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -62,16 +62,19 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: "divider" }}
       >
-        <Tab label="Item One" {...a11yProps(0)} />
+        {sideTabs.map((tab, index) => (
+          <Tab label={tab.label} {...a11yProps(index)} />
+        ))}
+        {/* <Tab label="Item One " {...a11yProps(0)} />
         <Tab label="Item Two" {...a11yProps(1)} />
         <Tab label="Item Three" {...a11yProps(2)} />
         <Tab label="Item Four" {...a11yProps(3)} />
         <Tab label="Item Five" {...a11yProps(4)} />
         <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
+        <Tab label="Item Seven" {...a11yProps(6)} /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
-        Item One
+        {children}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
