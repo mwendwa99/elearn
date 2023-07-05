@@ -201,19 +201,19 @@ function ResponsiveAppBar({ isAuth, displayName }) {
               )}
               {!isAuth && (
                 <Stack direction="row" spacing={2}>
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     component={RouterLink}
                     to="/signin"
                   >
                     Login
-                  </Button>
+                  </Button> */}
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     component={RouterLink}
-                    to="/signup"
+                    to="/signin"
                   >
-                    Signup
+                    Signin
                   </Button>
                 </Stack>
               )}

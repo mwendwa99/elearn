@@ -10,8 +10,8 @@ import Footer from "./components/Footer";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
-const SignIn = lazy(() => import("./pages/SignInPage"));
-const SignUp = lazy(() => import("./pages/SignUpPage"));
+const AccountSignin = lazy(() => import("./pages/AccountSignin"));
+// const SignUp = lazy(() => import("./pages/SignUpPage"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
@@ -63,8 +63,8 @@ function App() {
       <Appbar isAuth={isAuthenticated} displayName={displayName} />
       <Routes>
         <Route exact path="/" element={<Landing />} />
-        <Route exact path="/signin" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/signin" element={<AccountSignin />} />
+        {/* <Route exact path="/signup" element={<SignUp />} /> */}
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/cohort" element={<Cohort />} />

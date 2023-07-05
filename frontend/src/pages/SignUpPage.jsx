@@ -1,27 +1,11 @@
 import * as React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../actions/authActions";
+import { signInWithGoogle } from "../actions/authActions";
 
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CircularProgress from "@mui/material/CircularProgress";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import RadioButton from "../components/RadioButton";
-import CountrySelector from "../components/CountrySelector";
 import Form from "../components/Form";
 
 const type = ["Tutor", "Student"];
-
-const theme = createTheme();
 
 export default function SignUp() {
   const { isLoading, error, currentUser } = useSelector((state) => state.auth);
@@ -32,11 +16,17 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // React.useEffect(() => {
-  //   if (currentUser) {
-  //     return navigate("/");
-  //   }
-  // }, [currentUser]);
+  React.useEffect(() => {
+    if (currentUser) {
+      return navigate("/");
+    }
+  }, [currentUser]);
+
+  React.useEffect(() => {
+    if (error) {
+      setFormError(error);
+    }
+  }, [error]);
 
   const handleRadioChange = (value) => {
     setRadioValue(value);
@@ -64,6 +54,11 @@ export default function SignUp() {
         lastName: data.get("lastName"),
         firstName: data.get("firstName"),
       });
+    }
+
+    // signin with google
+    if (data.get("email") === "" && data.get("password") === "") {
+      dispatch(signInWithGoogle());
     }
 
     // console.log(formError);

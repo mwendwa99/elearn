@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -53,6 +54,15 @@ const Form = ({
   formError,
 }) => {
   const location = useLocation();
+
+  const [formData, setFormData] = useState({
+    firstName: firstName ? firstName : "",
+    lastName: lastName ? lastName : "",
+    email: email ? email : "",
+    password: password ? password : "",
+    confirmPassword: confirmPassword ? confirmPassword : "",
+    country: country ? country : "",
+  });
 
   // console.log("email", email);
 
@@ -106,7 +116,8 @@ const Form = ({
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  defaultValue={firstName ? firstName : ""}
+                  defaultValue={formData.firstName}
+                  // defaultValue={firstName ? firstName : ""}
                   autoFocus
                   error={formError.firstName ? true : false}
                   helperText={formError.firstName ? formError.firstName : ""}
@@ -131,48 +142,41 @@ const Form = ({
                   id="email"
                   label="Email Address"
                   name="email"
-                  defaultValue={email ? email : ""}
+                  // defaultValue={email ? email : ""}
+                  defaultValue={formData.email}
                   error={formError.email ? true : false}
                   helperText={formError.email ? formError.email : ""}
                 />
               </Grid>
-              {
-                // if location is signup then show password field
-                location.pathname !== "/signup" && (
-                  <>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        defaultValue={password ? password : ""}
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        error={formError.password ? true : false}
-                        helperText={
-                          formError.password ? formError.password : ""
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        defaultValue={confirmPassword ? confirmPassword : ""}
-                        required
-                        fullWidth
-                        name="confirmPassword"
-                        label="Confirm Password"
-                        type="password"
-                        id="confirmPassword"
-                        error={formError.password ? true : false}
-                        helperText={
-                          formError.password ? formError.password : ""
-                        }
-                      />
-                    </Grid>
-                  </>
-                )
-              }
+
+              <Grid item xs={12}>
+                <TextField
+                  required={location.pathname === "/profile" ? false : true}
+                  fullWidth
+                  // defaultValue={password ? password : ""}
+                  // defaultValue={formData.password}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  error={formError.password ? true : false}
+                  helperText={formError.password ? formError.password : ""}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  // defaultValue={confirmPassword ? confirmPassword : ""}
+                  required={location.pathname === "/profile" ? false : true}
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  error={formError.password ? true : false}
+                  helperText={formError.password ? formError.password : ""}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 {location.pathname === "/signup" ? (
                   <Stack direction="column">

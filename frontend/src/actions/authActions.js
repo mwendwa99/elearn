@@ -3,6 +3,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import axios from "axios";
 
@@ -17,6 +19,42 @@ import {
 import { auth, storage, db } from "../firebase";
 import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
+export const signInWithGoogle = () => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+
+    // add user to users collection with document id of user id if not already there
+    const userDocRef = doc(db, "users", userCredential.user.uid);
+    const userDoc = await getDoc(userDocRef);
+    if (!userDoc.exists()) {
+      await setDoc(userDocRef, {
+        lastName: userCredential.user.displayName.split(" ")[1] || "",
+        firstName: userCredential.user.displayName.split(" ")[0],
+        email: userCredential.user.email,
+        type: "",
+        country: "",
+        photoURL: userCredential.user.photoURL,
+        displayName: userCredential.user.displayName,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
+    }
+
+    // dispatch(setUser(userCredential.user.uid));
+    dispatch(setUser(userCredential.user.uid));
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(
+      setError({
+        code: error.code,
+        message: error.message,
+        origin: "signInWithGoogle",
+      })
+    );
+  }
+};
 
 export const registerUser =
   (email, password, lastName, firstName, type, country, photoURL) =>
