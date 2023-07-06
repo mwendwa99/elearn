@@ -43,7 +43,7 @@ export const signInWithGoogle = () => async (dispatch) => {
     }
 
     // dispatch(setUser(userCredential.user.uid));
-    dispatch(setUser(userCredential.user.uid));
+    dispatch(setUser(userCredential.user));
     dispatch(clearError());
   } catch (error) {
     dispatch(
