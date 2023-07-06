@@ -8,7 +8,7 @@ import VerticalTabs from "../components/VerticalTabs";
 import PersonalInfoCard from "../components/PersonalInfoCard";
 
 const ProfilePage = () => {
-  const { userProfile, currentUser, isLoading } = useSelector(
+  const { userProfile, currentUser, isLoading, error } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const ProfilePage = () => {
         photoURL: currentUser?.photoURL,
       });
     }
-  }, [currentUser, navigate]);
+  }, [currentUser, navigate, userProfile, dispatch]);
 
   const sideTabs = [
     {

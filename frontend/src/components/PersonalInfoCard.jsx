@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
   Typography,
-  TextField,
   Stack,
   Button,
   Grid,
 } from "@mui/material";
+
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../actions/authActions";
 
 import CountrySelector from "./CountrySelector";
 import UserTypeSelector from "./UserTypeSelector";
@@ -22,6 +24,12 @@ const PersonalInfoCard = ({
 }) => {
   const [countryCode, setCountryCode] = useState(country);
   const [editedType, setEditedType] = useState(type);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCountryCode(country);
+    setEditedType(type);
+  }, [country, type, dispatch]);
 
   const handleTypeChange = (value) => {
     setEditedType(value);
@@ -34,11 +42,7 @@ const PersonalInfoCard = ({
   const handleSave = () => {
     // Handle saving the edited fields
     // You can use the updated values in editedType, editedCountry, and editedPhotoURL
-    console.log({
-      uid: uid,
-      type: editedType,
-      country: countryCode,
-    });
+    dispatch(updateUserProfile(uid, editedType, countryCode));
   };
 
   return (

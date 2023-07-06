@@ -1,13 +1,9 @@
 import {
   onAuthStateChanged,
-  signInWithEmailAndPassword,
   signOut,
-  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import axios from "axios";
-
 import {
   setLoading,
   setError,
@@ -16,9 +12,15 @@ import {
   clearUser,
   clearError,
 } from "../features/authSlice";
-import { auth, storage, db } from "../firebase";
-import { doc, setDoc, Timestamp, getDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { auth, db } from "../firebase";
+import {
+  doc,
+  setDoc,
+  Timestamp,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 export const signInWithGoogle = () => async (dispatch) => {
   try {
@@ -39,6 +41,7 @@ export const signInWithGoogle = () => async (dispatch) => {
         photoURL: userCredential.user.photoURL,
         displayName: userCredential.user.displayName,
         createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: serverTimestamp(),
       });
     }
 
@@ -56,97 +59,42 @@ export const signInWithGoogle = () => async (dispatch) => {
   }
 };
 
-export const registerUser =
-  (email, password, lastName, firstName, type, country, photoURL) =>
-  async (dispatch) => {
-    try {
-      // Register user with email and password
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      // Get user ID
-      const userId = user.uid;
-
-      // // Upload profile image to Firebase Storage
-      // const storageRef = ref(storage, `users/${userId}/${profileImage.name}`);
-      // await uploadString(storageRef, profileImage, "data_url");
-
-      // // Get the download URL of the uploaded image
-      // const downloadURL = await getDownloadURL(storageRef);
-
-      // Save user details to Firestore
-      const userDocRef = doc(db, "users", userId);
-      await setDoc(userDocRef, {
-        lastName,
-        firstName,
-        email,
-        type,
-        country,
-        photoURL: photoURL || null,
-        displayName: `${firstName} ${lastName}`,
-        createdAt: Timestamp.fromDate(new Date()),
-      });
-
-      // Dispatch any additional actions or update state as needed
-      dispatch(setUser(user.uid));
-
-      // Return success or any relevant data
-      return { success: true };
-    } catch (error) {
-      // Handle and log any errors
-      console.error("Error registering user:", error);
-
-      // Return failure or any relevant data
-      return { success: false, error: error.message };
-    }
-  };
-
-// Action to update user profile, document, and password
-export const updateUserProfileAndPassword = async (
-  uid,
-  profileData,
-  newPassword
-) => {
-  try {
-    const auth = getAuth();
-    const firestore = getFirestore();
-
-    // Update user profile
-    await updateDoc(doc(firestore, "users", uid), profileData);
-
-    // Update document in the collection
-    await updateDoc(doc(firestore, "user_documents", uid), {
-      ...profileData,
-    });
-
-    // Update user password
-    const user = auth.currentUser;
-    await updatePassword(user, newPassword);
-
-    // Return success response if needed
-    // return { success: true };
-  } catch (error) {
-    // Return error response if needed
-    // return { success: false, error };
-  }
-};
-
-// Create async action to log in a user
-export const loginUser = (email, password) => async (dispatch) => {
+// write an action to update user profile in firestore params are uid, type, country
+export const updateUserProfile = (uid, type, country) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    dispatch(setUser(userCredential.user.uid));
-    dispatch(clearError());
+    const userDocRef = doc(db, "users", uid);
+    await updateDoc(userDocRef, {
+      type: type,
+      country: country,
+      updatedAt: serverTimestamp(),
+    });
+
+    // Fetch the updated user profile from Firestore
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      dispatch(setUserProfile(docSnap.data()));
+      console.log("Document data:", docSnap.data());
+    } else {
+      dispatch(
+        setError({
+          code: "user-not-found",
+          message: "No such document!",
+          origin: "updateUserProfileDatabase",
+        })
+      );
+    }
   } catch (error) {
-    dispatch(setError(error.message));
+    dispatch(
+      setError({
+        code: error.code,
+        message: error.message,
+        origin: "updateUserProfile",
+      })
+    );
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
@@ -188,24 +136,3 @@ export const logoutUser = () => async (dispatch) => {
     dispatch(setError(error.message));
   }
 };
-
-export const updateUserProfile =
-  ({ email, password, lastName, firstName, type, country, photoURL }) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch(setLoading(true));
-      const { uid } = getState().auth.user;
-      const response = await axios.put(
-        `http://localhost:3000/user/${uid}`,
-        { firstName, lastName, country, type },
-        {
-          headers: {
-            Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
-          },
-        }
-      );
-      dispatch(setUser(response.data.user));
-    } catch (error) {
-      dispatch(setError(error.message));
-    }
-  };
