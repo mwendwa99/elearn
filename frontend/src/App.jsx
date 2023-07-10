@@ -7,6 +7,7 @@ import { CircularProgress, Box } from "@mui/material";
 //
 import Appbar from "./components/AppBar";
 import Footer from "./components/Footer";
+import { Container } from "@mui/system";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
@@ -60,21 +61,23 @@ function App() {
         </Box>
       }
     >
-      <Appbar isAuth={isAuthenticated} displayName={displayName} />
-      <Routes>
-        <Route exact path="/" element={<Landing />} />
-        <Route exact path="/signin" element={<AccountSignin />} />
-        {/* <Route exact path="/signup" element={<SignUp />} /> */}
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/about" element={<About />} />
-        <Route exact path="/cohort" element={<Cohort />} />
-        <Route exact path="/tutoring" element={<Tutor />} />
-        <Route exact path="/co-curricular" element={<CocCurricular />} />
-        <Route exact path="/start_learning" element={<StartLearning />} />
-        <Route exact path="/classroom" element={<Classroom />} />
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-      <Footer />
+      <Container maxWidth="lg" sx={{ padding: 0 }}>
+        <Appbar isAuth={isAuthenticated} displayName={displayName} />
+        <Routes>
+          <Route exact path="/" element={<Landing />} />
+          <Route exact path="/signin" element={<AccountSignin />} />
+          {/* <Route exact path="/signup" element={<SignUp />} /> */}
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/cohort" element={<Cohort />} />
+          <Route exact path="/tutoring" element={<Tutor />} />
+          <Route exact path="/co-curricular" element={<CocCurricular />} />
+          <Route exact path="/start_learning" element={<StartLearning />} />
+          <Route exact path="/classroom" element={<Classroom />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+        <Footer />
+      </Container>
     </Suspense>
   );
 }

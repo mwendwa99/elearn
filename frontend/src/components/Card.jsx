@@ -53,7 +53,12 @@ export default function MediaCard({ title, tutor, start, price, description }) {
       </CardContent>
       <CardActions>
         {isLandingPage ? (
-          <Button component={RouterLink} to="start_learning" size="small">
+          <Button
+            variant="outlined"
+            component={RouterLink}
+            to="start_learning"
+            size="small"
+          >
             learn more
           </Button>
         ) : null}

@@ -65,7 +65,13 @@ function ResponsiveAppBar({ isAuth, displayName }) {
     <AppBar color="transparent" elevation={0} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton aria-label="home" component={RouterLink} to="/">
+          <IconButton
+            disableFocusRipple
+            disableRipple
+            aria-label="home"
+            component={RouterLink}
+            to="/"
+          >
             <img height="100%" width="100%" src={logo} alt="logo" />
           </IconButton>
           <Box component="span">
