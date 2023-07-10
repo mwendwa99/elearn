@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress } from "@mui/material";
 
 function Copyright(props) {
@@ -58,83 +58,78 @@ function SignIn() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const theme = createTheme();
+  // const theme = createTheme();
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+    // <ThemeProvider theme={theme}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {isLoading ? (
-                <CircularProgress size={20} sx={{ color: "white" }} />
-              ) : (
-                "Sign In"
-              )}
-            </Button>
-          </Box>
-          <Typography
-            align="center"
-            color={"secondary"}
-            variant="body1"
-            component={Link}
-            to="/signup"
-          >
-            Don't have an account? Sign Up
-          </Typography>
-          <Copyright sx={{ mt: 5 }} />
+            {isLoading ? (
+              <CircularProgress size={20} sx={{ color: "white" }} />
+            ) : (
+              "Sign In"
+            )}
+          </Button>
         </Box>
-      </Container>
-    </ThemeProvider>
+        <Typography
+          align="center"
+          color={"secondary"}
+          variant="body1"
+          component={Link}
+          to="/signup"
+        >
+          Don't have an account? Sign Up
+        </Typography>
+        <Copyright sx={{ mt: 5 }} />
+      </Box>
+    </Container>
+    // </ThemeProvider>
   );
 }
 

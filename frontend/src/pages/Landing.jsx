@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 
 import { getClass } from "../features/classSlice";
 
@@ -34,17 +35,27 @@ export default function Landing() {
         }}
       >
         <Grid item xs={12} md={6}>
-          <Typography
-            variant="h3"
-            sx={{ fontWeight: 700, color: "primary.main" }}
-            align="left"
-          >
-            Up your Skills <br /> to Advance your <br /> career path
+          <Typography variant="h1" align="left" color="text.main">
+            Up your{" "}
+            <Box component="span" color="text.primary">
+              Skills
+            </Box>{" "}
+            <br /> to{" "}
+            <Box component="span" color="text.primary">
+              Advance
+            </Box>{" "}
+            your
+            <br />
+            <Box component="span" color="text.primary">
+              career
+            </Box>{" "}
+            path
           </Typography>
           <Typography
             variant="body1"
             sx={{ color: "text.secondary", mt: 2 }}
             align="left"
+            gutterBottom
           >
             Provides you with the latest online learning system and material{" "}
             <br />

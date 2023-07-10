@@ -1,8 +1,8 @@
 import * as React from "react";
-import List from "@mui/joy/List";
-import ListItem from "@mui/joy/ListItem";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Typography from "@mui/joy/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Typography from "@mui/material/Typography";
 
 export default function DecoratedList({ data }) {
   return (
@@ -22,7 +22,7 @@ export default function DecoratedList({ data }) {
       >
         {data.description.map((item, index) => (
           <ListItem key={index}>
-            <ListItemDecorator>{item.icon}</ListItemDecorator>
+            <ListItemIcon>{item.icon}</ListItemIcon>
             {item.text}
           </ListItem>
         ))}

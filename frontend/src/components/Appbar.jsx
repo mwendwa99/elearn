@@ -3,10 +3,10 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { logoutUser } from "../actions/authActions";
-import theme from "./theme";
+// import theme from "../theme";
 import logo from "../assets/logo.svg";
 
-import { ThemeProvider } from "@mui/material/styles";
+// import { ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -61,167 +61,163 @@ function ResponsiveAppBar({ isAuth, displayName }) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar color="transparent" elevation={0} position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
+    // <ThemeProvider theme={theme}>
+    <AppBar color="transparent" elevation={0} position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <IconButton
+            sx={{
+              maxWidth: { xs: "100px", md: "100px" },
+              background: "#2e9cdb",
+              borderRadius: "5px",
+            }}
+            aria-label="delete"
+            component={RouterLink}
+            to="/"
+          >
+            <img height="100%" width="100%" src={logo} alt="logo" />
+          </IconButton>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
-              sx={{
-                maxWidth: { xs: "100px", md: "100px" },
-                background: "#2e9cdb",
-                borderRadius: "5px",
-              }}
-              aria-label="delete"
-              component={RouterLink}
-              to="/"
+              size="large"
+              aria-label="account of current user"
+              aria-controls="nav-menu"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
             >
-              <img height="100%" width="100%" src={logo} alt="logo" />
-            </IconButton>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="nav-menu"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon
-                  sx={{
-                    color: "#2e9cdb",
-                  }}
-                />
-              </IconButton>
-              <Menu
-                id="nav-menu"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+              <MenuIcon
                 sx={{
-                  display: { xs: "block", md: "none" },
                   color: "#2e9cdb",
                 }}
-              >
-                {pages.map((page) => (
-                  <MenuItem
-                    component={RouterLink}
-                    to={page.trim().toLowerCase().replace(/\s+/g, "_")}
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                  >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Box
+              />
+            </IconButton>
+            <Menu
+              id="nav-menu"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-                justifyContent: "center",
+                display: { xs: "block", md: "none" },
+                color: "#2e9cdb",
               }}
             >
-              {pages.map((page) => {
-                if (page === "Start Learning" && !isAuth) {
-                  return null; // Skip rendering the 'Start Learning' button
-                }
-                return (
-                  <Button
-                    id="main-nav"
-                    key={page}
-                    color="primary"
-                    sx={{ p: 1, mr: 2 }}
-                    variant="text"
-                    component={RouterLink}
-                    to={page.trim().toLowerCase().replace(/\s+/g, "_")}
-                  >
-                    {page}
-                  </Button>
-                );
-              })}
-            </Box>
+              {pages.map((page) => (
+                <MenuItem
+                  component={RouterLink}
+                  to={page.trim().toLowerCase().replace(/\s+/g, "_")}
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            {pages.map((page) => {
+              if (page === "Start Learning" && !isAuth) {
+                return null; // Skip rendering the 'Start Learning' button
+              }
+              return (
+                <Button
+                  id="main-nav"
+                  key={page}
+                  color="primary"
+                  sx={{ p: 1, mr: 2 }}
+                  variant="text"
+                  component={RouterLink}
+                  to={page.trim().toLowerCase().replace(/\s+/g, "_")}
+                >
+                  {page}
+                </Button>
+              );
+            })}
+          </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              {isAuth && (
-                <div>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="profile-menu"
-                    aria-haspopup="true"
-                    onClick={handleOpenUserMenu}
-                    color="inherit"
-                    // randomize color
+          <Box sx={{ flexGrow: 0 }}>
+            {isAuth && (
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="profile-menu"
+                  aria-haspopup="true"
+                  onClick={handleOpenUserMenu}
+                  color="inherit"
+                  // randomize color
+                >
+                  <Avatar
+                    sx={{
+                      background: "#2e9cdb",
+                    }}
                   >
-                    <Avatar
-                      sx={{
-                        background: "#2e9cdb",
-                      }}
-                    >
-                      {/* {displayName
+                    {/* {displayName
                         .split(" ")
                         .map((name) => name[0].toUpperCase())
                         .join("")} */}
-                    </Avatar>
-                  </IconButton>
-                  <Menu
-                    id="profile-menu"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
+                  </Avatar>
+                </IconButton>
+                <Menu
+                  id="profile-menu"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/profile"
+                    onClick={handleCloseUserMenu}
                   >
-                    <MenuItem
-                      component={RouterLink}
-                      to="/profile"
-                      onClick={handleCloseUserMenu}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </div>
-              )}
-              {!isAuth && (
-                <Stack direction="row" spacing={2}>
-                  {/* <Button
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            )}
+            {!isAuth && (
+              <Stack direction="row" spacing={2}>
+                {/* <Button
                     variant="outlined"
                     component={RouterLink}
                     to="/signin"
                   >
                     Login
                   </Button> */}
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to="/signin"
-                  >
-                    Signin
-                  </Button>
-                </Stack>
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ThemeProvider>
+                <Button variant="outlined" component={RouterLink} to="/signin">
+                  Signin
+                </Button>
+              </Stack>
+            )}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+    // </ThemeProvider>
   );
 }
 export default ResponsiveAppBar;
