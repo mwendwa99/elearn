@@ -14,6 +14,7 @@ import { getClass } from "../features/classSlice";
 import students from "../assets/students.webp";
 import Services from "../components/Services";
 import ClassesCarousel from "../components/Carousel";
+import Partners from "../components/Partners";
 
 export default function Landing() {
   const { classes } = useSelector((state) => state.class);
@@ -82,6 +83,38 @@ export default function Landing() {
         </Grid>
         <Grid item xs={12} md={6}>
           <img src={students} alt="landing" width="100%" height="100%" />
+        </Grid>
+      </Grid>
+      <Grid container sx={{ padding: "1rem" }}>
+        <Grid item xs={3}>
+          <Typography
+            gutterBottom
+            variant="h4"
+            color="primary.main"
+            sx={{
+              fontSize: "30px",
+              fontStyle: "normal",
+              fontWeight: 700,
+              lineHeight: "34px",
+            }}
+          >
+            International
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="body1"
+            color="primary.dark"
+            sx={{
+              fontSize: "30px",
+              fontStyle: "normal",
+              fontWeight: 400,
+            }}
+          >
+            Recognition
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <Partners />
         </Grid>
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
