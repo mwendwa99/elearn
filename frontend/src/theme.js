@@ -74,6 +74,11 @@ const theme = createTheme({
       dark: "#101828",
       light: "#646464",
     },
+    secondary: {
+      main: "#646464",
+      dark: "#101828",
+      light: "#646464",
+    },
     text: {
       primary: "#4883ff",
       main: "#101828",
@@ -104,6 +109,24 @@ const theme = createTheme({
 
           /* Shadow/xs */
           boxShadow: `0px 1px 2px 0px rgba(16, 24, 40, 0.05)`,
+        },
+        text: {
+          color: "#101828",
+          fontFamily: "Inter",
+          fontSize: "16px",
+          fontStyle: "normal",
+          fontWeight: 500,
+          lineHeight: "24px",
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+          "&:hover": {
+            background: "transparent",
+          },
         },
       },
     },

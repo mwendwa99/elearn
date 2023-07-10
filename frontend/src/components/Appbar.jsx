@@ -65,18 +65,15 @@ function ResponsiveAppBar({ isAuth, displayName }) {
     <AppBar color="transparent" elevation={0} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton
-            sx={{
-              maxWidth: { xs: "100px", md: "100px" },
-              background: "#2e9cdb",
-              borderRadius: "5px",
-            }}
-            aria-label="delete"
-            component={RouterLink}
-            to="/"
-          >
+          <IconButton aria-label="home" component={RouterLink} to="/">
             <img height="100%" width="100%" src={logo} alt="logo" />
           </IconButton>
+          <Box component="span">
+            <Typography variant="h6">
+              StaryDream International School
+            </Typography>
+            <Typography variant="subtitle1">Engage. Empower. Excel</Typography>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -86,12 +83,9 @@ function ResponsiveAppBar({ isAuth, displayName }) {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon
-                sx={{
-                  color: "#2e9cdb",
-                }}
-              />
+              <MenuIcon />
             </IconButton>
+
             <Menu
               id="nav-menu"
               anchorEl={anchorElNav}
@@ -138,7 +132,6 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                 <Button
                   id="main-nav"
                   key={page}
-                  color="primary"
                   sx={{ p: 1, mr: 2 }}
                   variant="text"
                   component={RouterLink}
