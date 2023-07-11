@@ -86,33 +86,6 @@ export default function Landing() {
         </Grid>
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
-        <Grid item xs={3}>
-          <Typography
-            gutterBottom
-            variant="h4"
-            color="primary.main"
-            sx={{
-              fontSize: "30px",
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "34px",
-            }}
-          >
-            International
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="body1"
-            color="primary.dark"
-            sx={{
-              fontSize: "30px",
-              fontStyle: "normal",
-              fontWeight: 400,
-            }}
-          >
-            Recognition
-          </Typography>
-        </Grid>
         <Grid item xs={8}>
           <Partners />
         </Grid>

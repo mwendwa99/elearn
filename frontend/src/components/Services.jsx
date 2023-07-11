@@ -3,8 +3,8 @@ import { Check, ArrowOutward } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 
 import List from "./List";
-import teach from "../assets/teach.webp";
-import learn from "../assets/learn.webp";
+import teach from "../assets/teach.svg";
+import learn from "../assets/learn.svg";
 
 const studentWriteUp = {
   title: "Students",
@@ -55,13 +55,24 @@ export default function Services() {
       <Grid container sx={{ my: "1rem" }} spacing={2}>
         <Grid item xs={12} md={6}>
           <Card raised={false} elevation={0}>
-            <CardMedia
-              height="200px"
-              sx={{ objectFit: "contain" }}
-              component="img"
-              image={learn}
-              alt="random"
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CardMedia
+                sx={{
+                  objectFit: "contain",
+                  height: "100px",
+                  width: "auto",
+                }}
+                component="img"
+                image={learn}
+                alt="learn"
+              />
+            </Box>
             <CardContent>
               <List data={studentWriteUp} />
               <Button
@@ -79,13 +90,24 @@ export default function Services() {
         </Grid>
         <Grid item xs={12} md={6}>
           <Card raised={false} elevation={0}>
-            <CardMedia
-              height="200px"
-              sx={{ objectFit: "contain" }}
-              component="img"
-              image={teach}
-              alt="random"
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CardMedia
+                sx={{
+                  objectFit: "contain",
+                  height: "100px",
+                  width: "auto",
+                }}
+                component="img"
+                image={teach}
+                alt="random"
+              />
+            </Box>
             <CardContent>
               <List data={tutorWriteUp} />
               <Button

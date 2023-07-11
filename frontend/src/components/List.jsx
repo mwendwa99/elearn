@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 
 export default function DecoratedList({ data }) {
   return (
-    <Box sx={{ width: "100%", height: "300px" }}>
+    <Box sx={{ width: "100%", height: { xs: "100%", md: "300px" } }}>
       <Typography
         id="decorated-list-demo"
         level="body1"
