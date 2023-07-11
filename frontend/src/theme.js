@@ -73,16 +73,19 @@ const theme = createTheme({
       main: "#4883ff",
       dark: "#101828",
       light: "#646464",
+      contrastText: "#fff",
     },
     secondary: {
       main: "#646464",
       dark: "#101828",
       light: "#646464",
+      contrastText: "#fff",
     },
     text: {
       primary: "#4883ff",
       main: "#101828",
       secondary: "#646464",
+      contrastText: "#fff",
     },
   },
   components: {

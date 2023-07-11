@@ -7,6 +7,14 @@ register();
 
 export default function Slider({ classes }) {
   const swiperElRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // listen for window resize
+    window.addEventListener("resize", () => {
+      setWindowWidth(window.innerWidth);
+    });
+  }, []);
 
   useEffect(() => {
     // listen for Swiper events using addEventListener
@@ -24,7 +32,7 @@ export default function Slider({ classes }) {
     <swiper-container
       ref={swiperElRef}
       // slides per view should be 1 on smaller screens and 3 in bigger screens
-      slides-per-view={window.innerWidth < 600 ? "1" : "3"}
+      slides-per-view={windowWidth < 600 ? "1" : "3"}
       loop="true"
       rewind="true"
       autoplay="true"

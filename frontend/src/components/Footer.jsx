@@ -7,10 +7,19 @@ const Footer = () => {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{ mb: 2 }}
+              color="text.contrastText"
+            >
               About Us
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2 }}>
+            <Typography
+              color="text.contrastText"
+              variant="body2"
+              sx={{ mb: 2 }}
+            >
               The Starry Dreams School is a leading global online school that
               provides students with an excellent education, regardless of their
               location. We aim to create a platform that enables parents and
@@ -18,11 +27,20 @@ const Footer = () => {
               of their homes.
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+          <Grid item xs={6} md={4}>
+            <Typography
+              color="text.contrastText"
+              variant="h6"
+              component="h2"
+              sx={{ mb: 2 }}
+            >
               Quick Links
             </Typography>
-            <Typography variant="body2" component="ul">
+            <Typography
+              color="text.contrastText"
+              variant="body2"
+              component="ul"
+            >
               <li>
                 <NavLink
                   style={{ textDecoration: "none", color: "white" }}
@@ -57,11 +75,20 @@ const Footer = () => {
               </li>
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+          <Grid item xs={6} md={4}>
+            <Typography
+              color="text.contrastText"
+              variant="h6"
+              component="h2"
+              sx={{ mb: 2 }}
+            >
               Connect With Us
             </Typography>
-            <Typography variant="body2" component="ul">
+            <Typography
+              color="text.contrastText"
+              variant="body2"
+              component="ul"
+            >
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
