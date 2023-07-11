@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
+import DiscountCard from "./DiscountCard";
 
 import Card from "./Card";
 
 register();
 
-export default function Slider({ classes }) {
+export default function Slider({ classes, discounts }) {
   const swiperElRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -43,17 +44,29 @@ export default function Slider({ classes }) {
       navigation="false"
       pagination="true"
     >
-      {classes.map((c, index) => (
-        <swiper-slide key={index}>
-          <Card
-            title={c.title}
-            tutor={c.tutor}
-            start={c.start}
-            price={c.price}
-            description={c.description}
-          />
-        </swiper-slide>
-      ))}
+      {classes &&
+        classes.map((c, index) => (
+          <swiper-slide key={index}>
+            <Card
+              title={c.title}
+              tutor={c.tutor}
+              start={c.start}
+              price={c.price}
+              description={c.description}
+            />
+          </swiper-slide>
+        ))}
+      {discounts &&
+        discounts.map((d, index) => (
+          <swiper-slide key={index}>
+            <DiscountCard
+              image={d.image}
+              title={d.title}
+              description={d.description}
+              onClick={() => console.log("clicked")}
+            />
+          </swiper-slide>
+        ))}
     </swiper-container>
   );
 }
