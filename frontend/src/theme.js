@@ -39,7 +39,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontSize: "1rem",
-      fontWeight: 400,
+      fontWeight: 500,
       color: "#101828",
     },
     subtitle2: {
@@ -127,6 +127,23 @@ const theme = createTheme({
           "&:hover": {
             background: "transparent",
           },
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          color: "#101828",
+          fontSize: "16px",
+          fontWeight: 300,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+          border: "1px solid rgba(216, 216, 216, 0.40)",
         },
       },
     },

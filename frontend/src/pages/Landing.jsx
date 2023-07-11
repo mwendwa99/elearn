@@ -119,12 +119,16 @@ export default function Landing() {
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
         <Grid item xs={12} md={12}>
-          <Typography gutterBottom variant="h4" color={"primary"}>
+          <Typography
+            align="center "
+            gutterBottom
+            variant="subtitle1"
+            color="text.primary"
+          >
             Our Services
           </Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            We provide you with the latest online learning system and material
-            that help your knowledge grow.
+          <Typography variant="h2" color="text.dark" align="center">
+            Fostering an engaging learning environment
           </Typography>
           <Services />
         </Grid>
