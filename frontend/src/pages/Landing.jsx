@@ -48,7 +48,7 @@ export default function Landing() {
             your
             <br />
             <Box component="span" color="text.primary">
-              career
+              Career
             </Box>{" "}
             path
           </Typography>
@@ -81,7 +81,7 @@ export default function Landing() {
             </Button>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid sx={{ display: { xs: "none", sm: "block" } }} item xs={12} md={6}>
           <img src={students} alt="landing" width="100%" height="100%" />
         </Grid>
       </Grid>
@@ -93,9 +93,9 @@ export default function Landing() {
       <Grid container sx={{ padding: "1rem" }}>
         <Grid item xs={12} md={12}>
           <Typography
-            align="center "
+            align="center"
             gutterBottom
-            variant="subtitle1"
+            variant="h5"
             color="text.primary"
           >
             Our Services
@@ -108,8 +108,11 @@ export default function Landing() {
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
         <Grid item xs={12} md={12}>
-          <Typography gutterBottom variant="h4" sx={{ color: "primary.main" }}>
-            Our Classes
+          <Typography gutterBottom variant="h5" color="text.primary">
+            Explore Programmes
+          </Typography>
+          <Typography gutterBottom variant="h2" color="text.main">
+            Our Popular Classes
           </Typography>
           <Typography
             gutterBottom

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
 
 import Card from "./Card";
@@ -23,7 +23,8 @@ export default function Slider({ classes }) {
   return (
     <swiper-container
       ref={swiperElRef}
-      slides-per-view="3"
+      // slides per view should be 1 on smaller screens and 3 in bigger screens
+      slides-per-view={window.innerWidth < 600 ? "1" : "3"}
       loop="true"
       rewind="true"
       autoplay="true"
@@ -31,6 +32,8 @@ export default function Slider({ classes }) {
       space-between="10"
       delay="2000"
       autoHeight="true"
+      navigation="false"
+      pagination="true"
     >
       {classes.map((c, index) => (
         <swiper-slide key={index}>

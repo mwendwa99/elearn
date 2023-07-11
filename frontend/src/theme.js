@@ -147,6 +147,26 @@ const theme = createTheme({
         },
       },
     },
+    MuiCardHeader: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          color: "#101828",
+        },
+        title: {
+          fontSize: "16px",
+          fontWeight: 500,
+          lineHeight: "24px",
+          color: "#101828",
+        },
+        subheader: {
+          fontSize: "14px",
+          fontWeight: 400,
+          lineHeight: "24px",
+          color: "#4883FF",
+        },
+      },
+    },
   },
 });
 

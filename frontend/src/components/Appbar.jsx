@@ -75,10 +75,18 @@ function ResponsiveAppBar({ isAuth, displayName }) {
             <img height="100%" width="100%" src={logo} alt="logo" />
           </IconButton>
           <Box component="span">
-            <Typography variant="h6">
+            <Typography
+              variant={{ xs: "body1", sm: "h6" }}
+              sx={{
+                fontWeight: { xs: "bold", sm: "" },
+              }}
+            >
               StaryDream International School
             </Typography>
-            <Typography variant="subtitle1">Engage. Empower. Excel</Typography>
+            <br />
+            <Typography variant={{ xs: "body1", sm: "subtitle1" }}>
+              Engage. Empower. Excel
+            </Typography>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
