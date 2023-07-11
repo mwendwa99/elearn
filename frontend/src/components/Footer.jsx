@@ -133,8 +133,8 @@ const Footer = () => {
           </Grid>
         </Grid>
         <Box mt={4}>
-          <Typography variant="body2" align="center">
-            © {new Date().getFullYear()} The Starry Dreams School. All rights
+          <Typography color="text.contrastText" variant="body2" align="center">
+            © {new Date().getFullYear()} The Stary Dream School. All rights
             reserved.
           </Typography>
         </Box>
