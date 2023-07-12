@@ -20,7 +20,7 @@ const Footer = () => {
               variant="body2"
               sx={{ mb: 2 }}
             >
-              The Starry Dreams School is a leading global online school that
+              The StaryDream School is a leading global online school that
               provides students with an excellent education, regardless of their
               location. We aim to create a platform that enables parents and
               students to receive proper educational guidance from the comfort

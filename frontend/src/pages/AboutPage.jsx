@@ -4,7 +4,7 @@ const AboutPage = () => {
   return (
     <Container sx={{ py: 8 }}>
       <Typography color="primary" variant="h4" align="center" gutterBottom>
-        About Starry Dreams School
+        About StaryDream School
       </Typography>
       <Typography
         color="text.secondary"
@@ -24,7 +24,7 @@ const AboutPage = () => {
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            At The Starry Dreams School, our mission is to provide high-quality
+            At StaryDream School, our mission is to provide high-quality
             academic and extra-curricular learning opportunities to students
             worldwide, catering to multiple curriculums. Through our online
             platform, we aim to create a global community of learners who can
@@ -40,7 +40,7 @@ const AboutPage = () => {
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            Our vision at The Starry Dreams School is to become a leading global
+            Our vision at The StaryDream School is to become a leading global
             online school that provides students with an excellent education,
             regardless of their location. We envision a world where every
             student has access to high-quality education that is tailored to

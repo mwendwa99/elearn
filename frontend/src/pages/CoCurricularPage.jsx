@@ -22,9 +22,8 @@ const CoCurricularPage = () => {
         Co-curricular Development
       </Typography>
       <Typography sx={{ color: "text.secondary" }}>
-        Starry Dreams provides a variety of opportunities for students to
-        explore their interests and develop their skills outside of the
-        classroom.
+        StaryDream provides a variety of opportunities for students to explore
+        their interests and develop their skills outside of the classroom.
       </Typography>
 
       <Box sx={{ my: 4 }}>
@@ -46,11 +45,10 @@ const CoCurricularPage = () => {
             >
               <div>
                 <Typography variant="body1" color="text.secondary" gutterBottom>
-                  At Starry Dreams Academy, we believe that physical fitness is
-                  an important aspect of overall well-being. Our sports
-                  programme provides opportunities for students to stay active
-                  and healthy while developing teamwork and sportsmanship
-                  skills.
+                  At StaryDream Academy, we believe that physical fitness is an
+                  important aspect of overall well-being. Our sports programme
+                  provides opportunities for students to stay active and healthy
+                  while developing teamwork and sportsmanship skills.
                 </Typography>
               </div>
               <div style={{ alignSelf: "flex-start", mt: 2 }}>
@@ -98,12 +96,11 @@ const CoCurricularPage = () => {
             >
               <div>
                 <Typography variant="body1" color="text.secondary">
-                  Starry Dreams Academy is proud to partner with Solidrock
-                  Academy in the UK to offer exchange programmes for our
-                  students. This programme provides an opportunity for students
-                  to travel to the UK for Easter and summer camps, and
-                  experience a new culture while developing their skills and
-                  making new friends.
+                  StaryDream Academy is proud to partner with Solidrock Academy
+                  in the UK to offer exchange programmes for our students. This
+                  programme provides an opportunity for students to travel to
+                  the UK for Easter and summer camps, and experience a new
+                  culture while developing their skills and making new friends.
                 </Typography>
                 <Typography color="text.secondary" sx={{ mt: 2 }}>
                   Our partnership with Solidrock Academy ensures that students
