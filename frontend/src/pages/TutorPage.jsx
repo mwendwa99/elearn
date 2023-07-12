@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import AreaSelect from "../components/AreaSelect";
 import SubjectSelect from "../components/SubjectSelect";
 
@@ -14,6 +16,11 @@ import {
 } from "@mui/material";
 
 const TutoringPage = ({ user }) => {
+  const [subject, setSubject] = useState("");
+  const [area, setArea] = useState("");
+  const [message, setMessage] = useState("");
+  const [duration, setDuration] = useState("");
+
   return (
     <Container sx={{ py: 8 }}>
       <Typography color="primary" variant="h4" align="center" gutterBottom>
