@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { TextField, Button, Container, Typography, Grid } from "@mui/material";
 
 interface FormValues {
-  description: string;
-  startDate: string;
-  endDate: string;
   title: string;
+  description: string;
+  price: number;
   subtitle: string;
-  school: string;
+  rating: number;
   photoUrl: string;
 }
 
 const initialValues: FormValues = {
-  description: "",
-  startDate: "",
-  endDate: "",
   title: "",
+  description: "",
+  price: 0,
   subtitle: "",
-  school: "",
+  rating: 0,
   photoUrl: "",
 };
 
-const CohortForm: React.FC = () => {
+const SubjectForm: React.FC = () => {
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,51 +39,12 @@ const CohortForm: React.FC = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-        Cohort Details
+        Subject Form
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              required
-              name="description"
-              label="Description"
-              value={formValues.description}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              name="startDate"
-              label="Start Date"
-              type="date"
-              value={formValues.startDate}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              name="endDate"
-              label="End Date"
-              type="date"
-              value={formValues.endDate}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
               name="title"
               label="Title"
               value={formValues.title}
@@ -97,7 +56,6 @@ const CohortForm: React.FC = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              required
               name="subtitle"
               label="Subtitle"
               value={formValues.subtitle}
@@ -109,10 +67,9 @@ const CohortForm: React.FC = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              required
-              name="school"
-              label="School"
-              value={formValues.school}
+              name="description"
+              label="Description"
+              value={formValues.description}
               onChange={handleChange}
               fullWidth
               margin="normal"
@@ -121,9 +78,33 @@ const CohortForm: React.FC = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              required
+              name="price"
+              label="Price"
+              type="number"
+              value={formValues.price}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              sx={{ mb: 2 }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="rating"
+              label="Rating"
+              type="number"
+              value={formValues.rating}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              sx={{ mb: 2 }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               name="photoUrl"
               label="Photo URL"
+              type="text"
               value={formValues.photoUrl}
               onChange={handleChange}
               fullWidth
@@ -142,4 +123,4 @@ const CohortForm: React.FC = () => {
   );
 };
 
-export default CohortForm;
+export default SubjectForm;

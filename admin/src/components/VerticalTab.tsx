@@ -1,10 +1,10 @@
 import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import CohortForm from "./CohortForm";
+import SubjectForm from "./SubjectForm";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -60,7 +60,7 @@ export default function VerticalTabs() {
         sx={{ borderRight: 1, borderColor: "divider" }}
       >
         <Tab label="Cohorts" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Subjects" {...a11yProps(1)} />
         <Tab label="Item Three" {...a11yProps(2)} />
         <Tab label="Item Four" {...a11yProps(3)} />
         <Tab label="Item Five" {...a11yProps(4)} />
@@ -71,7 +71,7 @@ export default function VerticalTabs() {
         <CohortForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <SubjectForm />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
