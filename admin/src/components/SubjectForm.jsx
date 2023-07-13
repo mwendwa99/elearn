@@ -1,5 +1,14 @@
-import { useState } from "react";
-import { TextField, Button, Container, Typography, Grid } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewSubject } from "../redux/subjects/subjectActions";
 
 const initialValues = {
   title: "",
@@ -12,6 +21,15 @@ const initialValues = {
 
 const SubjectForm = () => {
   const [formValues, setFormValues] = useState(initialValues);
+  const { loading, error } = useSelector((state) => state.subjects);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // once dispatch is successful, reset the form
+    if (!loading && !error) {
+      setFormValues(initialValues);
+    }
+  }, [dispatch, error, loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +42,7 @@ const SubjectForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
-    console.log(formValues);
+    dispatch(createNewSubject(formValues));
   };
 
   return (
@@ -32,6 +50,12 @@ const SubjectForm = () => {
       <Typography variant="h5" component="h2">
         Subject Form
       </Typography>
+      {loading && <CircularProgress />}
+      {error && (
+        <Typography variant="h5" component="h2">
+          {error}
+        </Typography>
+      )}
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={6}>

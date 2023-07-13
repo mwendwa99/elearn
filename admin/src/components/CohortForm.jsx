@@ -44,7 +44,6 @@ const CohortForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
-    console.log(formValues);
     dispatch(createNewCohort(formValues));
   };
 
