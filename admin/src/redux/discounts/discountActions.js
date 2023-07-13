@@ -1,4 +1,6 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, addDoc } from "firebase/firestore";
+
 import { db } from "../../firebaseConfig";
 import {
   setDiscounts,
@@ -7,23 +9,16 @@ import {
   setError,
 } from "./discountSlice";
 
-export const createNewDiscount = (discountData) => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    const docRef = collection(db, "discounts");
-    const docSnap = await addDoc(docRef, discountData);
-    dispatch(setDiscounts({ id: docSnap.id, ...discountData }));
-    dispatch(setLoading(false));
-    dispatch(clearError());
-  } catch (error) {
-    console.error("Error creating discount:", error);
-    dispatch(setLoading(false));
-    dispatch(
-      setError({
-        error: error.code,
-        message: error.message,
-        origin: "discountActions.ts",
-      })
-    );
+export const createNewDiscount = createAsyncThunk(
+  "discounts/createNewDiscount",
+  async (discount, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      dispatch(clearError());
+      const docRef = await addDoc(collection(db, "discounts"), discount);
+      dispatch(setDiscounts({ ...discount, id: docRef.id }));
+    } catch (error) {
+      dispatch(setError(error.message));
+    }
   }
-};
+);

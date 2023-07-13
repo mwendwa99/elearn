@@ -7,7 +7,7 @@ import CohortForm from "./CohortForm";
 import SubjectForm from "./SubjectForm";
 import DiscountForm from "./DiscountForm";
 
-function TabPanel({ children }) {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (

@@ -1,4 +1,4 @@
-import VerticalTabs from "./components/VerticalTab";
+import VerticalTabs from "./components/VerticalTabs";
 
 import { Box, Container, CssBaseline, Typography } from "@mui/material";
 

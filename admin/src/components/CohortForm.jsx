@@ -1,17 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Container, Typography, Grid } from "@mui/material";
 
-interface FormValues {
-  description: string;
-  startDate: string;
-  endDate: string;
-  title: string;
-  subtitle: string;
-  school: string;
-  photoUrl: string;
-}
-
-const initialValues: FormValues = {
+const initialValues = {
   description: "",
   startDate: new Date().toISOString().slice(0, 10),
   endDate: new Date().toISOString().slice(0, 10),
@@ -21,10 +11,10 @@ const initialValues: FormValues = {
   photoUrl: "",
 };
 
-const CohortForm: React.FC = () => {
-  const [formValues, setFormValues] = useState<FormValues>(initialValues);
+const CohortForm = () => {
+  const [formValues, setFormValues] = useState(initialValues);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -32,7 +22,7 @@ const CohortForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
     console.log(formValues);
