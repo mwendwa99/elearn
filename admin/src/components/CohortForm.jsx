@@ -1,5 +1,15 @@
-import { useState } from "react";
-import { TextField, Button, Container, Typography, Grid } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+
+import { createNewCohort } from "../redux/cohorts/cohortActions";
 
 const initialValues = {
   description: "",
@@ -13,6 +23,15 @@ const initialValues = {
 
 const CohortForm = () => {
   const [formValues, setFormValues] = useState(initialValues);
+  const { loading, error } = useSelector((state) => state.cohorts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // once dispatch is successful, reset the form
+    if (!loading && !error) {
+      setFormValues(initialValues);
+    }
+  }, [dispatch, error, loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,10 +45,18 @@ const CohortForm = () => {
     e.preventDefault();
     // Handle form submission or validation here
     console.log(formValues);
+    dispatch(createNewCohort(formValues));
   };
 
   return (
     <Container maxWidth="sm">
+      {loading && <CircularProgress />}
+      {error && (
+        <Typography variant="h5" component="h2">
+          {error}
+        </Typography>
+      )}
+
       <Typography variant="h5" component="h2">
         Cohort Details
       </Typography>

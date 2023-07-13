@@ -1,4 +1,4 @@
-import { addDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { db } from "../../firebaseConfig";
@@ -10,7 +10,7 @@ export const createNewCohort = createAsyncThunk(
     try {
       dispatch(setLoading(true));
       dispatch(clearError());
-      const docRef = await addDoc(db.collection("cohorts"), cohort);
+      const docRef = await addDoc(collection(db, "cohorts"), cohort);
       dispatch(setCohorts({ ...cohort, id: docRef.id }));
     } catch (error) {
       dispatch(setError(error.message));
