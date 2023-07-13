@@ -1,28 +1,15 @@
-import React, { useState } from "react";
-import { TextField, Button, Container, Typography, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Container, Typography, TextField, Button, Grid } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewDiscount } from "../redux/discounts/discountActions";
 
-interface FormValues {
-  title: string;
-  description: string;
-  price: number;
-  subtitle: string;
-  rating: number;
-  photoUrl: string;
-}
+const DiscountForm = () => {
+  const [formValues, setFormValues] = useState(initialDiscountFormValues);
+  const dispatch = useDispatch();
 
-const initialValues: FormValues = {
-  title: "",
-  description: "",
-  price: 0,
-  subtitle: "",
-  rating: 0,
-  photoUrl: "",
-};
+  useEffect(() => {}, [dispatch]);
 
-const SubjectForm: React.FC = () => {
-  const [formValues, setFormValues] = useState<FormValues>(initialValues);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -30,19 +17,53 @@ const SubjectForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
     console.log(formValues);
+    dispatch(createNewDiscount(formValues));
   };
 
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-        Subject Form
+        Discount Form
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              name="startDate"
+              label="start of discount"
+              type="date"
+              value={formValues.startDate}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="endDate"
+              label="end of discount"
+              type="date"
+              value={formValues.endDate}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              name="percentage"
+              label="Percentage"
+              type="number"
+              value={formValues.percentage}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
           <Grid item xs={6}>
             <TextField
               name="title"
@@ -51,18 +72,6 @@ const SubjectForm: React.FC = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              name="subtitle"
-              label="Subtitle"
-              value={formValues.subtitle}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -73,54 +82,25 @@ const SubjectForm: React.FC = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              name="price"
-              label="Price"
-              type="number"
-              value={formValues.price}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              name="rating"
-              label="Rating"
-              type="number"
-              value={formValues.rating}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
               name="photoUrl"
               label="Photo URL"
-              type="text"
               value={formValues.photoUrl}
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained">
-              Submit
-            </Button>
-          </Grid>
         </Grid>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
     </Container>
   );
 };
 
-export default SubjectForm;
+export default DiscountForm;

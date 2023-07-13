@@ -7,13 +7,7 @@ import CohortForm from "./CohortForm";
 import SubjectForm from "./SubjectForm";
 import DiscountForm from "./DiscountForm";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
+function TabPanel({ children }) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -29,7 +23,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
+function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
     "aria-controls": `vertical-tabpanel-${index}`,
@@ -39,7 +33,7 @@ function a11yProps(index: number) {
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -50,6 +44,7 @@ export default function VerticalTabs() {
         bgcolor: "background.paper",
         display: "flex",
         height: "500px",
+        p: 2,
       }}
     >
       <Tabs
