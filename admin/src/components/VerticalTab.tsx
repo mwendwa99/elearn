@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 
 import CohortForm from "./CohortForm";
 import SubjectForm from "./SubjectForm";
+import DiscountForm from "./DiscountForm";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,11 +62,7 @@ export default function VerticalTabs() {
       >
         <Tab label="Cohorts" {...a11yProps(0)} />
         <Tab label="Subjects" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
+        <Tab label="Discounts" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <CohortForm />
@@ -74,19 +71,7 @@ export default function VerticalTabs() {
         <SubjectForm />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Fourdsds
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
+        <DiscountForm />
       </TabPanel>
     </Box>
   );

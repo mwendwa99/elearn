@@ -1,8 +1,6 @@
-import { useState } from "react";
-
 import VerticalTabs from "./components/VerticalTab";
 
-import { Box, Container, CssBaseline } from "@mui/material";
+import { Box, Container, CssBaseline, Typography } from "@mui/material";
 
 function App() {
   return (
@@ -19,6 +17,7 @@ function App() {
         }}
       >
         <Container maxWidth="md">
+          <Typography variant="h3">StaryDream Admin Panel</Typography>
           <VerticalTabs />
         </Container>
       </Box>
