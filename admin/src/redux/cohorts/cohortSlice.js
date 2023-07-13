@@ -1,19 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewDiscount } from "./discountActions";
+import { createNewCohort } from "./cohortActions";
 
 const initialState = {
-  discounts: [],
+  cohorts: [],
   loading: false,
   error: null,
 };
 
-const discountSlice = createSlice({
-  name: "discounts",
+const cohortSlice = createSlice({
+  name: "cohorts",
   initialState,
   reducers: {
-    // ...
-    setDiscounts(state, action) {
-      state.discounts = action.payload;
+    setCohorts(state, action) {
+      state.cohorts = action.payload;
       state.loading = false;
     },
     setLoading(state, action) {
@@ -28,21 +27,21 @@ const discountSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createNewDiscount.pending, (state) => {
+      .addCase(createNewCohort.pending, (state) => {
         state.loading = true;
       })
-      .addCase(createNewDiscount.fulfilled, (state, action) => {
-        state.discounts = action.payload;
+      .addCase(createNewCohort.fulfilled, (state, action) => {
+        state.cohorts = action.payload;
         state.loading = false;
       })
-      .addCase(createNewDiscount.rejected, (state, action) => {
+      .addCase(createNewCohort.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { setDiscounts, setLoading, setError, clearError } =
-  discountSlice.actions;
+export const { setCohorts, setLoading, setError, clearError } =
+  cohortSlice.actions;
 
-export default discountSlice.reducer;
+export default cohortSlice.reducer;

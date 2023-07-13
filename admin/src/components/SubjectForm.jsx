@@ -1,5 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Container, Typography, Grid } from "@mui/material";
+
+const initialValues = {
+  title: "",
+  subtitle: "",
+  description: "",
+  price: 0,
+  rating: 0,
+  photoUrl: "",
+};
 
 const SubjectForm = () => {
   const [formValues, setFormValues] = useState(initialValues);
@@ -20,46 +29,36 @@ const SubjectForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+      <Typography variant="h5" component="h2">
         Subject Form
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
+              required
               name="title"
               label="Title"
               value={formValues.title}
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="subtitle"
               label="Subtitle"
               value={formValues.subtitle}
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              name="description"
-              label="Description"
-              value={formValues.description}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
+              required
               name="price"
               label="Price"
               type="number"
@@ -67,11 +66,11 @@ const SubjectForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="rating"
               label="Rating"
               type="number"
@@ -79,11 +78,11 @@ const SubjectForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="photoUrl"
               label="Photo URL"
               type="text"
@@ -91,7 +90,19 @@ const SubjectForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              name="description"
+              label="Description"
+              value={formValues.description}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
             />
           </Grid>
           <Grid item xs={12}>

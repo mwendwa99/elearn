@@ -1,13 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Container, Typography, TextField, Button, Grid } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewDiscount } from "../redux/discounts/discountActions";
 
-const DiscountForm = () => {
-  const [formValues, setFormValues] = useState(initialDiscountFormValues);
-  const dispatch = useDispatch();
+const initialValues = {
+  startDate: new Date().toISOString().slice(0, 10),
+  endDate: new Date().toISOString().slice(0, 10),
+  percentage: 0,
+  title: "",
+  description: "",
+  photoUrl: "",
+};
 
-  useEffect(() => {}, [dispatch]);
+const DiscountForm = () => {
+  const [formValues, setFormValues] = useState(initialValues);
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.discounts);
+  console.log(loading);
+  useEffect(() => {
+    // once dispatch is successful, reset the form
+    if (!loading && !error) {
+      setFormValues(initialValues);
+    }
+  }, [dispatch, error, loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +48,13 @@ const DiscountForm = () => {
 
   return (
     <Container maxWidth="sm">
+      {loading && <CircularProgress />}
+      {error && (
+        <Typography variant="h5" component="h2">
+          {error}
+        </Typography>
+      )}
+
       <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
         Discount Form
       </Typography>
@@ -33,6 +62,7 @@ const DiscountForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
+              required
               name="startDate"
               label="start of discount"
               type="date"
@@ -44,6 +74,7 @@ const DiscountForm = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="endDate"
               label="end of discount"
               type="date"
@@ -55,6 +86,7 @@ const DiscountForm = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="percentage"
               label="Percentage"
               type="number"
@@ -66,6 +98,7 @@ const DiscountForm = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required
               name="title"
               label="Title"
               value={formValues.title}
@@ -76,22 +109,26 @@ const DiscountForm = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              name="description"
-              label="Description"
-              value={formValues.description}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
+              required
               name="photoUrl"
               label="Photo URL"
               value={formValues.photoUrl}
               onChange={handleChange}
               fullWidth
               margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              name="description"
+              label="Description"
+              value={formValues.description}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
             />
           </Grid>
         </Grid>

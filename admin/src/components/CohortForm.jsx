@@ -30,23 +30,11 @@ const CohortForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+      <Typography variant="h5" component="h2">
         Cohort Details
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              required
-              name="description"
-              label="Description"
-              value={formValues.description}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              sx={{ mb: 2 }}
-            />
-          </Grid>
           <Grid item xs={6}>
             <TextField
               required
@@ -57,7 +45,6 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -70,7 +57,6 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -82,7 +68,6 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -94,9 +79,9 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
+
           <Grid item xs={6}>
             <TextField
               required
@@ -106,7 +91,6 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -118,10 +102,22 @@ const CohortForm = () => {
               onChange={handleChange}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              name="description"
+              label="Description"
+              value={formValues.description}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Button type="submit" variant="contained">
               Submit
             </Button>

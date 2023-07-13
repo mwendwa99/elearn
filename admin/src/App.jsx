@@ -9,17 +9,18 @@ function App() {
       <Box
         sx={{
           width: "100vw",
-          height: "100vh",
-          bgcolor: "primary.secondary",
+          height: "100%",
+          bgcolor: "secondary",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
+        <Typography variant="h3" gutterBottom>
+          StaryDream Admin Panel
+        </Typography>
         <Container maxWidth="md">
-          <Typography variant="h3" gutterBottom>
-            StaryDream Admin Panel
-          </Typography>
           <VerticalTabs />
         </Container>
       </Box>
