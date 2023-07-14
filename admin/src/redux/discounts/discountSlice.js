@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewDiscount } from "./discountActions";
+import {
+  createNewDiscount,
+  getDiscounts,
+  updateDiscount,
+  deleteDiscount,
+} from "./discountActions";
 
 const initialState = {
   discounts: [],
@@ -36,6 +41,39 @@ const discountSlice = createSlice({
         state.loading = false;
       })
       .addCase(createNewDiscount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getDiscounts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getDiscounts.fulfilled, (state, action) => {
+        state.discounts = action.payload;
+        state.loading = false;
+      })
+      .addCase(getDiscounts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteDiscount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteDiscount.fulfilled, (state, action) => {
+        state.discounts = action.payload;
+        state.loading = false;
+      })
+      .addCase(deleteDiscount.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateDiscount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateDiscount.fulfilled, (state, action) => {
+        state.discounts = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateDiscount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

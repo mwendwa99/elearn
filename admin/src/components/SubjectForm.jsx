@@ -209,7 +209,7 @@ const SubjectForm = () => {
                     fullWidth
                     type="submit"
                   >
-                    Update Cohort
+                    Update Subject
                   </Button>
                 ) : (
                   <Button
@@ -218,7 +218,7 @@ const SubjectForm = () => {
                     type="submit"
                     fullWidth
                   >
-                    Create Cohort
+                    Create Subject
                   </Button>
                 )}
               </Grid>
