@@ -8,6 +8,7 @@ import SubjectForm from "./SubjectForm";
 import DiscountForm from "./DiscountForm";
 
 function TabPanel(props) {
+  // eslint-disable-next-line react/prop-types
   const { children, value, index, ...other } = props;
 
   return (
@@ -17,6 +18,7 @@ function TabPanel(props) {
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
+      style={{ width: "100%" }}
     >
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
@@ -53,7 +55,7 @@ export default function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        sx={{ borderRight: 1, borderColor: "divider", width: "200px" }}
       >
         <Tab label="Cohorts" {...a11yProps(0)} />
         <Tab label="Subjects" {...a11yProps(1)} />

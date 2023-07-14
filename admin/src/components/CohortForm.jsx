@@ -7,10 +7,10 @@ import {
   Grid,
   CircularProgress,
   Card,
-  CardActionArea,
   CardMedia,
   CardContent,
   CardActions,
+  Divider,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -61,19 +61,12 @@ const CohortForm = () => {
     }
   }, [error, loading]);
 
-  const handleFormAction = (actionType, cohort) => {
-    switch (actionType) {
-      case "add":
-        setIsUpdate(() => false);
-        break;
-      case "update":
-        setFormValues(() => cohort);
-        setIsUpdate(() => true);
-        break;
-      default:
-        break;
+  // refresh the cohortData with every dispatch
+  useEffect(() => {
+    if (Array.isArray(cohorts)) {
+      setCohortData(cohorts);
     }
-  };
+  }, [cohorts]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,11 +83,22 @@ const CohortForm = () => {
     setCohortData((prevData) => [...prevData, formValues]);
   };
 
+  const handleEditCohort = (cohort) => {
+    // Handle form submission or validation here
+    setFormValues(() => cohort);
+    setIsUpdate(() => true);
+  };
+
   const handleUpdateCohort = (e) => {
     e.preventDefault();
-    // Handle form submission or validation here
-    // console.log("update", formValues);
-    dispatch(updateCohort(formValues));
+    dispatch(updateCohort(formValues))
+      .then(() => {
+        dispatch(getCohorts());
+        setIsUpdate(false);
+      })
+      .catch((err) => {
+        console.log("error updating cohort", err);
+      });
   };
 
   const handleDeleteCohort = (cohortId) => {
@@ -104,7 +108,7 @@ const CohortForm = () => {
 
   return (
     <Grid container>
-      <Grid item xs={8}>
+      <Grid item xs={7}>
         <Container maxWidth="sm">
           {loading && <CircularProgress />}
           {error && (
@@ -113,7 +117,7 @@ const CohortForm = () => {
             </Typography>
           )}
 
-          <Typography variant="h5" component="h2">
+          <Typography align="center" variant="h6">
             Cohort Details
           </Typography>
           <form
@@ -228,37 +232,47 @@ const CohortForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={5}>
+        <Typography align="center" variant="h6">
+          Cohorts
+        </Typography>
         <Container
           maxWidth="sm"
           sx={{
             overflow: "scroll",
             overflowX: "hidden",
             height: "500px",
-            width: "300px",
           }}
         >
           {cohortData &&
             cohortData.map((cohort, index) => (
               <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardActionArea
-                  onClick={() => handleFormAction("update", cohort)}
-                >
-                  <CardMedia
-                    sx={{ height: 100 }}
-                    image={cohort.photoUrl}
-                    title="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {cohort.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {cohort.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                <CardMedia
+                  component="img"
+                  sx={{
+                    maxHeight: "100px",
+                    maxWidth: "100%",
+                    objectFit: "contain",
+                  }}
+                  image={cohort.photoUrl}
+                  title={cohort.title}
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {cohort.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {cohort.school}
+                  </Typography>
+                  <Divider />
+                  <Typography variant="body2" color="text.secondary">
+                    {cohort.description}
+                  </Typography>
+                </CardContent>
                 <CardActions>
+                  <Button size="small" onClick={() => handleEditCohort(cohort)}>
+                    edit
+                  </Button>
                   <Button
                     size="small"
                     onClick={() => handleDeleteCohort(cohort.cohortId)}
