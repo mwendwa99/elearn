@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewSubject } from "./subjectActions";
+import {
+  createNewSubject,
+  getSubjects,
+  deleteSubject,
+  updateSubject,
+} from "./subjectActions";
 
 const initialState = {
   subjects: [],
@@ -35,6 +40,39 @@ const subjectSlice = createSlice({
         state.loading = false;
       })
       .addCase(createNewSubject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getSubjects.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSubjects.fulfilled, (state, action) => {
+        state.subjects = action.payload;
+        state.loading = false;
+      })
+      .addCase(getSubjects.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteSubject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteSubject.fulfilled, (state, action) => {
+        state.subjects = action.payload;
+        state.loading = false;
+      })
+      .addCase(deleteSubject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateSubject.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateSubject.fulfilled, (state, action) => {
+        state.subjects = action.payload;
+        state.loading = false;
+      })
+      .addCase(updateSubject.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
