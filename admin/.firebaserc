@@ -7,9 +7,6 @@
       "hosting": {
         "admin": [
           "elearn-admin"
-        ],
-        "public": [
-          "elearn-381507"
         ]
       }
     }

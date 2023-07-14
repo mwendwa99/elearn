@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "elearn-381507",
+    "site": "elearn-admin",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
