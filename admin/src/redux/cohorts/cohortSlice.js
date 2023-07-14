@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewCohort, getCohorts } from "./cohortActions";
+import { createNewCohort, getCohorts, deleteCohort } from "./cohortActions";
 
 const initialState = {
   cohorts: [],
@@ -46,6 +46,17 @@ const cohortSlice = createSlice({
         state.loading = false;
       })
       .addCase(getCohorts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteCohort.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteCohort.fulfilled, (state, action) => {
+        state.cohorts = action.payload;
+        state.loading = false;
+      })
+      .addCase(deleteCohort.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -3,6 +3,7 @@ import {
   collection,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -51,6 +52,26 @@ export const updateCohort = createAsyncThunk(
       const docRef = doc(db, "cohorts", cohort.cohortId);
       await updateDoc(docRef, cohort);
       dispatch(setCohorts(cohort));
+    } catch (error) {
+      dispatch(setError(error.message));
+    }
+  }
+);
+
+export const deleteCohort = createAsyncThunk(
+  "dispatch/deleteCohort",
+  async (cohortId, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      dispatch(clearError());
+      const docRef = doc(db, "cohorts", cohortId);
+      await deleteDoc(docRef);
+      const querySnapshot = await getDocs(collection(db, "cohorts"));
+      const cohorts = [];
+      querySnapshot.forEach((doc) => {
+        cohorts.push({ ...doc.data(), cohortId: doc.id });
+      });
+      dispatch(setCohorts(cohorts));
     } catch (error) {
       dispatch(setError(error.message));
     }

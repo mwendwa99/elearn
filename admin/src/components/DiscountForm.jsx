@@ -23,7 +23,6 @@ const DiscountForm = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.discounts);
-  console.log(loading);
   useEffect(() => {
     // once dispatch is successful, reset the form
     if (!loading && !error) {
@@ -42,7 +41,6 @@ const DiscountForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
-    console.log(formValues);
     dispatch(createNewDiscount(formValues));
   };
 

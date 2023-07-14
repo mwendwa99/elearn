@@ -18,6 +18,7 @@ import {
   createNewCohort,
   getCohorts,
   updateCohort,
+  deleteCohort,
 } from "../redux/cohorts/cohortActions";
 
 const initialValues = {
@@ -67,7 +68,6 @@ const CohortForm = () => {
         break;
       case "update":
         setFormValues(() => cohort);
-        console.log("id", cohort.cohortId);
         setIsUpdate(() => true);
         break;
       default:
@@ -95,6 +95,11 @@ const CohortForm = () => {
     // Handle form submission or validation here
     // console.log("update", formValues);
     dispatch(updateCohort(formValues));
+  };
+
+  const handleDeleteCohort = (cohortId) => {
+    // Handle form submission or validation here
+    dispatch(deleteCohort(cohortId));
   };
 
   return (
@@ -254,7 +259,12 @@ const CohortForm = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small">delete</Button>
+                  <Button
+                    size="small"
+                    onClick={() => handleDeleteCohort(cohort.cohortId)}
+                  >
+                    delete
+                  </Button>
                 </CardActions>
               </Card>
             ))}

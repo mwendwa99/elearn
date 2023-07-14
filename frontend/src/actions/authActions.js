@@ -75,7 +75,6 @@ export const updateUserProfile = (uid, type, country) => async (dispatch) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       dispatch(setUserProfile(docSnap.data()));
-      console.log("Document data:", docSnap.data());
     } else {
       dispatch(
         setError({
