@@ -37,14 +37,18 @@ const CohortForm = () => {
   const { cohorts, loading, error } = useSelector((state) => state.cohorts);
   const [cohortData, setCohortData] = useState([]);
   const dispatch = useDispatch();
-  console.log("isUpdate", isUpdate);
+
+  // useEffect to reset isUpdate to false after rerender
+  useEffect(() => {
+    setIsUpdate(() => false);
+  }, [cohorts]);
 
   useEffect(() => {
     dispatch(getCohorts());
   }, [dispatch]);
 
   useEffect(() => {
-    if (cohorts) {
+    if (Array.isArray(cohorts)) {
       setCohortData(cohorts);
     }
   }, [cohorts]);
@@ -54,7 +58,7 @@ const CohortForm = () => {
     if (!loading && !error) {
       setFormValues(initialValues);
     }
-  }, [dispatch, error, loading]);
+  }, [error, loading]);
 
   const handleFormAction = (actionType, cohort) => {
     switch (actionType) {
@@ -83,6 +87,7 @@ const CohortForm = () => {
     // Handle form submission or validation here
     dispatch(createNewCohort(formValues));
     setIsUpdate(() => false);
+    setCohortData((prevData) => [...prevData, formValues]);
   };
 
   const handleUpdateCohort = (e) => {
@@ -98,7 +103,7 @@ const CohortForm = () => {
         <Container maxWidth="sm">
           {loading && <CircularProgress />}
           {error && (
-            <Typography variant="h5" component="h2">
+            <Typography variant="body1" color="text.error" component="h2">
               {error}
             </Typography>
           )}
@@ -219,15 +224,23 @@ const CohortForm = () => {
         </Container>
       </Grid>
       <Grid item xs={4}>
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            overflow: "scroll",
+            overflowX: "hidden",
+            height: "500px",
+            width: "300px",
+          }}
+        >
           {cohortData &&
             cohortData.map((cohort, index) => (
-              <Card sx={{ maxWidth: 345 }} key={index}>
+              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
                 <CardActionArea
                   onClick={() => handleFormAction("update", cohort)}
                 >
                   <CardMedia
-                    sx={{ height: 140 }}
+                    sx={{ height: 100 }}
                     image={cohort.photoUrl}
                     title="green iguana"
                   />
