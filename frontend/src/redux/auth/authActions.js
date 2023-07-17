@@ -11,8 +11,8 @@ import {
   setUserProfile,
   clearUser,
   clearError,
-} from "../features/authSlice";
-import { auth, db } from "../firebase";
+} from "./authSlice";
+import { auth, db } from "../../firebaseConfig";
 import {
   doc,
   setDoc,

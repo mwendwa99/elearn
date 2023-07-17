@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 
-import { getClass } from "../features/classSlice";
+import { getClass } from "../redux/classroom/classSlice";
 
 import students from "../assets/students.webp";
 import Services from "../components/Services";

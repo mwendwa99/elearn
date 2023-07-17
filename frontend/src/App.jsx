@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser } from "./actions/authActions";
+import { getCurrentUser } from "./redux/auth/authActions";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { logoutUser } from "../actions/authActions";
+import { logoutUser } from "../redux/auth/authActions";
 // import theme from "../theme";
 import logo from "../assets/logo.svg";
 

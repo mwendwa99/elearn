@@ -1,11 +1,11 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebaseConfig";
 
 import {
   getClassesStart,
   getClassesSuccess,
   getClassesFailure,
-} from "../features/classSlice";
+} from "./classSlice";
 
 export const getClasses = () => async (dispatch) => {
   dispatch(getClassesStart());
