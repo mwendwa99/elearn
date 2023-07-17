@@ -39,7 +39,9 @@ const DiscountCard = ({ image, title, description, onClick }) => {
         >
           {title}
         </Typography>
-        <Typography variant="body1">{description}</Typography>
+        <Typography variant="body1" color="text.contrastText">
+          {description}
+        </Typography>
       </CardContent>
     </Card>
   );

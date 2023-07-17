@@ -2,13 +2,33 @@ import { useRef, useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
 import DiscountCard from "./DiscountCard";
 
+import { getDiscounts } from "../redux/discounts/discountActions";
+import { useDispatch, useSelector } from "react-redux";
+
 import Card from "./Card";
 
 register();
 
-export default function Slider({ classes, discounts }) {
+export default function Slider({ classes }) {
   const swiperElRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const dispatch = useDispatch();
+  const { discounts, isLoading, error } = useSelector(
+    (state) => state.discounts
+  );
+  const [discountData, setDiscountData] = useState([]);
+
+  useEffect(() => {
+    dispatch(getDiscounts());
+  }, []);
+
+  useEffect(() => {
+    if (Array.isArray(discounts)) {
+      setDiscountData(discounts);
+    }
+  }, [discounts]);
+
+  console.log(discounts);
 
   useEffect(() => {
     // listen for window resize
@@ -27,7 +47,7 @@ export default function Slider({ classes, discounts }) {
     swiperElRef.current.addEventListener("slidechange", (e) => {
       // console.log("slide changed");
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <swiper-container
@@ -56,11 +76,11 @@ export default function Slider({ classes, discounts }) {
             />
           </swiper-slide>
         ))}
-      {discounts &&
-        discounts.map((d, index) => (
+      {discountData &&
+        discountData.map((d, index) => (
           <swiper-slide key={index}>
             <DiscountCard
-              image={d.image}
+              image={d.photoUrl}
               title={d.title}
               description={d.description}
               onClick={() => console.log("clicked")}
