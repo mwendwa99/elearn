@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getClass, addClass } from "../features/classroom/classSlice";
+import { getClass, addClass } from "../redux/classroom/classSlice";
 import ClassesCarousel from "../components/Carousel";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";

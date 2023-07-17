@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { useDispatch } from "react-redux";
-import { updateUserProfile } from "../actions/authActions";
+import { updateUserProfile } from "../redux/auth/authActions";
 
 import CountrySelector from "./CountrySelector";
 import UserTypeSelector from "./UserTypeSelector";
