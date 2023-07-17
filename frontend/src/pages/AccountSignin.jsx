@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { signInWithGoogle } from "../actions/authActions";
+import { signInWithGoogle } from "../redux/auth/authActions";
 
 import { useNavigate } from "react-router-dom";
 
