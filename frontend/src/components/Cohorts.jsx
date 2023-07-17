@@ -1,43 +1,21 @@
 import { useEffect, useState } from "react";
 
-import { Container, Typography, Paper, Divider, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Paper,
+  Divider,
+  Box,
+  Card,
+  Grid,
+  CardMedia,
+  CardActions,
+  CardContent,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCohorts } from "../redux/cohorts/cohortActions";
-
-// const cohorts = [
-//   {
-//     name: "Introduction to Computer Science",
-//     school: "Harvard University",
-//     duration: "12 weeks",
-//     startDate: "October 1, 2022",
-//     tutor: "David J. Malan",
-//     path: "/cohort/cs",
-//     image:
-//       "https://images.pexels.com/photos/5429947/pexels-photo-5429947.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-//   },
-//   {
-//     name: "Machine Learning",
-//     school: "Stanford University",
-//     duration: "10 weeks",
-//     startDate: "November 1, 2022",
-//     tutor: "Andrew Ng",
-//     path: "/cohort/ml",
-//     image:
-//       "https://images.pexels.com/photos/5678042/pexels-photo-5678042.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-//   },
-//   {
-//     name: "Mobile App Development with React Native",
-//     school: "The Hong Kong University of Science and Technology",
-//     duration: "8 weeks",
-//     startDate: "December 1, 2022",
-//     tutor: "Jogesh K. Muppala",
-//     path: "/cohort/react-native",
-//     image:
-//       "https://images.pexels.com/photos/1065085/pexels-photo-1065085.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-//   },
-// ];
 
 const Cohorts = () => {
   const [cohortData, setCohortData] = useState([]);
@@ -59,65 +37,60 @@ const Cohorts = () => {
       <Typography color="primary" variant="h4" align="center" gutterBottom>
         Cohorts
       </Typography>
-      {cohortData &&
-        cohortData.map((cohort, index) => (
-          <Paper
-            key={index}
-            variant="outlined"
-            sx={{ p: 2, mb: 2, display: "flex", alignItems: "center" }}
-          >
-            <Box
-              sx={{
-                display: {
-                  xs: "none",
-                  md: "block",
-                },
-              }}
-            >
-              <img
-                src={cohort.photoUrl}
-                alt={`${cohort.name} at ${cohort.school}`}
-                style={{
-                  maxHeight: "100px",
-                  objectFit: "cover",
-                  width: "200px",
-                  height: "100px",
-                  borderRadius: "5px",
-                  marginRight: "1rem",
+      {/* <Paper
+        key={index}
+        variant="outlined"
+        sx={{ p: 2, mb: 2, display: "flex", alignItems: "center" }}
+      > */}
+      <Grid container spacing={1}>
+        {cohortData &&
+          cohortData.map((cohort, index) => (
+            <Grid item xs={12} sm={10} md={6}>
+              <Card
+                sx={{
+                  maxWidth: "100%",
+                  my: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  p: 1,
+                  height: "150px",
                 }}
-              />
-            </Box>
-            <div>
-              <Link
-                //   to={`/cohorts/${cohort.name.replace(/ /g, "-").toLowerCase()}`}
-                to={cohort.path}
-                style={{ textDecoration: "none", color: "inherit" }}
+                key={index}
               >
-                <Typography
-                  color="primary"
-                  variant="h6"
-                  gutterBottom
-                  component="div"
-                >
-                  {cohort.name}
-                </Typography>
-              </Link>
-              <Typography color="text.secondary" variant="subtitle1">
-                {cohort.school}
-              </Typography>
-              <Typography color="text.secondary" variant="body1" gutterBottom>
-                Starts: {cohort.startDate}
-              </Typography>
-              <Typography color="text.secondary" variant="body1" gutterBottom>
-                {cohort.tutor}
-              </Typography>
-              <Divider sx={{ my: 1 }} />
-              <Typography color="text.secondary" variant="body2">
-                {cohort.description}
-              </Typography>
-            </div>
-          </Paper>
-        ))}
+                <CardMedia
+                  component="img"
+                  sx={{
+                    objectFit: "cover",
+                    width: "200px",
+                    height: "100px",
+                    borderRadius: "5px",
+                  }}
+                  image={cohort.photoUrl}
+                  title={cohort.title}
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div" color="text.primary">
+                    {cohort.title}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    {cohort.school}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    starts:{cohort.startDate.replace(/-/g, "/")}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    ends:{cohort.endDate.replace(/-/g, "/")}
+                  </Typography>
+                  <Divider />
+                  <Typography variant="body2" color="text.secondary">
+                    {cohort.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+      </Grid>
+      {/* </Paper> */}
     </Container>
   );
 };
