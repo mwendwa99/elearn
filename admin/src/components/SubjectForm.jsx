@@ -12,6 +12,7 @@ import {
   CardMedia,
   Card,
   Stack,
+  Box,
 } from "@mui/material";
 import { Star } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -112,7 +113,33 @@ const SubjectForm = () => {
           <Typography variant="h5" component="h2">
             Subject Form
           </Typography>
-          {loading && <CircularProgress />}
+          {loading && (
+            <Box
+              component="div"
+              sx={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#fff",
+                position: "fixed",
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                zIndex: 9999,
+              }}
+            >
+              <CircularProgress
+                size={40}
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
+                }}
+              />
+            </Box>
+          )}
           {error && (
             <Typography variant="h5" component="h2">
               {error}
@@ -121,7 +148,7 @@ const SubjectForm = () => {
           <form
             onSubmit={isUpdate ? handleUpdateSubject : handleSubmitNewSubject}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={6}>
                 <TextField
                   required
@@ -231,11 +258,12 @@ const SubjectForm = () => {
           Subjects
         </Typography>
         <Container
-          maxWidth="sm"
+          maxWidth="xs"
           sx={{
             overflow: "scroll",
             overflowX: "hidden",
             height: "500px",
+            minWidth: "300px",
           }}
         >
           {subjectData &&

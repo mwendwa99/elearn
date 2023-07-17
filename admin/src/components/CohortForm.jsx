@@ -11,6 +11,7 @@ import {
   CardContent,
   CardActions,
   Divider,
+  Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -110,7 +111,33 @@ const CohortForm = () => {
     <Grid container>
       <Grid item xs={7}>
         <Container maxWidth="sm">
-          {loading && <CircularProgress />}
+          {loading && (
+            <Box
+              component="div"
+              sx={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#fff",
+                position: "fixed",
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                zIndex: 9999,
+              }}
+            >
+              <CircularProgress
+                size={40}
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
+                }}
+              />
+            </Box>
+          )}
           {error && (
             <Typography variant="body1" color="text.error" component="h2">
               {error}
@@ -123,7 +150,7 @@ const CohortForm = () => {
           <form
             onSubmit={isUpdate ? handleUpdateCohort : handleSubmitNewCohort}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={6}>
                 <TextField
                   required
@@ -237,11 +264,12 @@ const CohortForm = () => {
           Cohorts
         </Typography>
         <Container
-          maxWidth="sm"
+          maxWidth="xs"
           sx={{
             overflow: "scroll",
             overflowX: "hidden",
             height: "500px",
+            minWidth: "300px",
           }}
         >
           {cohortData &&
