@@ -8,55 +8,17 @@ import VerticalTabs from "../components/VerticalTabs";
 import PersonalInfoCard from "../components/PersonalInfoCard";
 
 const ProfilePage = () => {
-  const { userProfile, currentUser, isLoading, error } = useSelector(
-    (state) => state.auth
-  );
-  const dispatch = useDispatch();
-  const [userData, setUserData] = useState({
-    displayName: "",
-    email: "",
-    type: "",
-    country: "",
-    photoURL: "",
-  });
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (currentUser !== null) {
-      setUserData({
-        displayName: currentUser?.displayName,
-        email: currentUser?.email,
-        type: userProfile?.type,
-        country: userProfile?.country,
-        photoURL: currentUser?.photoURL,
-      });
-    }
-  }, [currentUser, navigate, userProfile, dispatch]);
-
   const sideTabs = [
     {
       label: "Profile",
-      path: `/profile/${currentUser?.id}`,
-      component: (
-        <PersonalInfoCard
-          uid={currentUser?.uid}
-          displayName={userData.displayName}
-          email={userData.email}
-          type={userData.type}
-          country={userData.country}
-          photoURL={userData.photoURL}
-        />
-      ),
+      component: <PersonalInfoCard />,
     },
     {
       label: "My Enrollments",
-      path: `/profile/${currentUser?.id}/enrollments`,
       component: <Paper>My Enrollments</Paper>,
     },
     {
       label: "My Courses",
-      path: `/profile/${currentUser?.id}/courses`,
       component: <Paper>My Courses</Paper>,
     },
   ];

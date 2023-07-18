@@ -6,6 +6,7 @@ import {
   Stack,
   Button,
   Grid,
+  Skeleton,
 } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +15,11 @@ import { updateUserProfile, getUserProfile } from "../redux/auth/authActions";
 import CountrySelector from "./CountrySelector";
 import UserTypeSelector from "./UserTypeSelector";
 
-const PersonalInfoCard = ({ uid }) => {
+const PersonalInfoCard = () => {
   const dispatch = useDispatch();
-  const { isLoading, error, userProfile } = useSelector((state) => state.auth);
+  const { isLoading, error, userProfile, currentUser } = useSelector(
+    (state) => state.auth
+  );
   const [userProfileData, setUserProfileData] = useState({
     displayName: "",
     email: "",
@@ -26,8 +29,8 @@ const PersonalInfoCard = ({ uid }) => {
   });
 
   useEffect(() => {
-    dispatch(getUserProfile(uid));
-  }, [dispatch, uid]);
+    dispatch(getUserProfile(currentUser?.uid));
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     if (userProfile) {
@@ -54,46 +57,67 @@ const PersonalInfoCard = ({ uid }) => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
-            <img
-              src={userProfileData.photoURL}
-              alt="Profile"
-              width="100%"
-              style={{
-                borderRadius: "50%",
-                width: "100px",
-              }}
-            />
+            {isLoading || userProfileData.photoURL === "" ? (
+              <Skeleton variant="circular" width={100} height={100} />
+            ) : (
+              <img
+                src={userProfileData.photoURL}
+                alt="Profile"
+                width="100%"
+                style={{
+                  borderRadius: "50%",
+                  width: "100px",
+                }}
+              />
+            )}
           </Grid>
           <Grid item xs={12} sm={8}>
             <Typography variant="h5" gutterBottom color="text.primary">
               Personal Information
             </Typography>
-            <Typography variant="subtitle1" gutterBottom>
-              Name: {userProfileData.displayName}
-            </Typography>
-            <Typography variant="subtitle1" gutterBottom>
-              Email: {userProfileData.email}
-            </Typography>
+            {isLoading || userProfileData.displayName === "" ? (
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={100} />
+            ) : (
+              <Typography variant="subtitle1" gutterBottom>
+                Name:
+                {userProfileData.displayName}
+              </Typography>
+            )}
+            {isLoading || userProfileData.email === "" ? (
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={100} />
+            ) : (
+              <Typography variant="subtitle1" gutterBottom>
+                Email: {userProfileData.email}
+              </Typography>
+            )}
           </Grid>
           <Grid item xs={12} sm={12}>
             <Stack direction="column" sx={{ my: 2 }}>
               <Typography variant="body1" gutterBottom>
                 Please select who you are joining us as:
               </Typography>
-              <UserTypeSelector
-                disabled={userProfileData.type ? true : false}
-                onChange={handleTypeChange}
-                value={userProfileData.type}
-              />
+              {isLoading || userProfileData.type === "" ? (
+                <Skeleton variant="rectangular" width={300} height={50} />
+              ) : (
+                <UserTypeSelector
+                  disabled={userProfileData.type ? true : false}
+                  onChange={handleTypeChange}
+                  value={userProfileData.type}
+                />
+              )}
             </Stack>
             <Stack direction="column" sx={{ my: 2 }}>
               <Typography variant="body1" gutterBottom>
                 Country code:
               </Typography>
-              <CountrySelector
-                countryCode={userProfileData.country}
-                onCountryChange={handleCountryChange}
-              />
+              {isLoading || userProfileData.country === "" ? (
+                <Skeleton variant="rectangular" width={300} height={20} />
+              ) : (
+                <CountrySelector
+                  countryCode={userProfileData.country}
+                  onCountryChange={handleCountryChange}
+                />
+              )}
             </Stack>
           </Grid>
           <Grid item xs={12} sm={12}>
