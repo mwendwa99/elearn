@@ -25,7 +25,7 @@ const pages = [
   "Home",
   "About",
   "Cohort",
-  "Tutoring",
+  // "Tutoring",
   "Co-curricular",
   "Start Learning",
 ];
@@ -38,8 +38,8 @@ const getPageLink = (page) => {
       return "/about";
     case "Cohort":
       return "/cohort";
-    case "Tutoring":
-      return "/tutoring";
+    // case "Tutoring":
+    //   return "/tutoring";
     case "Co-curricular":
       return "/co-curricular";
     case "Start Learning":

@@ -33,20 +33,36 @@ const Cohorts = () => {
   }, [cohorts]);
 
   return (
-    <Container sx={{ py: 8 }}>
+    <Container>
       <Typography color="primary" variant="h4" align="center" gutterBottom>
         Cohorts
       </Typography>
-      {/* <Paper
-        key={index}
-        variant="outlined"
-        sx={{ p: 2, mb: 2, display: "flex", alignItems: "center" }}
-      > */}
-      <Grid container spacing={1}>
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          maxHeight: "300px",
+          p: 2,
+          overflow: "scroll",
+          overflowX: "hidden",
+          "&::-webkit-scrollbar": {
+            width: "0.5em",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "#eaeaea",
+            borderRadius: "100px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#c7c7c7",
+            borderRadius: "100px",
+          },
+        }}
+      >
         {cohortData &&
           cohortData.map((cohort, index) => (
             <Grid item xs={12} sm={10} md={6}>
               <Card
+                elevation={0}
                 sx={{
                   maxWidth: "100%",
                   my: 1,
@@ -90,7 +106,6 @@ const Cohorts = () => {
             </Grid>
           ))}
       </Grid>
-      {/* </Paper> */}
     </Container>
   );
 };

@@ -16,7 +16,7 @@ const AccountSignin = lazy(() => import("./pages/AccountSignin"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
 const Cohort = lazy(() => import("./pages/CohortPage"));
-const Tutor = lazy(() => import("./pages/TutorPage"));
+// const Tutor = lazy(() => import("./pages/TutorPage"));
 const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
 const StartLearning = lazy(() => import("./pages/StartLearningPage"));
 const Classroom = lazy(() => import("./pages/ClassroomPage"));
@@ -70,7 +70,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/cohort" element={<Cohort />} />
-          <Route exact path="/tutoring" element={<Tutor />} />
+          {/* <Route exact path="/tutoring" element={<Tutor />} /> */}
           <Route exact path="/co-curricular" element={<CocCurricular />} />
           <Route exact path="/start_learning" element={<StartLearning />} />
           <Route exact path="/classroom" element={<Classroom />} />
