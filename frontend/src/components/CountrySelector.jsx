@@ -33,32 +33,46 @@ function CountrySelector(props) {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-      <Autocomplete
-        style={{ width: "100%" }}
-        filterOptions={filterOptions}
-        options={countryList}
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => (
-          <TextField {...params} label="Select a country" variant="outlined" />
-        )}
-        onChange={(_, value) => {
-          props.onCountryChange(value);
-        }}
-        renderOption={(props, option) => (
-          <Box
-            component="li"
-            sx={{ typography: "body2", display: "flex", alignItems: "center" }}
-            {...props}
-          >
-            <Flag sx={{ mr: 1 }} htmlColor="#ccc" fontSize="small" />
-            <Box component="span" sx={{ flexGrow: 1 }}>
-              <Typography variant="body2" color="text.secondary">
-                {option.name} {option.code}
-              </Typography>
+      {props.countryCode ? (
+        <Typography disabled variant="body2" color="text.secondary">
+          {props.countryCode}
+        </Typography>
+      ) : (
+        <Autocomplete
+          style={{ width: "100%" }}
+          filterOptions={filterOptions}
+          options={countryList}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Select a country"
+              variant="outlined"
+            />
+          )}
+          onChange={(_, value) => {
+            props.onCountryChange(value);
+          }}
+          renderOption={(props, option) => (
+            <Box
+              component="li"
+              sx={{
+                typography: "body2",
+                display: "flex",
+                alignItems: "center",
+              }}
+              {...props}
+            >
+              <Flag sx={{ mr: 1 }} htmlColor="#ccc" fontSize="small" />
+              <Box component="span" sx={{ flexGrow: 1 }}>
+                <Typography variant="body2" color="text.secondary">
+                  {option.name} {option.code}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        )}
-      />
+          )}
+        />
+      )}
     </Box>
   );
 }

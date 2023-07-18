@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   setLoading,
   setError,
@@ -60,42 +61,33 @@ export const signInWithGoogle = () => async (dispatch) => {
 };
 
 // write an action to update user profile in firestore params are uid, type, country
-export const updateUserProfile = (uid, type, country) => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    const userDocRef = doc(db, "users", uid);
-    await updateDoc(userDocRef, {
-      type: type,
-      country: country,
-      updatedAt: serverTimestamp(),
-    });
-
-    // Fetch the updated user profile from Firestore
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      dispatch(setUserProfile(docSnap.data()));
-    } else {
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async ({ uid, type, country }, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      const userDocRef = doc(db, "users", uid);
+      await updateDoc(userDocRef, {
+        type,
+        country,
+        updatedAt: serverTimestamp(),
+      });
+      // set user profile with users data from db
+      const userDoc = await getDoc(userDocRef);
+      const response = userDoc.data();
+      dispatch(setUserProfile(response));
+      dispatch(clearError());
+    } catch (error) {
       dispatch(
         setError({
-          code: "user-not-found",
-          message: "No such document!",
-          origin: "updateUserProfileDatabase",
+          code: error.code,
+          message: error.message,
+          origin: "updateUserProfile",
         })
       );
     }
-  } catch (error) {
-    dispatch(
-      setError({
-        code: error.code,
-        message: error.message,
-        origin: "updateUserProfile",
-      })
-    );
-  } finally {
-    dispatch(setLoading(false));
   }
-};
+);
 
 // Create async action to get current user on app load
 export const getCurrentUser = () => async (dispatch) => {
@@ -109,21 +101,27 @@ export const getCurrentUser = () => async (dispatch) => {
   }
 };
 
-export const getUserProfile = (uid) => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    // const response = await axios.get(`http://localhost:3000/user/${uid}`);
-    // const response = auth.currentUser;
-    const userDocRef = doc(db, "users", uid);
-    const userDoc = await getDoc(userDocRef);
-    const response = userDoc.data();
-    dispatch(setUserProfile(response));
-  } catch (error) {
-    dispatch(setError(error.message));
-  } finally {
-    dispatch(setLoading(false));
+export const getUserProfile = createAsyncThunk(
+  "auth/getUserProfile",
+  async (uid, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      const userDocRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userDocRef);
+      const response = userDoc.data();
+      dispatch(setUserProfile(response));
+      dispatch(clearError());
+    } catch (error) {
+      dispatch(
+        setError({
+          code: error.code,
+          message: error.message,
+          origin: "getUserProfile",
+        })
+      );
+    }
   }
-};
+);
 
 // Create async action to log out a user
 export const logoutUser = () => async (dispatch) => {

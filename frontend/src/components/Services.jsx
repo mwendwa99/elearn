@@ -81,7 +81,7 @@ export default function Services() {
                 color="primary"
                 sx={{ mt: "1rem" }}
                 component={RouterLink}
-                to="/signup"
+                to="/signin"
               >
                 Get Started
               </Button>
@@ -116,7 +116,7 @@ export default function Services() {
                 color="primary"
                 sx={{ mt: "1rem" }}
                 component={RouterLink}
-                to="/signup"
+                to="/signin"
               >
                 Get Started
               </Button>

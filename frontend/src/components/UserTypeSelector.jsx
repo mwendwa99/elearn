@@ -12,7 +12,7 @@ const UserTypeSelector = ({ disabled, onChange, value }) => {
         id="user-type"
         onChange={handleTypeChange}
         disabled={disabled}
-        label="User Type"
+        label="Register as"
         sx={{ minWidth: 120 }}
         value={value ? value : ""}
         required

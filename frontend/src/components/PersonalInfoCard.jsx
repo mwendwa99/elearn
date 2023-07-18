@@ -8,28 +8,32 @@ import {
   Grid,
 } from "@mui/material";
 
-import { useDispatch } from "react-redux";
-import { updateUserProfile } from "../redux/auth/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfile, getUserProfile } from "../redux/auth/authActions";
 
 import CountrySelector from "./CountrySelector";
 import UserTypeSelector from "./UserTypeSelector";
 
-const PersonalInfoCard = ({
-  uid,
-  displayName,
-  email,
-  type,
-  country,
-  photoURL,
-}) => {
-  const [countryCode, setCountryCode] = useState(country);
-  const [editedType, setEditedType] = useState(type);
+const PersonalInfoCard = ({ uid }) => {
   const dispatch = useDispatch();
+  const { isLoading, error, userProfile } = useSelector((state) => state.auth);
+  const [userProfileData, setUserProfileData] = useState({
+    displayName: "",
+    email: "",
+    type: "",
+    country: "",
+    photoURL: "",
+  });
 
   useEffect(() => {
-    setCountryCode(country);
-    setEditedType(type);
-  }, [country, type, dispatch]);
+    dispatch(getUserProfile(uid));
+  }, [dispatch, uid]);
+
+  useEffect(() => {
+    if (userProfile) {
+      setUserProfileData(userProfile);
+    }
+  }, [userProfile]);
 
   const handleTypeChange = (value) => {
     setEditedType(value);
@@ -46,12 +50,12 @@ const PersonalInfoCard = ({
   };
 
   return (
-    <Card sx={{ maxWidth: 400 }}>
+    <Card sx={{ maxWidth: 400 }} elevation={0}>
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <img
-              src={photoURL}
+              src={userProfileData.photoURL}
               alt="Profile"
               width="100%"
               style={{
@@ -61,14 +65,14 @@ const PersonalInfoCard = ({
             />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" gutterBottom color="text.primary">
               Personal Information
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Name: {displayName}
+              Name: {userProfileData.displayName}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Email: {email}
+              Email: {userProfileData.email}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -77,20 +81,30 @@ const PersonalInfoCard = ({
                 Please select who you are joining us as:
               </Typography>
               <UserTypeSelector
-                disabled={type ? true : false}
+                disabled={userProfileData.type ? true : false}
                 onChange={handleTypeChange}
-                value={editedType}
+                value={userProfileData.type}
               />
             </Stack>
             <Stack direction="column" sx={{ my: 2 }}>
               <Typography variant="body1" gutterBottom>
-                What country do you come from?:
+                Country code:
               </Typography>
-              <CountrySelector onCountryChange={handleCountryChange} />
+              <CountrySelector
+                countryCode={userProfileData.country}
+                onCountryChange={handleCountryChange}
+              />
             </Stack>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Button variant="contained" onClick={handleSave} sx={{}}>
+            <Button
+              disabled={
+                userProfileData.type && userProfileData.country ? true : false
+              }
+              variant="contained"
+              onClick={handleSave}
+              sx={{}}
+            >
               Save
             </Button>
           </Grid>

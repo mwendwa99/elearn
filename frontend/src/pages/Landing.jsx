@@ -83,7 +83,7 @@ export default function Landing() {
           <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
             <Button
               component={RouterLink}
-              to="/signup"
+              to="/signin"
               variant="contained"
               color="primary"
             >

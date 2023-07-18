@@ -102,15 +102,19 @@ function ResponsiveAppBar({ isAuth, displayName }) {
             </IconButton>
             <Box component="span">
               <Typography
-                variant={{ xs: "body1", sm: "h6" }}
                 sx={{
                   fontWeight: { xs: "bold", sm: "" },
+                  fontSize: { xs: "body1.fontSize", sm: "h6.fontSize" },
                 }}
               >
                 StaryDream International School
               </Typography>
               <br />
-              <Typography variant={{ xs: "body1", sm: "subtitle1" }}>
+              <Typography
+                sx={{
+                  fontSize: { xs: "body1.fontSize", sm: "subtitle.fontSize" },
+                }}
+              >
                 Engage. Empower. Excel
               </Typography>
             </Box>

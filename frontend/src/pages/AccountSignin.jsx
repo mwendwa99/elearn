@@ -28,7 +28,7 @@ const AccountSignin = () => {
 
   useEffect(() => {
     if (currentUser) {
-      navigate("/", { replace: true });
+      navigate("/profile", { replace: true });
     }
   }, [currentUser, navigate]);
 
@@ -45,7 +45,7 @@ const AccountSignin = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "100%",
           width: "100%",
         }}
       >

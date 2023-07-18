@@ -3,7 +3,7 @@ import { getCohorts } from "./cohortActions";
 
 const initialState = {
   cohorts: [],
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -13,10 +13,10 @@ const cohortSlice = createSlice({
   reducers: {
     setCohorts(state, action) {
       state.cohorts = action.payload;
-      state.loading = false;
+      state.isLoading = false;
     },
     setLoading(state, action) {
-      state.loading = action.payload;
+      state.isLoading = action.payload;
     },
     setError(state, action) {
       state.error = action.payload;
@@ -28,14 +28,14 @@ const cohortSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCohorts.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
       })
       .addCase(getCohorts.fulfilled, (state, action) => {
         state.cohorts = action.payload;
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(getCohorts.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.payload;
       });
   },
