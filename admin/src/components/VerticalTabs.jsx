@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import CohortForm from "./CohortForm";
 import SubjectForm from "./SubjectForm";
 import DiscountForm from "./DiscountForm";
+import UsersForm from "./UsersForm";
 
 function TabPanel(props) {
   // eslint-disable-next-line react/prop-types
@@ -60,6 +61,7 @@ export default function VerticalTabs() {
         <Tab label="Cohorts" {...a11yProps(0)} />
         <Tab label="Subjects" {...a11yProps(1)} />
         <Tab label="Discounts" {...a11yProps(2)} />
+        <Tab label="Users" {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <CohortForm />
@@ -69,6 +71,9 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <DiscountForm />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <UsersForm />
       </TabPanel>
     </Box>
   );
