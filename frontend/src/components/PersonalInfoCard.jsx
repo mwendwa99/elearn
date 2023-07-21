@@ -67,6 +67,7 @@ const PersonalInfoCard = () => {
                 style={{
                   borderRadius: "50%",
                   width: "100px",
+                  height: "100px",
                 }}
               />
             )}
