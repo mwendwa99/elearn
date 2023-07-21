@@ -100,16 +100,15 @@ function ResponsiveAppBar({ isAuth, displayName }) {
             >
               <img height="100%" width="100%" src={logo} alt="logo" />
             </IconButton>
-            <Box component="span">
+            <Box component="span" sx={{ display: { xs: "none", sm: "block" } }}>
               <Typography
                 sx={{
-                  fontWeight: { xs: "bold", sm: "" },
+                  fontWeight: { xs: "regular", sm: "bold" },
                   fontSize: { xs: "body1.fontSize", sm: "h6.fontSize" },
                 }}
               >
                 StaryDream International School
               </Typography>
-              <br />
               <Typography
                 sx={{
                   fontSize: { xs: "body1.fontSize", sm: "subtitle.fontSize" },
