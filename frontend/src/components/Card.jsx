@@ -36,11 +36,19 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    children: name,
   };
 }
 
-export default function MediaCard({ title, tutor, start, price, description }) {
+export default function MediaCard({
+  title,
+  tutor,
+  subtitle,
+  start,
+  price,
+  description,
+  image,
+}) {
   // check if current page is the landing page
   const isLandingPage = window.location.pathname === "/";
 
@@ -61,10 +69,14 @@ export default function MediaCard({ title, tutor, start, price, description }) {
         <CardContent>
           <CardMedia
             component="img"
-            height="100%"
-            image={online}
-            alt="Online Learning"
-            sx={{ objectFit: "cover", borderRadius: "8px" }}
+            image={image ? image : online}
+            alt={title}
+            sx={{
+              objectFit: "cover",
+              borderRadius: "8px",
+              maxHeight: "100px",
+              maxWidth: "100%",
+            }}
           />
           <Box
             sx={{
@@ -72,43 +84,30 @@ export default function MediaCard({ title, tutor, start, price, description }) {
               mt: 2,
             }}
           >
-            <Typography gutterBottom variant="h6" color="text.primary">
+            <Typography variant="h6" color="text.primary">
               {title}
             </Typography>
-
+            <Typography gutterBottom variant="body1" color="text.secondary">
+              {subtitle}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               {description}
             </Typography>
           </Box>
           <CardHeader
             title={
-              <Typography gutterBottom variant="h6" color="text.main">
-                {tutor}
+              <Typography variant="h6" color="text.main">
+                {tutor.firstName + " " + tutor.lastName}
               </Typography>
             }
             subheader={
               <Box>
-                <Typography variant="body2" color="text.secondary">
-                  Starts:
-                  {start.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }) +
-                    " " +
-                    start.toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })}
-                </Typography>
                 <Typography variant="h5" color="text.primary">
-                  {price}
+                  ${price}
                 </Typography>
               </Box>
             }
-            avatar={<Avatar {...stringAvatar(tutor)} />}
+            avatar={<Avatar alt={tutor.displayName} src={tutor.photoURL} />}
           />
         </CardContent>
       </CardActionArea>

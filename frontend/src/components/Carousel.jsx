@@ -2,33 +2,13 @@ import { useRef, useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
 import DiscountCard from "./DiscountCard";
 
-import { getDiscounts } from "../redux/discounts/discountActions";
-import { useDispatch, useSelector } from "react-redux";
-
 import Card from "./Card";
 
 register();
 
-export default function Slider({ classes }) {
+export default function Slider({ courseData, discountData }) {
   const swiperElRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const dispatch = useDispatch();
-  const { discounts, isLoading, error } = useSelector(
-    (state) => state.discounts
-  );
-  const [discountData, setDiscountData] = useState([]);
-
-  useEffect(() => {
-    dispatch(getDiscounts());
-  }, []);
-
-  useEffect(() => {
-    if (Array.isArray(discounts)) {
-      setDiscountData(discounts);
-    }
-  }, [discounts]);
-
-  console.log(discounts);
 
   useEffect(() => {
     // listen for window resize
@@ -47,7 +27,7 @@ export default function Slider({ classes }) {
     swiperElRef.current.addEventListener("slidechange", (e) => {
       // console.log("slide changed");
     });
-  }, [dispatch]);
+  }, [swiperElRef.current, windowWidth]);
 
   return (
     <swiper-container
@@ -64,14 +44,16 @@ export default function Slider({ classes }) {
       navigation="false"
       pagination="true"
     >
-      {classes &&
-        classes.map((c, index) => (
+      {courseData &&
+        courseData.map((c, index) => (
           <swiper-slide key={index}>
             <Card
               title={c.title}
               tutor={c.tutor}
               start={c.start}
               price={c.price}
+              image={c.photoUrl}
+              subtitle={c.subtitle}
               description={c.description}
             />
           </swiper-slide>

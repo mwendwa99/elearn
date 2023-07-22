@@ -1,46 +1,33 @@
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  getDocs,
+  doc,
+  getDoc,
+  where,
+  query,
+} from "firebase/firestore";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import { db } from "../../firebaseConfig";
 
-import {
-  getClassesStart,
-  getClassesSuccess,
-  getClassesFailure,
-} from "./classSlice";
+import { setAllClasses, setError, setLoading, clearError } from "./classSlice";
 
-export const getClasses = () => async (dispatch) => {
-  dispatch(getClassesStart());
-
-  // try {
-  //   const classesRef = collection(db, "classes");
-  //   const snapshot = await classesRef.get();
-
-  //   const classes = snapshot.docs.map((doc) => {
-  //     return {
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     };
-  //   });
-
-  //   dispatch(getClassesSuccess(classes));
-  // } catch (error) {
-  //   dispatch(getClassesFailure(error.message));
-  // }
-};
-
-export const addClass = (classData) => async (dispatch) => {
-  dispatch(addClassStart());
-
-  try {
-    const classesRef = collection(db, "classes");
-    const classDoc = await addDoc(classesRef, {
-      ...classData,
-      createdAt: serverTimestamp(),
-    });
-
-    dispatch(addClassSuccess());
-
-    return classDoc;
-  } catch (error) {
-    dispatch(addClassFailure(error.message));
+export const getAllClasses = createAsyncThunk(
+  "class/getAllClasses",
+  async (_, { dispatch }) => {
+    dispatch(setLoading());
+    dispatch(clearError());
+    try {
+      const querySnapshot = await getDocs(collection(db, "classes"));
+      const classes = [];
+      querySnapshot.forEach((doc) => {
+        classes.push({ ...doc.data(), id: doc.id });
+      });
+      dispatch(setAllClasses(classes));
+    } catch (error) {
+      dispatch(setError(error.message));
+    }
   }
-};
+);

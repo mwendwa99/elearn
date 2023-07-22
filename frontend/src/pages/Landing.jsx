@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,38 +9,34 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 
-import { getClass } from "../redux/classroom/classSlice";
+import { getAllCourses } from "../redux/courses/courseActions";
+import { getDiscounts } from "../redux/discounts/discountActions";
 
 import students from "../assets/students.webp";
 import Services from "../components/Services";
 import Carousel from "../components/Carousel";
 import Partners from "../components/Partners";
 
-const discounts = [
-  {
-    title: "Summer Sale",
-    image:
-      "https://images.pexels.com/photos/5625121/pexels-photo-5625121.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    title: "Back to School Discount",
-    image:
-      "https://images.pexels.com/photos/5625040/pexels-photo-5625040.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-  {
-    title: "Holiday Special",
-    image:
-      "https://images.pexels.com/photos/5632382/pexels-photo-5632382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  },
-];
-
 export default function Landing() {
-  const { classes } = useSelector((state) => state.class);
+  const [discountData, setDiscountData] = useState([]);
+  const [courseData, setCourseData] = useState([]);
+  const { courses } = useSelector((state) => state.courses);
+  const { discounts } = useSelector((state) => state.discounts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getClass());
+    dispatch(getDiscounts());
+    dispatch(getAllCourses());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (Array.isArray(discounts)) {
+      setDiscountData(discounts);
+    }
+    if (Array.isArray(courses)) {
+      setCourseData(courses);
+    }
+  }, [discounts, courses]);
 
   return (
     <>
@@ -110,7 +106,7 @@ export default function Landing() {
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
         <Grid item xs={12}>
-          <Carousel discounts={discounts} />
+          <Carousel discountData={discountData} />
         </Grid>
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
@@ -145,7 +141,7 @@ export default function Landing() {
             Let's join our famous class, the knowledge provided will definitely
             be useful for you.
           </Typography>
-          <Carousel classes={classes} />
+          <Carousel courseData={courseData} />
         </Grid>
       </Grid>
     </>

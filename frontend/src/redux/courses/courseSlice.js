@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllClasses } from "./classActions";
+import { getAllCourses } from "./courseActions";
 
 const initialState = {
-  classes: [],
+  courses: [],
   isLoading: false,
   error: null,
 };
 
-export const classSlice = createSlice({
-  name: "class",
+export const courseSlice = createSlice({
+  name: "course",
   initialState,
   reducers: {
     // add your reducers here
-    setAllClasses: (state, action) => {
-      state.classes = action.payload;
+    setAllCourses: (state, action) => {
+      state.courses = action.payload;
     },
     setLoading: (state) => {
       state.isLoading = true;
@@ -27,21 +27,21 @@ export const classSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllClasses.pending, (state) => {
+      .addCase(getAllCourses.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllClasses.fulfilled, (state, action) => {
+      .addCase(getAllCourses.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.classes = action.payload;
+        state.courses = action.payload;
       })
-      .addCase(getAllClasses.rejected, (state, action) => {
+      .addCase(getAllCourses.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { setAllClasses, setError, setLoading, clearError } =
-  classSlice.actions;
+export const { setAllCourses, setError, setLoading, clearError } =
+  courseSlice.actions;
 
-export default classSlice.reducer;
+export default courseSlice.reducer;
