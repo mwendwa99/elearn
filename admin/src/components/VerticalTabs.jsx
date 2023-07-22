@@ -7,6 +7,7 @@ import CohortForm from "./CohortForm";
 import SubjectForm from "./SubjectForm";
 import DiscountForm from "./DiscountForm";
 import UsersForm from "./UsersForm";
+import CourseForm from "./CourseForm";
 
 function TabPanel(props) {
   // eslint-disable-next-line react/prop-types
@@ -62,6 +63,7 @@ export default function VerticalTabs() {
         <Tab label="Subjects" {...a11yProps(1)} />
         <Tab label="Discounts" {...a11yProps(2)} />
         <Tab label="Users" {...a11yProps(3)} />
+        <Tab label="Courses" {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <CohortForm />
@@ -74,6 +76,9 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <UsersForm />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <CourseForm />
       </TabPanel>
     </Box>
   );

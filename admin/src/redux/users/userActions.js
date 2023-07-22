@@ -7,8 +7,16 @@ import {
   addDoc,
   getDocs,
   serverTimestamp,
+  query,
+  where,
 } from "firebase/firestore";
-import { clearError, setError, setLoading, setUsers } from "./userSlice";
+import {
+  clearError,
+  setError,
+  setLoading,
+  setUsers,
+  setTutor,
+} from "./userSlice";
 import { db } from "../../firebaseConfig";
 
 export const getUsers = createAsyncThunk(
@@ -102,6 +110,31 @@ export const createUser = createAsyncThunk(
         message: error.message,
         origin: "createUser",
       });
+    }
+  }
+);
+
+export const getTutors = createAsyncThunk(
+  "users/getTutors",
+  async (_, { dispatch }) => {
+    try {
+      dispatch(setLoading(true));
+      dispatch(clearError());
+      const q = query(collection(db, "users"), where("type", "==", "Tutor"));
+      const querySnapshot = await getDocs(q);
+      const tutors = [];
+      querySnapshot.forEach((doc) => {
+        tutors.push({ ...doc.data(), userId: doc.id });
+      });
+      dispatch(setTutor(tutors));
+    } catch (error) {
+      dispatch(
+        setError({
+          message: error.message,
+          code: error.code,
+          origin: "getTutors",
+        })
+      );
     }
   }
 );

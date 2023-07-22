@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsers, deleteUser, updateUser, createUser } from "./userActions";
+import {
+  getUsers,
+  deleteUser,
+  updateUser,
+  createUser,
+  getTutors,
+} from "./userActions";
 
 const initialState = {
   users: [],
   loading: false,
   error: null,
+  tutors: [],
 };
 
 const userSlice = createSlice({
@@ -23,6 +30,9 @@ const userSlice = createSlice({
     },
     clearError(state) {
       state.error = null;
+    },
+    setTutor: (state, action) => {
+      state.tutors = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -70,10 +80,22 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.users = action.payload;
+      })
+      .addCase(getTutors.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTutors.fulfilled, (state, action) => {
+        state.tutors = action.payload;
+        state.loading = false;
+      })
+      .addCase(getTutors.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { setUsers, setLoading, clearError, setError } = userSlice.actions;
+export const { setUsers, setLoading, clearError, setError, setTutor } =
+  userSlice.actions;
 
 export default userSlice.reducer;

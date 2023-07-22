@@ -12,63 +12,72 @@ import {
   CardMedia,
   Card,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createUser,
-  getUsers,
-  deleteUser,
-  updateUser,
-} from "../redux/users/userActions";
+  createCourse,
+  getCourses,
+  deleteCourse,
+  updateCourse,
+} from "../redux/courses/courseActions";
+import { getTutors } from "../redux/users/userActions";
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  displayName: "",
-  email: "",
-  type: "",
-  country: "",
-  photoURL: "",
+  title: "",
+  subtitle: "",
+  description: "",
+  price: 0,
+  photoUrl: "",
+  tutorId: "",
 };
 
-const UserForm = () => {
+const CourseForm = () => {
   const [formValues, setFormValues] = useState(initialValues);
-  const [userData, setUserData] = useState([]);
+  const [courseData, setCourseData] = useState([]);
+  const [tutorData, setTutorData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
-  const { users, loading, error } = useSelector((state) => state.users);
-  //   const users = [];
-  //   const loading = false;
-  //   const error = false;
+  const { courseList, loading, error } = useSelector((state) => state.courses);
+  const {
+    tutors,
+    loading: tutorLoading,
+    error: tutorError,
+  } = useSelector((state) => state.users);
   const dispatch = useDispatch();
+
+  //   console.log("courseData   ", courseList);
 
   // useEffect to reset isUpdate to false after rerender
   useEffect(() => {
     setIsUpdate(() => false);
-  }, [users]);
+  }, [courseList]);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getCourses());
+    dispatch(getTutors());
   }, [dispatch]);
 
   useEffect(() => {
-    if (Array.isArray(users)) {
-      setUserData(users);
+    if (Array.isArray(courseList)) {
+      setCourseData(courseList);
     }
-  }, [users]);
+    if (Array.isArray(tutors)) {
+      setTutorData(tutors);
+    }
+  }, [courseList, tutors]);
 
   useEffect(() => {
     // once dispatch is successful, reset the form
     if (!loading && !error) {
       setFormValues(initialValues);
     }
-  }, [error, loading]);
-
-  // refresh the cohortData with every dispatch
-  useEffect(() => {
-    if (Array.isArray(users)) {
-      setUserData(users);
+    if (!tutorLoading && !tutorError) {
+      setFormValues(initialValues);
     }
-  }, [users]);
+  }, [error, loading, tutorError, tutorLoading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,58 +86,38 @@ const UserForm = () => {
       [name]: value,
     }));
   };
-  const handleSubmitNewUser = (e) => {
+  const handleSubmitNewCourse = (e) => {
     e.preventDefault();
     // Handle form submission or validation here
-    // validate type to always start with a capital letter and the rest in small letters
-
-    dispatch(
-      createUser({
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        displayName: formValues.displayName,
-        email: formValues.email,
-        type: formValues.type.charAt(0).toUpperCase().slice(1).toLowerCase(),
-        country: formValues.country.toUpperCase(),
-        photoURL: formValues.photoURL,
-      })
-    );
+    dispatch(createCourse(formValues));
     setIsUpdate(() => false);
-    setUserData((prevData) => [...prevData, formValues]);
+    setCourseData((prevData) => [...prevData, formValues]);
+    // console.log("formValues", formValues);
   };
 
-  const handleEditUser = (user) => {
+  const handleEditCourse = (course) => {
     // Handle form submission or validation here
-    setFormValues(() => user);
+    setFormValues(() => course);
     setIsUpdate(() => true);
   };
 
-  const handleUpdateUser = (e) => {
+  const handleUpdateCourse = (e) => {
     e.preventDefault();
-
-    dispatch(
-      updateUser({
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        displayName: formValues.displayName,
-        email: formValues.email,
-        type: formValues.type.charAt(0).toUpperCase().slice(1).toLowerCase(),
-        country: formValues.country.toUpperCase(),
-        photoURL: formValues.photoURL,
-      })
-    )
+    dispatch(updateCourse(formValues))
       .then(() => {
-        dispatch(getUsers());
+        dispatch(getCourses());
         setIsUpdate(false);
       })
       .catch((err) => {
-        console.log("error updating user", err);
+        console.log("error updating course", err);
       });
   };
 
-  const handleDeleteUser = (userId) => {
+  const handleDeleteCourse = (courseId) => {
     // Handle form submission or validation here
-    dispatch(deleteUser(userId));
+    dispatch(deleteCourse(courseId));
+    // trigger a rerender
+    dispatch(getCourses());
   };
 
   return (
@@ -136,7 +125,7 @@ const UserForm = () => {
       <Grid item xs={7}>
         <Container maxWidth="sm">
           <Typography variant="h5" component="h2">
-            Users Form
+            Course Form
           </Typography>
           {loading && (
             <Box
@@ -170,14 +159,16 @@ const UserForm = () => {
               {error.message}
             </Typography>
           )}
-          <form onSubmit={isUpdate ? handleUpdateUser : handleSubmitNewUser}>
+          <form
+            onSubmit={isUpdate ? handleUpdateCourse : handleSubmitNewCourse}
+          >
             <Grid container spacing={1}>
               <Grid item xs={6}>
                 <TextField
                   required
-                  name="firstName"
-                  label="First Name"
-                  value={formValues.firstName}
+                  name="title"
+                  label="Title"
+                  value={formValues.title}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
@@ -186,9 +177,9 @@ const UserForm = () => {
               <Grid item xs={6}>
                 <TextField
                   required
-                  name="lastName"
-                  label="Last Name"
-                  value={formValues.lastName}
+                  name="subtitle"
+                  label="Subtitle"
+                  value={formValues.subtitle}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
@@ -197,10 +188,10 @@ const UserForm = () => {
               <Grid item xs={6}>
                 <TextField
                   required
-                  name="email"
-                  label="Email"
-                  type="text"
-                  value={formValues.email}
+                  name="price"
+                  label="Price"
+                  type="number"
+                  value={formValues.price}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
@@ -210,53 +201,47 @@ const UserForm = () => {
                 />
               </Grid>
               <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Tutor</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={formValues.tutorId}
+                    name="tutorId"
+                    label="Tutor"
+                    onChange={handleChange}
+                  >
+                    {tutorData.map((tutor, index) => (
+                      <MenuItem key={index} value={tutor.userId}>
+                        {tutor.displayName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   required
-                  name="type"
-                  label="User Type"
+                  name="photoUrl"
+                  label="Photo URL"
                   type="text"
-                  value={formValues.type}
+                  value={formValues.photoUrl}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
-                  inputProps={{
-                    min: 0,
-                    max: 5,
-                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
-                  name="photoURL"
-                  label="Photo URL"
-                  type="text"
-                  value={formValues.photoURL}
+                  name="description"
+                  label="Description"
+                  value={formValues.description}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  required
-                  name="displayName"
-                  label="UserName"
-                  value={formValues.displayName}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  required
-                  name="country"
-                  label="Country"
-                  value={formValues.country}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
+                  multiline
+                  rows={4}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -264,11 +249,11 @@ const UserForm = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleUpdateUser}
+                    onClick={handleUpdateCourse}
                     fullWidth
                     type="submit"
                   >
-                    Update User
+                    Update Course
                   </Button>
                 ) : (
                   <Button
@@ -277,7 +262,7 @@ const UserForm = () => {
                     type="submit"
                     fullWidth
                   >
-                    Create User
+                    Create Course
                   </Button>
                 )}
               </Grid>
@@ -287,7 +272,7 @@ const UserForm = () => {
       </Grid>
       <Grid item xs={5}>
         <Typography align="center" variant="h6">
-          Users
+          Courses
         </Typography>
         <Container
           maxWidth="xs"
@@ -298,8 +283,8 @@ const UserForm = () => {
             minWidth: "300px",
           }}
         >
-          {userData &&
-            userData.map((user, index) => (
+          {courseData &&
+            courseData.map((course, index) => (
               <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
                 <CardMedia
                   component="img"
@@ -308,37 +293,43 @@ const UserForm = () => {
                     maxWidth: "100%",
                     objectFit: "contain",
                   }}
-                  image={user.photoURL}
-                  firstName={user.firstName}
+                  image={course.photoUrl}
+                  title={course.title}
                 />
                 <CardContent>
                   <Typography variant="h6" component="div">
-                    {user.firstName}
+                    {course.title}
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
-                    {user.school}
+                    {course.subtitle}
                   </Typography>
                   <Divider />
                   <Typography variant="body2" color="text.secondary">
-                    {user.displayName}
+                    ${course.price}
                   </Typography>
+
+                  {tutorData && (
+                    <Typography variant="body2" color="text.secondary">
+                      tutor:{" "}
+                      {tutorData.find(
+                        (tutor) => tutor.userId === course.tutorId
+                      ) &&
+                        tutorData.find(
+                          (tutor) => tutor.userId === course.tutorId
+                        ).email}
+                    </Typography>
+                  )}
                   <Typography variant="body2" color="text.secondary">
-                    {user.email}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    user type: {user.type}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    country code: {user.country}
+                    {course.description}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={() => handleEditUser(user)}>
+                  <Button size="small" onClick={() => handleEditCourse(course)}>
                     edit
                   </Button>
                   <Button
                     size="small"
-                    onClick={() => handleDeleteUser(user.userId)}
+                    onClick={() => handleDeleteCourse(course.courseId)}
                   >
                     delete
                   </Button>
@@ -351,4 +342,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default CourseForm;
