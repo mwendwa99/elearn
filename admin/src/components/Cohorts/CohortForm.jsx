@@ -1,18 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  Container,
-  Typography,
-  Grid,
-  CircularProgress,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Divider,
-  Box,
-} from "@mui/material";
+import { TextField, Button, Container, Typography, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -20,7 +7,8 @@ import {
   getCohorts,
   updateCohort,
   deleteCohort,
-} from "../redux/cohorts/cohortActions";
+} from "../../redux/cohorts/cohortActions";
+import { CohortList } from "./CohortList";
 
 const initialValues = {
   description: "",
@@ -111,33 +99,6 @@ const CohortForm = () => {
     <Grid container>
       <Grid item xs={7}>
         <Container maxWidth="sm">
-          {loading && (
-            <Box
-              component="div"
-              sx={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#fff",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                zIndex: 9999,
-              }}
-            >
-              <CircularProgress
-                size={40}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  marginTop: "-12px",
-                  marginLeft: "-12px",
-                }}
-              />
-            </Box>
-          )}
           {error && (
             <Typography variant="body1" color="text.error" component="h2">
               {error}
@@ -259,59 +220,12 @@ const CohortForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={5}>
-        <Typography align="center" variant="h6">
-          Cohorts
-        </Typography>
-        <Container
-          maxWidth="xs"
-          sx={{
-            overflow: "scroll",
-            overflowX: "hidden",
-            height: "500px",
-            minWidth: "300px",
-          }}
-        >
-          {cohortData &&
-            cohortData.map((cohort, index) => (
-              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxHeight: "100px",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                  image={cohort.photoUrl}
-                  title={cohort.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {cohort.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {cohort.school}
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body2" color="text.secondary">
-                    {cohort.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => handleEditCohort(cohort)}>
-                    edit
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => handleDeleteCohort(cohort.cohortId)}
-                  >
-                    delete
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-        </Container>
-      </Grid>
+      <CohortList
+        loading={loading}
+        handleDeleteCohort={handleDeleteCohort}
+        handleEditCohort={handleEditCohort}
+        cohortData={cohortData}
+      />
     </Grid>
   );
 };

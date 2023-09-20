@@ -5,13 +5,6 @@ import {
   Container,
   Typography,
   Grid,
-  CircularProgress,
-  CardContent,
-  Divider,
-  CardActions,
-  CardMedia,
-  Card,
-  Box,
   FormControl,
   InputLabel,
   Select,
@@ -23,8 +16,10 @@ import {
   getCourses,
   deleteCourse,
   updateCourse,
-} from "../redux/courses/courseActions";
-import { getTutors } from "../redux/users/userActions";
+} from "../../redux/courses/courseActions";
+import { getTutors } from "../../redux/users/userActions";
+
+import { CourseList } from "./CourseList";
 
 const initialValues = {
   title: "",
@@ -127,33 +122,7 @@ const CourseForm = () => {
           <Typography variant="h5" component="h2">
             Course Form
           </Typography>
-          {loading && (
-            <Box
-              component="div"
-              sx={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#fff",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                zIndex: 9999,
-              }}
-            >
-              <CircularProgress
-                size={40}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  marginTop: "-12px",
-                  marginLeft: "-12px",
-                }}
-              />
-            </Box>
-          )}
+
           {error && (
             <Typography variant="h5" component="h2">
               {error.message}
@@ -270,74 +239,13 @@ const CourseForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={5}>
-        <Typography align="center" variant="h6">
-          Courses
-        </Typography>
-        <Container
-          maxWidth="xs"
-          sx={{
-            overflow: "scroll",
-            overflowX: "hidden",
-            height: "500px",
-            minWidth: "300px",
-          }}
-        >
-          {courseData &&
-            courseData.map((course, index) => (
-              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxHeight: "100px",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                  image={course.photoUrl}
-                  title={course.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {course.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {course.subtitle}
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body2" color="text.secondary">
-                    ${course.price}
-                  </Typography>
-
-                  {tutorData && (
-                    <Typography variant="body2" color="text.secondary">
-                      tutor:{" "}
-                      {tutorData.find(
-                        (tutor) => tutor.userId === course.tutorId
-                      ) &&
-                        tutorData.find(
-                          (tutor) => tutor.userId === course.tutorId
-                        ).email}
-                    </Typography>
-                  )}
-                  <Typography variant="body2" color="text.secondary">
-                    {course.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => handleEditCourse(course)}>
-                    edit
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => handleDeleteCourse(course.courseId)}
-                  >
-                    delete
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-        </Container>
-      </Grid>
+      <CourseList
+        courseData={courseData}
+        loading={loading}
+        tutorData={tutorData}
+        handleEditCourse={handleEditCourse}
+        handleDeleteCourse={handleDeleteCourse}
+      />
     </Grid>
   );
 };

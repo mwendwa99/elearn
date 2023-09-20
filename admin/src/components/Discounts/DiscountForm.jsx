@@ -1,25 +1,13 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  CircularProgress,
-  CardActions,
-  CardContent,
-  Divider,
-  CardMedia,
-  Card,
-  Box,
-} from "@mui/material";
+import { Container, Typography, TextField, Button, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createNewDiscount,
   deleteDiscount,
   updateDiscount,
   getDiscounts,
-} from "../redux/discounts/discountActions";
+} from "../../redux/discounts/discountActions";
+import { DiscountList } from "./DiscountList";
 
 const initialValues = {
   startDate: new Date().toISOString().slice(0, 10),
@@ -108,39 +96,12 @@ const DiscountForm = () => {
     <Grid container>
       <Grid item xs={7}>
         <Container maxWidth="sm">
-          {loading && (
-            <Box
-              component="div"
-              sx={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#fff",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                zIndex: 9999,
-              }}
-            >
-              <CircularProgress
-                size={40}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  marginTop: "-12px",
-                  marginLeft: "-12px",
-                }}
-              />
-            </Box>
-          )}
+          {" "}
           {error && (
             <Typography variant="h5" component="h2">
               {error}
             </Typography>
           )}
-
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             Discount Form
           </Typography>
@@ -245,65 +206,12 @@ const DiscountForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={5}>
-        <Typography align="center" variant="h6">
-          Discounts
-        </Typography>
-        <Container
-          maxWidth="xs"
-          sx={{
-            overflow: "scroll",
-            overflowX: "hidden",
-            height: "500px",
-            minWidth: "300px",
-          }}
-        >
-          {discountData &&
-            discountData.map((discount, index) => (
-              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxHeight: "100px",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                  image={discount.photoUrl}
-                  title={discount.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {discount.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {discount.percentage}% off
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body2" color="text.secondary">
-                    {discount.startDate} to {discount.endDate}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {discount.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    onClick={() => handleEditDiscount(discount)}
-                  >
-                    edit
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => handleDeleteDiscount(discount.discountId)}
-                  >
-                    delete
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-        </Container>
-      </Grid>
+      <DiscountList
+        loading={loading}
+        handleDeleteDiscount={handleDeleteDiscount}
+        handleEditDiscount={handleEditDiscount}
+        discountData={discountData}
+      />
     </Grid>
   );
 };

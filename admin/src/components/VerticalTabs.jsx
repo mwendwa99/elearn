@@ -3,11 +3,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-import CohortForm from "./CohortForm";
-import SubjectForm from "./SubjectForm";
-import DiscountForm from "./DiscountForm";
-import UsersForm from "./UsersForm";
-import CourseForm from "./CourseForm";
+import CohortForm from "./Cohorts/CohortForm";
+import SubjectForm from "./Subjects/SubjectForm";
+import DiscountForm from "./Discounts/DiscountForm";
+import UsersForm from "./Users/UsersForm";
+import CourseForm from "./Courses/CourseForm";
 
 function TabPanel(props) {
   // eslint-disable-next-line react/prop-types

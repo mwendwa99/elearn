@@ -6,11 +6,6 @@ import {
   Typography,
   Grid,
   CircularProgress,
-  CardContent,
-  Divider,
-  CardActions,
-  CardMedia,
-  Card,
   Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +14,8 @@ import {
   getUsers,
   deleteUser,
   updateUser,
-} from "../redux/users/userActions";
+} from "../../redux/users/userActions";
+import { UserList } from "./UserList";
 
 const initialValues = {
   firstName: "",
@@ -285,68 +281,12 @@ const UserForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={5}>
-        <Typography align="center" variant="h6">
-          Users
-        </Typography>
-        <Container
-          maxWidth="xs"
-          sx={{
-            overflow: "scroll",
-            overflowX: "hidden",
-            height: "500px",
-            minWidth: "300px",
-          }}
-        >
-          {userData &&
-            userData.map((user, index) => (
-              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxHeight: "100px",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                  image={user.photoURL}
-                  firstName={user.firstName}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {user.firstName}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {user.school}
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body2" color="text.secondary">
-                    {user.displayName}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {user.email}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    user type: {user.type}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    country code: {user.country}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => handleEditUser(user)}>
-                    edit
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => handleDeleteUser(user.userId)}
-                  >
-                    delete
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-        </Container>
-      </Grid>
+      <UserList
+        loading={loading}
+        handleDeleteUser={handleDeleteUser}
+        handleEditUser={handleEditUser}
+        userData={userData}
+      />
     </Grid>
   );
 };

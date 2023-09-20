@@ -1,27 +1,13 @@
 import { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  Container,
-  Typography,
-  Grid,
-  CircularProgress,
-  CardContent,
-  Divider,
-  CardActions,
-  CardMedia,
-  Card,
-  Stack,
-  Box,
-} from "@mui/material";
-import { Star } from "@mui/icons-material";
+import { TextField, Button, Container, Typography, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createNewSubject,
   getSubjects,
   deleteSubject,
   updateSubject,
-} from "../redux/subjects/subjectActions";
+} from "../../redux/subjects/subjectActions";
+import { SubjectList } from "./SubjectList";
 
 const initialValues = {
   title: "",
@@ -113,33 +99,6 @@ const SubjectForm = () => {
           <Typography variant="h5" component="h2">
             Subject Form
           </Typography>
-          {loading && (
-            <Box
-              component="div"
-              sx={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#fff",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                zIndex: 9999,
-              }}
-            >
-              <CircularProgress
-                size={40}
-                sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  marginTop: "-12px",
-                  marginLeft: "-12px",
-                }}
-              />
-            </Box>
-          )}
           {error && (
             <Typography variant="h5" component="h2">
               {error}
@@ -253,71 +212,12 @@ const SubjectForm = () => {
           </form>
         </Container>
       </Grid>
-      <Grid item xs={5}>
-        <Typography align="center" variant="h6">
-          Subjects
-        </Typography>
-        <Container
-          maxWidth="xs"
-          sx={{
-            overflow: "scroll",
-            overflowX: "hidden",
-            height: "500px",
-            minWidth: "300px",
-          }}
-        >
-          {subjectData &&
-            subjectData.map((subject, index) => (
-              <Card sx={{ maxWidth: "100%", my: 1 }} key={index}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    maxHeight: "100px",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                  image={subject.photoUrl}
-                  title={subject.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {subject.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {subject.school}
-                  </Typography>
-                  <Divider />
-                  <Typography variant="body2" color="text.secondary">
-                    {subject.description}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    ${subject.price}
-                  </Typography>
-                  <Stack direction="row" spacing={0}>
-                    <Star fontSize="small" />
-                    <Typography variant="body2" color="text.primary">
-                      {subject.rating}
-                    </Typography>
-                  </Stack>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    onClick={() => handleEditSubject(subject)}
-                  >
-                    edit
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => handleDeleteSubject(subject.subjectId)}
-                  >
-                    delete
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-        </Container>
-      </Grid>
+      <SubjectList
+        loading={loading}
+        handleDeleteSubject={handleDeleteSubject}
+        handleEditSubject={handleEditSubject}
+        subjectData={subjectData}
+      />
     </Grid>
   );
 };
