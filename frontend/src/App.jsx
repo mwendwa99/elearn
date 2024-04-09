@@ -76,8 +76,8 @@ function App() {
           <Route exact path="/classroom" element={<Classroom />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
-        <Footer />
       </Container>
+      <Footer />
     </Suspense>
   );
 }
