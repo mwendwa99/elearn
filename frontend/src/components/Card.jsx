@@ -97,7 +97,7 @@ export default function MediaCard({
           <CardHeader
             title={
               <Typography variant="h6" color="text.main">
-                {tutor.firstName + " " + tutor.lastName}
+                {tutor?.firstName + " " + tutor?.lastName}
               </Typography>
             }
             subheader={
@@ -107,7 +107,7 @@ export default function MediaCard({
                 </Typography>
               </Box>
             }
-            avatar={<Avatar alt={tutor.displayName} src={tutor.photoURL} />}
+            avatar={<Avatar alt={tutor?.displayName} src={tutor?.photoURL} />}
           />
         </CardContent>
       </CardActionArea>

@@ -48,13 +48,13 @@ export default function Slider({ courseData, discountData }) {
         courseData.map((c, index) => (
           <swiper-slide key={index}>
             <Card
-              title={c.title}
-              tutor={c.tutor}
-              start={c.start}
-              price={c.price}
-              image={c.photoUrl}
-              subtitle={c.subtitle}
-              description={c.description}
+              title={c?.title}
+              tutor={c?.tutor}
+              start={c?.start}
+              price={c?.price}
+              image={c?.photoUrl}
+              subtitle={c?.subtitle}
+              description={c?.description}
             />
           </swiper-slide>
         ))}
