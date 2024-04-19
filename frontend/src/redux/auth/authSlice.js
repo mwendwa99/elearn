@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateUserProfile, getUserProfile } from "./authActions";
+import {
+  // updateUserProfile,
+  // getUserProfile,
+  logout,
+  createUser,
+  loginWithEmail,
+} from "./authActions";
+import { auth } from "../../firebaseConfig";
 
 const initialState = {
   user: null,
@@ -8,7 +15,7 @@ const initialState = {
 };
 
 // Create slice to hold user information
-const userSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -16,58 +23,66 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
     },
-    setUserProfile: (state, action) => {
-      state.user = action.payload;
-      state.loading = false;
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
-    },
     clearUser: (state) => {
       state.user = null;
-    },
-    clearError: (state) => {
-      state.error = null;
+      state.loading = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(updateUserProfile.pending, (state, action) => {
+      .addCase(createUser.pending, (state, action) => {
         state.loading = true;
+        state.error = null;
       })
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
+      .addCase(createUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.error = null;
       })
-      .addCase(updateUserProfile.rejected, (state, action) => {
+      .addCase(createUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
-      .addCase(getUserProfile.pending, (state, action) => {
+      .addCase(loginWithEmail.pending, (state, action) => {
         state.loading = true;
+        state.error = null;
       })
-      .addCase(getUserProfile.fulfilled, (state, action) => {
+      .addCase(loginWithEmail.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.error = null;
       })
-      .addCase(getUserProfile.rejected, (state, action) => {
+      .addCase(loginWithEmail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
+      })
+      .addCase(logout.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = null;
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const {
-  setUser,
-  setUserProfile,
-  setLoading,
-  setError,
-  clearUser,
-  clearError,
-} = userSlice.actions;
+export const { setUser, clearUser } = authSlice.actions;
 
-export default userSlice.reducer;
+export default authSlice.reducer;
+
+// Listen for authentication state changes and update Redux store accordingly
+export const listenForAuthChanges = () => (dispatch) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      dispatch(setUser(user)); // If user is authenticated, set user in Redux store
+    } else {
+      dispatch(clearUser()); // If user is not authenticated, clear user in Redux store
+    }
+  });
+};

@@ -107,11 +107,10 @@ const theme = createTheme({
           boxShadow: `0px 0px 0px 4px #F4EBFF, 0px 1px 2px 0px rgba(16, 24, 40, 0.05)`,
         },
         outlined: {
-          border: "1px solid #D9E5FF",
           background: "#D9E5FF",
+          border: `3px solid rgba(72, 131, 255, 0.2)`,
 
           /* Shadow/xs */
-          boxShadow: `0px 1px 2px 0px rgba(16, 24, 40, 0.05)`,
         },
         text: {
           color: "#101828",

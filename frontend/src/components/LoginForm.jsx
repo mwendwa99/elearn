@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { TextField, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { CircularProgress } from "@mui/material";
 import { useModal } from "../context/ModalContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { loginWithEmail } from "../redux/auth/authActions";
 
 function Copyright(props) {
   return (
@@ -31,15 +33,38 @@ function Copyright(props) {
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
+  const [showPassword, setShowPassword] = useState(false);
+  const { user, loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user) {
+      toast.success("Logged in successfully");
+      closeModal();
+    }
+  }, [user]);
+
+  // console.log("usasaser", user);
+  // console.log(loading);
+  // console.log("error", error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = formData.email.trim();
     const password = formData.password.trim();
 
-    console.log(email, password);
-    // dispatch(loginUser(email, password));
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    dispatch(loginWithEmail({ email, password }));
   };
 
   const handleInputChange = (event) => {
@@ -50,7 +75,7 @@ export default function SignIn() {
   return (
     <Box className="d-flex flex-column justify-content-center align-items-center">
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
+        <LockOutlined />
       </Avatar>
       <Typography component="h1" variant="h5">
         Sign in
@@ -74,11 +99,22 @@ export default function SignIn() {
           fullWidth
           name="password"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           autoComplete="current-password"
           value={formData.password}
           onChange={handleInputChange}
+          InputProps={{
+            endAdornment: (
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            ),
+          }}
         />
         <Button
           type="submit"

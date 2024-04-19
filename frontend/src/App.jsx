@@ -4,16 +4,21 @@ import { getUserProfile } from "./redux/auth/authActions";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebaseConfig";
+
 //
 import Appbar from "./components/AppBar";
 import Footer from "./components/Footer";
 import { Modal } from "./components";
 import { Container } from "@mui/system";
+import { toast } from "react-toastify";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
-const AccountSignin = lazy(() => import("./pages/AccountSignin"));
-const SignInPage = lazy(() => import("./pages/SignInPage"));
+// const AccountSignin = lazy(() => import("./pages/AccountSignin"));
+// const SignInPage = lazy(() => import("./pages/SignInPage"));
 // const SignUp = lazy(() => import("./pages/SignUpPage"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
@@ -26,16 +31,17 @@ const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
   const [displayName, setDisplayName] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch, user]);
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
-  console.log(user);
-
+  // console.log("user", user);
   return (
     <Suspense
       fallback={
@@ -53,10 +59,12 @@ function App() {
     >
       <Container maxWidth="lg" sx={{ padding: 0 }}>
         <Appbar isAuth={isAuthenticated} displayName={displayName} />
+        <ToastContainer />
+
         <Modal />
         <Routes>
           <Route exact path="/" element={<Landing />} />
-          <Route exact path="/signin" element={<AccountSignin />} />
+          {/* <Route exact path="/signin" element={<AccountSignin />} /> */}
           {/* <Route exact path="/signup" element={<SignUp />} /> */}
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/about" element={<About />} />

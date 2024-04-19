@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { TextField, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { CircularProgress } from "@mui/material";
 import { useModal } from "../context/ModalContext";
+import { createUser } from "../redux/auth/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function Copyright(props) {
   return (
@@ -31,7 +34,16 @@ function Copyright(props) {
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { openModal } = useModal();
+  const [showPassword, setShowPassword] = useState(false);
+  const { openModal, closeModal } = useModal();
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,9 +51,31 @@ export default function SignUp() {
     const password = formData.password.trim();
     const confirm_password = formData.confirmPassword.trim();
 
-    console.log(email, password, confirm_password);
-    // dispatch(loginUser(email, password));
+    if (password !== confirm_password) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (!email || !password || !confirm_password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    dispatch(createUser({ email, password }));
+
+    toast.success("Account created successfully");
+
+    closeModal();
   };
+
+  console.log("user", user);
+  console.log("loading", loading);
+  console.log("error", error);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -51,7 +85,7 @@ export default function SignUp() {
   return (
     <Box className="d-flex flex-column justify-content-center align-items-center">
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
+        <LockOutlined />
       </Avatar>
       <Typography component="h1" variant="h5">
         Register
@@ -75,11 +109,21 @@ export default function SignUp() {
           fullWidth
           name="password"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           autoComplete="current-password"
           value={formData.password}
           onChange={handleInputChange}
+          InputProps={{
+            endAdornment: (
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            ),
+          }}
         />
         <TextField
           margin="normal"
@@ -87,10 +131,20 @@ export default function SignUp() {
           fullWidth
           name="confirmPassword"
           label="Confirm Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="confirmPassword"
           value={formData.confirm_password}
           onChange={handleInputChange}
+          InputProps={{
+            endAdornment: (
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            ),
+          }}
         />
         <Button
           type="submit"

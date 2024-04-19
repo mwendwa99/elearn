@@ -1,35 +1,30 @@
 import * as React from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { logoutUser } from "../redux/auth/authActions";
+import { logout } from "../redux/auth/authActions";
 import { useModal } from "../context/ModalContext";
-// import theme from "../theme";
 import logo from "../assets/logo.svg";
 
-// import { ThemeProvider } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import { Stack } from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
+import {
+  AppBar,
+  Stack,
+  MenuItem,
+  Container,
+  Typography,
+  Avatar,
+  IconButton,
+  Toolbar,
+  Box,
+  Button,
+  Menu,
+  Tooltip,
+} from "@mui/material";
+import { toast } from "react-toastify";
 
-const pages = [
-  "Home",
-  "About",
-  "Cohort",
-  // "Tutoring",
-  "Co-curricular",
-  "Start Learning",
-];
+const pages = ["Home", "About", "Cohort", "Co-curricular"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 const getPageLink = (page) => {
   switch (page) {
@@ -39,8 +34,6 @@ const getPageLink = (page) => {
       return "/about";
     case "Cohort":
       return "/cohort";
-    // case "Tutoring":
-    //   return "/tutoring";
     case "Co-curricular":
       return "/co-curricular";
     case "Start Learning":
@@ -50,22 +43,18 @@ const getPageLink = (page) => {
   }
 };
 
-function ResponsiveAppBar({ isAuth, displayName }) {
+function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { openModal } = useModal();
+  const { user } = useSelector((state) => state.auth);
 
-  React.useEffect(() => {
-    if (isAuth) {
-      setAnchorElUser(null);
-    }
-  }, [isAuth]);
+  // console.log("user", user);
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    navigate("/");
+    dispatch(logout());
+    toast("Logged out successfully", { type: "info" });
   };
 
   const handleOpenNavMenu = (event) => {
@@ -77,22 +66,17 @@ function ResponsiveAppBar({ isAuth, displayName }) {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    setAnchorElUser(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
-  const handleLinkClick = () => {
-    handleCloseNavMenu();
-  };
-
   return (
-    <ClickAwayListener onClickAway={handleCloseNavMenu}>
-      <AppBar color="transparent" elevation={0} position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
+    <AppBar color="transparent" elevation={0} position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <div id="nav-menu-anchor-2">
             <IconButton
               disableFocusRipple
               disableRipple
@@ -102,153 +86,139 @@ function ResponsiveAppBar({ isAuth, displayName }) {
             >
               <img height="100%" width="100%" src={logo} alt="logo" />
             </IconButton>
-            <Box component="span" sx={{ display: { xs: "none", sm: "block" } }}>
-              <Typography
-                sx={{
-                  fontWeight: { xs: "regular", sm: "bold" },
-                  fontSize: { xs: "body1.fontSize", sm: "h6.fontSize" },
-                }}
-              >
-                StaryDream International School
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "body1.fontSize", sm: "subtitle.fontSize" },
-                }}
-              >
-                Engage. Empower. Excel
-              </Typography>
-            </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          </div>
+          <Box component="span" sx={{ display: { xs: "none", sm: "block" } }}>
+            <Typography
+              sx={{
+                fontWeight: { xs: "regular", sm: "bold" },
+                fontSize: { xs: "body1.fontSize", sm: "h6.fontSize" },
+              }}
+            >
+              StaryDream International School
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "body1.fontSize", sm: "subtitle.fontSize" },
+              }}
+            >
+              Engage. Empower. Excel
+            </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <div id="nav-menu-anchor">
               <IconButton
                 size="large"
                 aria-label="account of current user"
-                aria-controls="nav-menu"
+                aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
               >
                 <MenuIcon />
               </IconButton>
+            </div>
 
-              <Menu
-                id="nav-menu"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseUserMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                  color: "#2e9cdb",
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem
-                    component={RouterLink}
-                    to={getPageLink(page)}
-                    key={page}
-                    onClick={handleLinkClick}
-                  >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Box
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-                justifyContent: "center",
+                display: { xs: "block", md: "none" },
+                color: "#2e9cdb",
               }}
             >
-              {pages.map((page) => {
-                if (page === "Start Learning" && !isAuth) {
-                  return null; // Skip rendering the 'Start Learning' button
-                }
-                return (
-                  <Button
-                    id="main-nav"
-                    key={page}
-                    sx={{ p: 1, mr: 2 }}
-                    variant="text"
-                    component={RouterLink}
-                    to={getPageLink(page)}
-                  >
-                    {page}
-                  </Button>
-                );
-              })}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              {isAuth && (
-                <div>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="profile-menu"
-                    aria-haspopup="true"
-                    onClick={handleOpenUserMenu}
-                    color="inherit"
-                    // randomize color
-                  >
-                    <Avatar
-                      sx={{
-                        background: "#2e9cdb",
-                      }}
-                    >
-                      {/* {displayName
-                        .split(" ")
-                        .map((name) => name[0].toUpperCase())
-                        .join("")} */}
-                    </Avatar>
-                  </IconButton>
-                  <Menu
-                    id="profile-menu"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    <MenuItem
-                      component={RouterLink}
-                      to="/profile"
-                      onClick={handleCloseUserMenu}
-                    >
-                      Profile
+              {pages.map((page) => (
+                <MenuItem
+                  component={RouterLink}
+                  to={getPageLink(page)}
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+            }}
+          >
+            {pages.map((page) => {
+              <Button
+                id="main-nav"
+                key={page}
+                sx={{ p: 1, mr: 2 }}
+                variant="text"
+                component={RouterLink}
+                to={getPageLink(page)}
+                onClick={handleCloseNavMenu}
+              >
+                {page}
+              </Button>;
+            })}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            {user ? (
+              <>
+                <Tooltip title="Open settings">
+                  <div id="nav-menu-anchor-3">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={user?.email} src={user?.photoURL} />
+                    </IconButton>
+                  </div>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting, index) => (
+                    <MenuItem key={index} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </div>
-              )}
-              {!isAuth && (
+                  ))}
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <>
                 <Stack direction="row" spacing={2}>
                   <Button variant="outlined" onClick={() => openModal("login")}>
                     Signin
                   </Button>
                 </Stack>
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ClickAwayListener>
+              </>
+            )}
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
 export default ResponsiveAppBar;
