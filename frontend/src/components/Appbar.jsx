@@ -153,7 +153,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
                     component={RouterLink}
                     to={getPageLink(page)}
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    onClick={handleLinkClick}
                   >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
