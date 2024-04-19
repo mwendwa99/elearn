@@ -37,8 +37,9 @@ export default function SignUp() {
     event.preventDefault();
     const email = formData.email.trim();
     const password = formData.password.trim();
+    const confirm_password = formData.confirmPassword.trim();
 
-    console.log(email, password);
+    console.log(email, password, confirm_password);
     // dispatch(loginUser(email, password));
   };
 
@@ -78,6 +79,17 @@ export default function SignUp() {
           id="password"
           autoComplete="current-password"
           value={formData.password}
+          onChange={handleInputChange}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          id="confirmPassword"
+          value={formData.confirm_password}
           onChange={handleInputChange}
         />
         <Button
