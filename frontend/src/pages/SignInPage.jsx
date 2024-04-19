@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../actions/authActions";
+// import { loginUser } from "../actions/authActions";
 import { useNavigate, Link } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
@@ -38,11 +38,11 @@ function SignIn() {
   const { currentUser, isLoading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) {
-      return navigate("/");
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     return navigate("/");
+  //   }
+  // }, [currentUser]);
 
   // clear the error
 
@@ -50,7 +50,7 @@ function SignIn() {
     event.preventDefault();
     const email = formData.email.trim();
     const password = formData.password.trim();
-    dispatch(loginUser(email, password));
+    // dispatch(loginUser(email, password));
   };
 
   const handleInputChange = (event) => {

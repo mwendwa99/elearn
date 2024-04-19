@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { logoutUser } from "../redux/auth/authActions";
+import { useModal } from "../context/ModalContext";
 // import theme from "../theme";
 import logo from "../assets/logo.svg";
 
@@ -54,6 +55,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
   React.useEffect(() => {
     if (isAuth) {
@@ -237,11 +239,7 @@ function ResponsiveAppBar({ isAuth, displayName }) {
               )}
               {!isAuth && (
                 <Stack direction="row" spacing={2}>
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to="/signin"
-                  >
+                  <Button variant="outlined" onClick={() => openModal("login")}>
                     Signin
                   </Button>
                 </Stack>

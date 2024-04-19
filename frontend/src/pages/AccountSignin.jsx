@@ -16,21 +16,23 @@ import { Google, Facebook, LockOutlined } from "@mui/icons-material";
 
 const AccountSignin = () => {
   const dispatch = useDispatch();
-  const { currentUser, error } = useSelector((state) => state.auth);
+  const { user, error, loading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
+  console.log(user, loading, error);
 
   const handleGoogleSignIn = () => {
     // Handle Google sign in
-    if (!currentUser) {
+    if (!user) {
       dispatch(signInWithGoogle());
     }
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (user) {
       navigate("/profile", { replace: true });
     }
-  }, [currentUser, navigate]);
+  }, [user, navigate]);
 
   const handleFacebookSignIn = () => {
     // Handle Facebook sign in

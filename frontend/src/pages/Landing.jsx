@@ -20,23 +20,23 @@ import Partners from "../components/Partners";
 export default function Landing() {
   const [discountData, setDiscountData] = useState([]);
   const [courseData, setCourseData] = useState([]);
-  const { courses } = useSelector((state) => state.courses);
-  const { discounts } = useSelector((state) => state.discounts);
+  // const courses = useSelector((state) => state.courses.courses);
+  // const discounts = useSelector((state) => state.discounts.discounts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getDiscounts());
-    dispatch(getAllCourses());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getDiscounts());
+  //   dispatch(getAllCourses());
+  // }, [dispatch]);
 
-  useEffect(() => {
-    if (Array.isArray(discounts)) {
-      setDiscountData(discounts);
-    }
-    if (Array.isArray(courses)) {
-      setCourseData(courses);
-    }
-  }, [discounts, courses]);
+  // useEffect(() => {
+  //   if (Array.isArray(discounts)) {
+  //     setDiscountData(discounts);
+  //   }
+  //   if (Array.isArray(courses)) {
+  //     setCourseData(courses);
+  //   }
+  // }, [discounts, courses]);
 
   return (
     <>
