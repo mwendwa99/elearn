@@ -4,14 +4,16 @@ import Modal from "@mui/material/Modal";
 import { useModal } from "../context/ModalContext";
 import LoginForm from "./LoginForm";
 import SignUp from "./SignupForm";
-import { borderBottom, borderRadius } from "@mui/system";
+import { borderBottom, borderRadius, maxHeight } from "@mui/system";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 400,
+  maxHeight: 700,
+  overflowY: "auto",
   bgcolor: "background.paper",
   border: "5px solid #c3c3c3",
   boxShadow: 24,
