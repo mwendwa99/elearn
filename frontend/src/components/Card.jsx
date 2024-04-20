@@ -51,7 +51,7 @@ export default function MediaCard({
 }) {
   // check if current page is the landing page
   const isLandingPage = window.location.pathname === "/";
-  console.log(image);
+  // console.log(image);
 
   return (
     <Card
@@ -97,9 +97,11 @@ export default function MediaCard({
           </Box>
           <CardHeader
             title={
-              <Typography variant="h6" color="text.main">
-                {tutor?.firstName + " " + tutor?.lastName}
-              </Typography>
+              <Box>
+                <Typography variant="h6" color="text.primary">
+                  {tutor?.displayName || ""}
+                </Typography>
+              </Box>
             }
             subheader={
               <Box>
