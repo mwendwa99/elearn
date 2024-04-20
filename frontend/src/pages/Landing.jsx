@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 
 import { getAllCourses } from "../redux/courses/courseActions";
 import { getDiscounts } from "../redux/discounts/discountActions";
+import { useModal } from "../context/ModalContext";
 
 import students from "../assets/students.webp";
 import Services from "../components/Services";
@@ -18,25 +19,25 @@ import Carousel from "../components/Carousel";
 import Partners from "../components/Partners";
 
 export default function Landing() {
-  const [discountData, setDiscountData] = useState([]);
-  const [courseData, setCourseData] = useState([]);
-  // const courses = useSelector((state) => state.courses.courses);
-  // const discounts = useSelector((state) => state.discounts.discounts);
+  const { openModal } = useModal();
+  const { user } = useSelector((state) => state.auth);
+  const {
+    courses,
+    loading: courseLoading,
+    error: courseError,
+  } = useSelector((state) => state.course);
+  const { discounts } = useSelector((state) => state.discount);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getDiscounts());
-  //   dispatch(getAllCourses());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllCourses());
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (Array.isArray(discounts)) {
-  //     setDiscountData(discounts);
-  //   }
-  //   if (Array.isArray(courses)) {
-  //     setCourseData(courses);
-  //   }
-  // }, [discounts, courses]);
+  useEffect(() => {
+    dispatch(getDiscounts());
+  }, [dispatch]);
+
+  // console.log(courses);
 
   return (
     <>
@@ -77,14 +78,15 @@ export default function Landing() {
             that help your knowledge grow.
           </Typography>
           <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-            <Button
-              component={RouterLink}
-              to="/signin"
-              variant="contained"
-              color="primary"
-            >
-              Get Started
-            </Button>
+            {!user && (
+              <Button
+                onClick={() => openModal("signup")}
+                variant="contained"
+                color="primary"
+              >
+                Get Started
+              </Button>
+            )}
             <Button
               component={RouterLink}
               to="/about"
@@ -106,7 +108,7 @@ export default function Landing() {
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
         <Grid item xs={12}>
-          <Carousel discountData={discountData} />
+          <Carousel discountData={discounts} />
         </Grid>
       </Grid>
       <Grid container sx={{ padding: "1rem" }}>
@@ -125,25 +127,31 @@ export default function Landing() {
           <Services />
         </Grid>
       </Grid>
-      <Grid container sx={{ padding: "1rem" }}>
-        <Grid item xs={12} md={12}>
-          <Typography gutterBottom variant="h5" color="text.primary">
-            Explore Programmes
-          </Typography>
-          <Typography gutterBottom variant="h2" color="text.main">
-            Our Popular Classes
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="body1"
-            sx={{ color: "text.secondary" }}
-          >
-            Let's join our famous class, the knowledge provided will definitely
-            be useful for you.
-          </Typography>
-          <Carousel courseData={courseData} />
+      {courses && (
+        <Grid container sx={{ padding: "1rem" }}>
+          <Grid item xs={12} md={12}>
+            <Typography gutterBottom variant="h5" color="text.primary">
+              Explore Programmes
+            </Typography>
+            <Typography gutterBottom variant="h2" color="text.main">
+              Our Popular Classes
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="body1"
+              sx={{ color: "text.secondary" }}
+            >
+              Let's join our famous class, the knowledge provided will
+              definitely be useful for you.
+            </Typography>
+            <Carousel
+              courseData={courses}
+              loading={courseLoading}
+              error={courseError}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 }

@@ -51,6 +51,7 @@ export default function MediaCard({
 }) {
   // check if current page is the landing page
   const isLandingPage = window.location.pathname === "/";
+  console.log(image);
 
   return (
     <Card

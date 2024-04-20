@@ -58,9 +58,8 @@ function App() {
       }
     >
       <Container maxWidth="lg" sx={{ padding: 0 }}>
-        <Appbar isAuth={isAuthenticated} displayName={displayName} />
+        <Appbar />
         <ToastContainer />
-
         <Modal />
         <Routes>
           <Route exact path="/" element={<Landing />} />

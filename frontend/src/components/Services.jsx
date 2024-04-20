@@ -2,6 +2,9 @@ import { Box, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
 import { Check, ArrowOutward } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useModal } from "../context/ModalContext";
+
 import List from "./List";
 import teach from "../assets/teach.svg";
 import learn from "../assets/learn.svg";
@@ -50,6 +53,9 @@ const tutorWriteUp = {
 };
 // services section
 export default function Services() {
+  const { openModal } = useModal();
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <Box sx={{ padding: "1rem" }}>
       <Grid container sx={{ my: "1rem" }} spacing={2}>
@@ -75,16 +81,17 @@ export default function Services() {
             </Box>
             <CardContent>
               <List data={studentWriteUp} />
-              <Button
-                endIcon={<ArrowOutward />}
-                variant="contained"
-                color="primary"
-                sx={{ mt: "1rem" }}
-                component={RouterLink}
-                to="/signin"
-              >
-                Get Started
-              </Button>
+              {!user && (
+                <Button
+                  endIcon={<ArrowOutward />}
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: "1rem", width: "100%" }}
+                  onClick={() => openModal("signup")}
+                >
+                  Get Started
+                </Button>
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -110,16 +117,17 @@ export default function Services() {
             </Box>
             <CardContent>
               <List data={tutorWriteUp} />
-              <Button
-                endIcon={<ArrowOutward />}
-                variant="contained"
-                color="primary"
-                sx={{ mt: "1rem" }}
-                component={RouterLink}
-                to="/signin"
-              >
-                Get Started
-              </Button>
+              {!user && (
+                <Button
+                  endIcon={<ArrowOutward />}
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: "1rem", width: "100%" }}
+                  onClick={() => openModal("signup")}
+                >
+                  Get Started
+                </Button>
+              )}
             </CardContent>
           </Card>
         </Grid>
