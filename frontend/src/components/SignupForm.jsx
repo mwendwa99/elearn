@@ -123,7 +123,6 @@ export default function SignUp() {
           label="Full Names"
           name="fullNames"
           autoComplete="fullNames"
-          autoFocus
           value={formData.fullNames}
           onChange={handleInputChange}
         />
@@ -136,7 +135,6 @@ export default function SignUp() {
           label="Email Address"
           name="email"
           autoComplete="email"
-          autoFocus
           value={formData.email}
           onChange={handleInputChange}
         />
