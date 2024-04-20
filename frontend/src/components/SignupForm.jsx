@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import { TextField, IconButton } from "@mui/material";
+import { TextField, IconButton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
@@ -13,6 +13,8 @@ import { useModal } from "../context/ModalContext";
 import { createUser } from "../redux/auth/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import UserTypeSelector from "./UserTypeSelector";
+import CountrySelector from "./CountrySelector";
 
 function Copyright(props) {
   return (
@@ -38,6 +40,8 @@ export default function SignUp() {
   const { openModal, closeModal } = useModal();
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.auth);
+  const [userType, setUserType] = useState("");
+  const [countryCode, setCountryCode] = useState("");
 
   useEffect(() => {
     if (error) {
@@ -45,11 +49,22 @@ export default function SignUp() {
     }
   }, [error]);
 
+  const handleTypeChange = (value) => {
+    setUserType(value);
+  };
+
+  const handleCountryChange = (country) => {
+    setCountryCode(country);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = formData.email.trim();
     const password = formData.password.trim();
     const confirm_password = formData.confirmPassword.trim();
+    const fullNames = formData.fullNames.trim();
+    const type = userType;
+    const country = countryCode;
 
     if (password !== confirm_password) {
       toast.error("Passwords do not match");
@@ -66,16 +81,25 @@ export default function SignUp() {
       return;
     }
 
-    dispatch(createUser({ email, password }));
+    // console.log(
+    //   fullNames,
+    //   email,
+    //   password,
+    //   confirm_password,
+    //   type,
+    //   country?.code
+    // );
+
+    dispatch(createUser({ email, password, fullNames, type, country }));
 
     toast.success("Account created successfully");
 
-    closeModal();
+    // closeModal();
   };
 
   // console.log("user", user);
   // console.log("loading", loading);
-  // console.log("error", error);
+  console.log("error", error);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -95,6 +119,19 @@ export default function SignUp() {
           margin="normal"
           required
           fullWidth
+          id="fullNames"
+          label="Full Names"
+          name="fullNames"
+          autoComplete="fullNames"
+          autoFocus
+          value={formData.fullNames}
+          onChange={handleInputChange}
+        />
+
+        <TextField
+          margin="normal"
+          required
+          fullWidth
           id="email"
           label="Email Address"
           name="email"
@@ -103,6 +140,24 @@ export default function SignUp() {
           value={formData.email}
           onChange={handleInputChange}
         />
+
+        <Stack direction="column" sx={{ my: 2 }}>
+          <Typography variant="body1" gutterBottom>
+            Please select who you are joining us as:
+          </Typography>
+          <UserTypeSelector onChange={handleTypeChange} value={userType} />
+        </Stack>
+        <Stack direction="column" sx={{ my: 2 }}>
+          <Typography variant="body1" gutterBottom>
+            Country of Residence:
+          </Typography>
+
+          <CountrySelector
+            onCountryChange={handleCountryChange}
+            value={countryCode}
+          />
+        </Stack>
+
         <TextField
           margin="normal"
           required

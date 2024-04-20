@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../redux/auth/authActions";
@@ -22,6 +22,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "About", "Cohort", "Co-curricular"];
 const settings = ["Profile", "Account", "Dashboard"];
@@ -49,12 +50,14 @@ function ResponsiveAppBar() {
   const dispatch = useDispatch();
   const { openModal } = useModal();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   // console.log("user", user);
 
   const handleLogout = () => {
     dispatch(logout());
     toast("Logged out successfully", { type: "info" });
+    navigate("/");
   };
 
   const handleOpenNavMenu = (event) => {
@@ -198,7 +201,16 @@ function ResponsiveAppBar() {
                 >
                   {settings.map((setting, index) => (
                     <MenuItem key={index} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                      <Typography
+                        component={RouterLink}
+                        to={setting.toLowerCase()}
+                        textAlign="center"
+                        sx={{
+                          textDecoration: "none",
+                        }}
+                      >
+                        {setting}
+                      </Typography>
                     </MenuItem>
                   ))}
                   <MenuItem onClick={handleLogout}>

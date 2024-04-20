@@ -10,33 +10,15 @@ import {
 } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile, getUserProfile } from "../redux/auth/authActions";
+// import { updateUserProfile, getUserProfile } from "../redux/auth/authActions";
 
 import CountrySelector from "./CountrySelector";
 import UserTypeSelector from "./UserTypeSelector";
 
 const PersonalInfoCard = () => {
-  const dispatch = useDispatch();
-  const { isLoading, error, userProfile, currentUser } = useSelector(
-    (state) => state.auth
-  );
-  const [userProfileData, setUserProfileData] = useState({
-    displayName: "",
-    email: "",
-    type: "",
-    country: "",
-    photoURL: "",
-  });
+  const { loading, error, user } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(getUserProfile(currentUser?.uid));
-  }, [dispatch, currentUser]);
-
-  useEffect(() => {
-    if (userProfile) {
-      setUserProfileData(userProfile);
-    }
-  }, [userProfile]);
+  console.log(user);
 
   const handleTypeChange = (value) => {
     setEditedType(value);
@@ -49,7 +31,7 @@ const PersonalInfoCard = () => {
   const handleSave = () => {
     // Handle saving the edited fields
     // You can use the updated values in editedType, editedCountry, and editedPhotoURL
-    dispatch(updateUserProfile(uid, editedType, countryCode));
+    // dispatch(updateUserProfile(uid, editedType, countryCode));
   };
 
   return (
@@ -57,11 +39,11 @@ const PersonalInfoCard = () => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
-            {isLoading || userProfileData.photoURL === "" ? (
+            {loading || user.photoURL === "" ? (
               <Skeleton variant="circular" width={100} height={100} />
             ) : (
               <img
-                src={userProfileData.photoURL}
+                src={user.photoURL}
                 alt="Profile"
                 width="100%"
                 style={{
@@ -76,19 +58,19 @@ const PersonalInfoCard = () => {
             <Typography variant="h5" gutterBottom color="text.primary">
               Personal Information
             </Typography>
-            {isLoading || userProfileData.displayName === "" ? (
+            {loading || user.displayName === "" ? (
               <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={100} />
             ) : (
               <Typography variant="subtitle1" gutterBottom>
                 Name:
-                {userProfileData.displayName}
+                {user.displayName}
               </Typography>
             )}
-            {isLoading || userProfileData.email === "" ? (
+            {loading || user.email === "" ? (
               <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={100} />
             ) : (
               <Typography variant="subtitle1" gutterBottom>
-                Email: {userProfileData.email}
+                Email: {user.email}
               </Typography>
             )}
           </Grid>
@@ -97,13 +79,13 @@ const PersonalInfoCard = () => {
               <Typography variant="body1" gutterBottom>
                 Please select who you are joining us as:
               </Typography>
-              {isLoading || userProfileData.type === "" ? (
+              {loading || user.type === "" ? (
                 <Skeleton variant="rectangular" width={300} height={50} />
               ) : (
                 <UserTypeSelector
-                  disabled={userProfileData.type ? true : false}
+                  disabled={user.type ? true : false}
                   onChange={handleTypeChange}
-                  value={userProfileData.type}
+                  value={user.type}
                 />
               )}
             </Stack>
@@ -111,11 +93,11 @@ const PersonalInfoCard = () => {
               <Typography variant="body1" gutterBottom>
                 Country code:
               </Typography>
-              {isLoading || userProfileData.country === "" ? (
+              {loading || user.country === "" ? (
                 <Skeleton variant="rectangular" width={300} height={20} />
               ) : (
                 <CountrySelector
-                  countryCode={userProfileData.country}
+                  countryCode={user.country}
                   onCountryChange={handleCountryChange}
                 />
               )}
@@ -123,9 +105,7 @@ const PersonalInfoCard = () => {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Button
-              disabled={
-                userProfileData.type && userProfileData.country ? true : false
-              }
+              disabled={user.type && user.country ? true : false}
               variant="contained"
               onClick={handleSave}
               sx={{}}

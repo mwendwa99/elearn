@@ -25,6 +25,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { display } from "@mui/system";
 
 const provider = new GoogleAuthProvider();
 
@@ -67,7 +68,10 @@ export const getUserProfile = createAsyncThunk(
 
 export const createUser = createAsyncThunk(
   "auth/createUser",
-  async ({ email, password }, { rejectWithValue }) => {
+  async (
+    { email, password, fullNames, type, country },
+    { rejectWithValue }
+  ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -79,19 +83,17 @@ export const createUser = createAsyncThunk(
       const userDoc = await getDoc(userDocRef);
       if (!userDoc.exists()) {
         await setDoc(userDocRef, {
-          lastName: userCredential.user.displayName.split(" ")[1] || "",
-          firstName: userCredential.user.displayName.split(" ")[0],
           email: userCredential.user.email,
-          type: "",
-          country: "",
+          displayName: fullNames,
+          type,
+          country,
           photoURL: userCredential.user.photoURL,
-          displayName: userCredential.user.displayName,
           createdAt: Timestamp.fromDate(new Date()),
           updatedAt: serverTimestamp(),
         });
       }
 
-      return userCredential.user;
+      return userDoc.data();
     } catch (error) {
       return rejectWithValue(error.code);
     }

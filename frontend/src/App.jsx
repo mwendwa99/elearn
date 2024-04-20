@@ -7,6 +7,7 @@ import { CircularProgress, Box } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 //
 import Appbar from "./components/AppBar";
@@ -30,10 +31,15 @@ const Classroom = lazy(() => import("./pages/ClassroomPage"));
 const Error404 = lazy(() => import("./pages/Error404"));
 
 function App() {
-  const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
-  const [displayName, setDisplayName] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { user, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  // if no user always redirect to landing page
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     if (error) {
@@ -63,12 +69,9 @@ function App() {
         <Modal />
         <Routes>
           <Route exact path="/" element={<Landing />} />
-          {/* <Route exact path="/signin" element={<AccountSignin />} /> */}
-          {/* <Route exact path="/signup" element={<SignUp />} /> */}
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/cohort" element={<Cohort />} />
-          {/* <Route exact path="/tutoring" element={<Tutor />} /> */}
           <Route exact path="/co-curricular" element={<CocCurricular />} />
           <Route exact path="/start_learning" element={<StartLearning />} />
           <Route exact path="/classroom" element={<Classroom />} />
