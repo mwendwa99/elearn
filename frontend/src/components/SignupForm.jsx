@@ -24,12 +24,9 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
-      {/* <Link color="inherit" href="https://mui.com/"> */}
-      StaryDream School
-      {/* </Link>{" "} */}
+      {"Copyright ©"}
+      StaryDream School&nbsp;
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -199,12 +196,7 @@ export default function SignUp() {
             ),
           }}
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
+        <Button type="submit" fullWidth variant="contained">
           Register
         </Button>
       </Box>
@@ -212,11 +204,11 @@ export default function SignUp() {
         align="center"
         onClick={() => openModal("login")}
         component={"a"}
-        className="link-primary cursor-pointer"
+        className="link-primary cursor-pointer my-2"
       >
         Already have an account? Log in
       </Typography>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright />
     </Box>
   );
 }

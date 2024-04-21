@@ -12,6 +12,7 @@ import { useModal } from "../context/ModalContext";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { loginWithEmail } from "../redux/auth/authActions";
+import { sendEmail } from "../services/mail.service";
 
 function Copyright(props) {
   return (
@@ -27,40 +28,30 @@ function Copyright(props) {
     </Typography>
   );
 }
-export default function SignIn() {
+
+export default function ContactForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { openModal, closeModal } = useModal();
-  const [showPassword, setShowPassword] = useState(false);
-  const { user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user) {
-      toast.success("Logged in successfully");
-      closeModal();
-    }
-  }, [user]);
-
-  // console.log("usasaser", user);
-  // console.log(loading);
-  // console.log("error", error);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const email = formData.email.trim();
-    const password = formData.password.trim();
+    const subject = formData.subject;
+    const message = formData.message;
+    const email = formData.email;
 
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+    if (!subject || !message) {
+      toast.error("Please fill all fields");
       return;
     }
 
-    if (!email || !password) {
-      toast.error("Please fill in all fields");
-      return;
+    try {
+      const response = await sendEmail(email, subject, message);
+      if (response.success) {
+        toast.success("Message sent successfully");
+      }
+    } catch (error) {
+      toast.error("Error sending message");
     }
-
-    dispatch(loginWithEmail({ email, password }));
   };
 
   const handleInputChange = (event) => {
@@ -70,11 +61,8 @@ export default function SignIn() {
 
   return (
     <Box className="d-flex flex-column justify-content-center align-items-center">
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlined />
-      </Avatar>
       <Typography component="h1" variant="h5">
-        Sign in
+        Send us a message
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
@@ -92,37 +80,31 @@ export default function SignIn() {
           margin="normal"
           required
           fullWidth
-          name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          id="password"
-          autoComplete="current-password"
-          value={formData.password}
+          name="subject"
+          label="Subject"
+          type={"text"}
+          id="subject"
+          autoComplete="subject"
+          value={formData.subject}
           onChange={handleInputChange}
-          InputProps={{
-            endAdornment: (
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                edge="end"
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            ),
-          }}
         />
-        <Button type="submit" fullWidth variant="contained">
-          Log In
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="message"
+          label="Message"
+          type={"text"}
+          id="message"
+          value={formData.message}
+          onChange={handleInputChange}
+          multiline
+          rows={4}
+        />
+        <Button type="submit" fullWidth variant="contained" className="my-2">
+          Send
         </Button>
       </Box>
-      <Typography
-        align="center"
-        onClick={() => openModal("signup")}
-        component={"a"}
-        className="link-primary cursor-pointer my-2"
-      >
-        Don't have an account? Sign Up
-      </Typography>
       <Copyright />
     </Box>
   );

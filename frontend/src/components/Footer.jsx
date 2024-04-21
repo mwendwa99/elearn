@@ -1,7 +1,10 @@
 import { Box, Container, Grid, Link, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useModal } from "../context/ModalContext";
 
 const Footer = () => {
+  const { openModal } = useModal();
+
   return (
     <Box sx={{ bgcolor: "#101828", pt: 8, pb: 6 }}>
       <Container maxWidth="lg">
@@ -68,7 +71,7 @@ const Footer = () => {
               <li>
                 <NavLink
                   style={{ textDecoration: "none", color: "white" }}
-                  to="/contact"
+                  onClick={() => openModal("contact")}
                 >
                   Contact Us
                 </NavLink>
@@ -122,7 +125,7 @@ const Footer = () => {
               <li>
                 <Link
                   sx={{ textDecoration: "none", color: "white" }}
-                  href="https://www.instagram.com/StarryDreamsschool"
+                  href="https://www.instagram.com/starydream_international_sch?utm_source=qr&igsh=dWJra3pxMXVndTV3"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
