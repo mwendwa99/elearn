@@ -91,7 +91,7 @@ export default function SignUp() {
 
     toast.success("Account created successfully");
 
-    // closeModal();
+    openModal("login");
   };
 
   // console.log("user", user);

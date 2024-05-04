@@ -48,6 +48,7 @@ function App() {
   }, [error]);
 
   // console.log("user", user);
+  // console.log("error", error);
   return (
     <Suspense
       fallback={

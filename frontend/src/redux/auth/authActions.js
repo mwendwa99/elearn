@@ -55,11 +55,26 @@ export const signInWithGoogle = createAsyncThunk(
 // get user profile from firestore
 export const getUserProfile = createAsyncThunk(
   "auth/getUserProfile",
-  async (_, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const userDocRef = doc(db, "users", auth.currentUser.uid);
-      const userDoc = await getDoc(userDocRef);
-      return userDoc.data();
+      // Check if the user is authenticated
+      // const currentUser = await auth.currentUser;
+      // console.log("BACKEND", currentUser);
+      if (!id) {
+        throw new Error("User is not authenticated.");
+      }
+
+      // Fetch the user document from Firestore
+      const userDocRef = doc(db, "users", id);
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      // Check if the user document exists
+      if (!userDocSnapshot.exists()) {
+        throw new Error("User profile not found.");
+      }
+
+      // Return the user data
+      return userDocSnapshot.data();
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -87,7 +102,9 @@ export const createUser = createAsyncThunk(
           displayName: fullNames,
           type,
           country,
-          photoURL: userCredential.user.photoURL,
+          photoURL:
+            userCredential.user.photoURL ||
+            "https://www.svgrepo.com/show/408476/user-person-profile-block-account-circle.svg",
           createdAt: Timestamp.fromDate(new Date()),
           updatedAt: serverTimestamp(),
         });

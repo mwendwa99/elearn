@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   // updateUserProfile,
-  // getUserProfile,
+  getUserProfile,
   logout,
   createUser,
   loginWithEmail,
@@ -12,6 +12,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  userProfile: null,
 };
 
 // Create slice to hold user information
@@ -40,6 +41,19 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getUserProfile.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userProfile = action.payload;
+        state.error = null;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

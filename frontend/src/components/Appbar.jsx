@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link as RouterLink, useNavigation } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../redux/auth/authActions";
@@ -37,6 +37,8 @@ const getPageLink = (page) => {
       return "/cohort";
     case "Co-curricular":
       return "/co-curricular";
+    case "Profile":
+      return "/profile";
     case "Start Learning":
       return "/start-learning";
     default:
@@ -204,6 +206,7 @@ function ResponsiveAppBar() {
                       <Typography
                         component={RouterLink}
                         to={setting.toLowerCase()}
+                        onClick={handleCloseUserMenu}
                         textAlign="center"
                         sx={{
                           textDecoration: "none",
