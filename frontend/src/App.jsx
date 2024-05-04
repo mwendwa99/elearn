@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 //
 import Appbar from "./components/AppBar";
 import Footer from "./components/Footer";
-import { Modal } from "./components";
+import { Modal, Navbar } from "./components";
 import { Container } from "@mui/system";
 import { toast } from "react-toastify";
 
@@ -33,6 +33,15 @@ const Error404 = lazy(() => import("./pages/Error404"));
 function App() {
   const { user, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        dispatch(getUserProfile(user.uid));
+      }
+    });
+  }, []);
 
   // if no user always redirect to landing page
   useEffect(() => {
@@ -65,7 +74,7 @@ function App() {
       }
     >
       <Container maxWidth="lg" sx={{ padding: 0 }}>
-        <Appbar />
+        <Navbar />
         <ToastContainer />
         <Modal />
         <Routes>

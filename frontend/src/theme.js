@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
@@ -89,6 +89,16 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#fff",
+          color: "#101828",
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(216, 216, 216, 0.40)",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
