@@ -10,7 +10,6 @@ import { auth } from "./firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 //
-import Appbar from "./components/AppBar";
 import Footer from "./components/Footer";
 import { Modal, Navbar } from "./components";
 import { Container } from "@mui/system";
@@ -18,13 +17,9 @@ import { toast } from "react-toastify";
 
 // Define lazy-loaded components
 const Landing = lazy(() => import("./pages/Landing"));
-// const AccountSignin = lazy(() => import("./pages/AccountSignin"));
-// const SignInPage = lazy(() => import("./pages/SignInPage"));
-// const SignUp = lazy(() => import("./pages/SignUpPage"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 const About = lazy(() => import("./pages/AboutPage"));
-const Cohort = lazy(() => import("./pages/CohortPage"));
-// const Tutor = lazy(() => import("./pages/TutorPage"));
+// const Cohort = lazy(() => import("./pages/CohortPage"));
 const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
 const StartLearning = lazy(() => import("./pages/StartLearningPage"));
 const Classroom = lazy(() => import("./pages/ClassroomPage"));
@@ -56,8 +51,6 @@ function App() {
     }
   }, [error]);
 
-  // console.log("user", user);
-  // console.log("error", error);
   return (
     <Suspense
       fallback={

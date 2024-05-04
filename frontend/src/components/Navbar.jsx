@@ -21,7 +21,7 @@ import Menu from "./Menu";
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Co-curricular"];
-const settings = ["Profile", "Account", "Dashboard"];
+const settings = ["Profile"];
 
 function DrawerAppBar({ children, ...props }) {
   const { user, error } = useSelector((state) => state.auth);

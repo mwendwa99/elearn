@@ -1,9 +1,7 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Avatar, IconButton } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/auth/authActions";
@@ -11,7 +9,7 @@ import { toast } from "react-toastify";
 
 export default function BasicMenu({ data }) {
   const { userProfile } = useSelector((state) => state.auth);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,7 +19,10 @@ export default function BasicMenu({ data }) {
   };
   const handleClose = (page) => {
     setAnchorEl(null);
-    navigate(`/${page.toLowerCase()}`);
+    const lowerCasePage = page.toLowerCase();
+    // console.log(lowerCasePage);
+
+    navigate(`/${lowerCasePage}`);
   };
 
   const handleLogout = () => {
