@@ -81,7 +81,7 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/about" element={<About />} />
-          <Route exact path="/cohort" element={<Cohort />} />
+          {/* <Route exact path="/cohort" element={<Cohort />} /> */}
           <Route exact path="/co-curricular" element={<CocCurricular />} />
           <Route exact path="/start_learning" element={<StartLearning />} />
           <Route exact path="/classroom" element={<Classroom />} />

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,14 +15,26 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link, useLocation } from "react-router-dom";
 import { Stack } from "@mui/system";
+import { useSelector } from "react-redux";
+import { useModal } from "../context/ModalContext";
+import Menu from "./Menu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Cohort", "Co-curricular"];
+const navItems = ["Home", "About", "Co-curricular"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function DrawerAppBar({ children, ...props }) {
+  const { user, error } = useSelector((state) => state.auth);
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { openModal } = useModal();
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -108,7 +120,6 @@ function DrawerAppBar({ children, ...props }) {
                   variant="text"
                   component={Link}
                   to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                  //if current path is equal to the item, set the color to red
                   sx={{
                     fontSize: "14px",
                     borderRadius: 0,
@@ -130,6 +141,15 @@ function DrawerAppBar({ children, ...props }) {
                 </Button>
               ))}
             </Box>
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            {user ? (
+              <Menu data={settings} />
+            ) : (
+              <Button variant="contained" onClick={() => openModal("login")}>
+                Signin
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
