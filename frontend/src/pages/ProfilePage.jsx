@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
 import { Paper, Box } from "@mui/material";
 
-import VerticalTabs from "../components/VerticalTabs";
-import PersonalInfoCard from "../components/PersonalInfoCard";
+import { VerticalTabs, PersonalInfoCard, EnrollmentCard } from "../components";
+
+const sideTabs = [
+  {
+    label: "Profile",
+    component: <PersonalInfoCard />,
+  },
+  {
+    label: "My Enrollments",
+    component: <EnrollmentCard />,
+  },
+];
 
 const ProfilePage = () => {
-  const sideTabs = [
-    {
-      label: "Profile",
-      component: <PersonalInfoCard />,
-    },
-    {
-      label: "My Enrollments",
-      component: <Paper>My Enrollments</Paper>,
-    },
-    {
-      label: "My Courses",
-      component: <Paper>My Courses</Paper>,
-    },
-  ];
-
   return (
     <Box
       sx={{
