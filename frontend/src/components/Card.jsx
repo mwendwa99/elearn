@@ -79,22 +79,15 @@ export default function MediaCard({
               maxWidth: "100%",
             }}
           />
-          <Box
-            sx={{
-              height: "100px",
-              mt: 2,
-            }}
-          >
-            <Typography variant="h6" color="text.primary">
-              {title}
-            </Typography>
-            <Typography gutterBottom variant="body1" color="text.secondary">
-              {subtitle}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {description}
-            </Typography>
-          </Box>
+          <Typography variant="h6" color="text.primary">
+            {title}
+          </Typography>
+          <Typography gutterBottom variant="body1" color="text.secondary">
+            {subtitle}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
           <CardHeader
             title={
               <Box>

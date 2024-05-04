@@ -18,7 +18,7 @@ const Partners = () => {
           // flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={6} md={4}>
           <Typography
             variant="h2"
             color="primary.main"
@@ -41,7 +41,7 @@ const Partners = () => {
             Recognition
           </Typography>
         </Grid>
-        <Grid item xs={8} sm={8}>
+        <Grid item xs={8} sm={8} md={4}>
           <Stack direction="row">
             {partnerImages.map((image, index) => (
               <img
