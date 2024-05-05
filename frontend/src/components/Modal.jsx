@@ -5,6 +5,7 @@ import { useModal } from "../context/ModalContext";
 import LoginForm from "./LoginForm";
 import SignUp from "./SignupForm";
 import ContactForm from "./ContactForm";
+import CourseModal from "./CourseModal";
 import { borderBottom, borderRadius, maxHeight } from "@mui/system";
 
 const style = {
@@ -33,6 +34,8 @@ export default function BasicModal() {
         return <SignUp />;
       case "contact":
         return <ContactForm />;
+      case "course":
+        return <CourseModal />;
       default:
         return null;
     }

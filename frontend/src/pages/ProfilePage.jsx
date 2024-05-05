@@ -1,4 +1,5 @@
-import { Paper, Box } from "@mui/material";
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 import { VerticalTabs, PersonalInfoCard, EnrollmentCard } from "../components";
 
@@ -15,15 +16,18 @@ const sideTabs = [
 
 const ProfilePage = () => {
   return (
-    <Box
-      sx={{
-        height: "100%",
-      }}
-    >
-      <Box sx={{ my: 2, minHeight: "50vh" }}>
-        <VerticalTabs sideTabs={sideTabs} />
+    <>
+      <Box
+        sx={{
+          height: "100%",
+        }}
+      >
+        <Box sx={{ my: 2, minHeight: "50vh" }}>
+          <VerticalTabs sideTabs={sideTabs} />
+        </Box>
       </Box>
-    </Box>
+      <Outlet />
+    </>
   );
 };
 

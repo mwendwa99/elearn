@@ -22,7 +22,7 @@ export default function BasicMenu({ data }) {
     const lowerCasePage = page.toLowerCase();
     // console.log(lowerCasePage);
 
-    navigate(`/${lowerCasePage}`);
+    navigate(`/${page}`);
   };
 
   const handleLogout = () => {

@@ -14,16 +14,9 @@ import Footer from "./components/Footer";
 import { Modal, Navbar } from "./components";
 import { Container } from "@mui/system";
 import { toast } from "react-toastify";
+import Dashboard from "./pages/Dashboard";
 
-// Define lazy-loaded components
-const Landing = lazy(() => import("./pages/Landing"));
-const Profile = lazy(() => import("./pages/ProfilePage"));
-const About = lazy(() => import("./pages/AboutPage"));
-// const Cohort = lazy(() => import("./pages/CohortPage"));
-const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
-const StartLearning = lazy(() => import("./pages/StartLearningPage"));
-const Classroom = lazy(() => import("./pages/ClassroomPage"));
-const Error404 = lazy(() => import("./pages/Error404"));
+import AppRoutes from "./routes";
 
 function App() {
   const { user, error } = useSelector((state) => state.auth);
@@ -70,16 +63,7 @@ function App() {
         <Navbar />
         <ToastContainer />
         <Modal />
-        <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/about" element={<About />} />
-          {/* <Route exact path="/cohort" element={<Cohort />} /> */}
-          <Route exact path="/co-curricular" element={<CocCurricular />} />
-          <Route exact path="/start_learning" element={<StartLearning />} />
-          <Route exact path="/classroom" element={<Classroom />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
+        <AppRoutes />
       </Container>
       <Footer />
     </Suspense>

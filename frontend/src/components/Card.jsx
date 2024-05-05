@@ -44,10 +44,10 @@ export default function MediaCard({
   title,
   tutor,
   subtitle,
-  start,
   price,
   description,
   image,
+  action,
 }) {
   // check if current page is the landing page
   const isLandingPage = window.location.pathname === "/";
@@ -66,7 +66,7 @@ export default function MediaCard({
         },
       }}
     >
-      <CardActionArea>
+      <CardActionArea onClick={action}>
         <CardContent>
           <CardMedia
             component="img"

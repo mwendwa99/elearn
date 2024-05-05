@@ -1,22 +1,27 @@
-import { Paper, Typography, Box, Button } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllCourses } from "../redux/courses/courseActions";
 import Card from "./Card";
+import { useModal } from "../context/ModalContext";
+import { useNavigate } from "react-router-dom";
 
-const CourseList = ({ courses }) => {
+const CourseList = ({ courses, action }) => {
   return (
     <Box>
-      {courses.map((course) => (
-        <Card
-          title={course?.title}
-          tutor={course?.tutor}
-          start={course?.start}
-          price={course?.price}
-          image={course?.photoUrl}
-          subtitle={course?.subtitle}
-          description={course?.description}
-        />
+      {courses.map((course, index) => (
+        <div key={index}>
+          <Card
+            title={course?.title}
+            tutor={course?.tutor}
+            start={course?.start}
+            price={course?.price}
+            image={course?.photoUrl}
+            subtitle={course?.subtitle}
+            description={course?.description}
+            action={action}
+          />
+        </div>
       ))}
     </Box>
   );
@@ -26,7 +31,7 @@ export default function EnrollmentCard() {
   const { courses } = useSelector((state) => state.course);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllCourses());
   }, [dispatch]);
@@ -38,7 +43,7 @@ export default function EnrollmentCard() {
     return courses.some((course) => course.users.uid === uid);
   };
 
-  console.log(checkIfUidExists());
+  // console.log(checkIfUidExists());
 
   return (
     <Box sx={{ p: 2 }}>
@@ -53,7 +58,7 @@ export default function EnrollmentCard() {
             You are not enrolled in any course
           </Typography>
           <Typography variant="body1">Checkout these courses</Typography>
-          <CourseList courses={courses} />
+          <CourseList courses={courses} action={() => navigate("dashboard")} />
         </>
       )}
     </Box>
