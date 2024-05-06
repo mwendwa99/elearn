@@ -55,10 +55,8 @@ export default function EnrollmentCard() {
       ) : (
         <>
           <Typography variant="body1">
-            You are not enrolled in any course
+            You are not enrolled in any course, visit the dahsboard for more.
           </Typography>
-          <Typography variant="body1">Checkout these courses</Typography>
-          <CourseList courses={courses} action={() => navigate("dashboard")} />
         </>
       )}
     </Box>

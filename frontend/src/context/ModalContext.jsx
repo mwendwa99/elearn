@@ -11,14 +11,15 @@ export const ModalProvider = ({ children }) => {
   const [modalState, setModalState] = useState({
     isOpen: false,
     formType: null,
+    data: null,
   });
 
-  const openModal = (formType) => {
-    setModalState({ isOpen: true, formType });
+  const openModal = (formType, data) => {
+    setModalState({ isOpen: true, formType, data });
   };
 
   const closeModal = () => {
-    setModalState({ isOpen: false, formType: null });
+    setModalState({ isOpen: false, formType: null, data: null });
   };
 
   return (

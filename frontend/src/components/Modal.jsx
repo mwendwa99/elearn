@@ -25,6 +25,7 @@ const style = {
 
 export default function BasicModal() {
   const { modalState, closeModal } = useModal();
+  console.log(modalState);
 
   const renderForm = () => {
     switch (modalState.formType) {
@@ -35,7 +36,7 @@ export default function BasicModal() {
       case "contact":
         return <ContactForm />;
       case "course":
-        return <CourseModal />;
+        return <CourseModal data={modalState.data} />;
       default:
         return null;
     }
