@@ -51,11 +51,6 @@ const CoCurricularPage = () => {
                   while developing teamwork and sportsmanship skills.
                 </Typography>
               </div>
-              <div style={{ alignSelf: "flex-start", mt: 2 }}>
-                <Button variant="contained" color="primary" sx={{ my: "1rem" }}>
-                  Enroll
-                </Button>
-              </div>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box
@@ -111,11 +106,6 @@ const CoCurricularPage = () => {
                   programme. The programme fee includes all expenses for the
                   trip, including transportation, accommodation, and meals.
                 </Typography>
-              </div>
-              <div style={{ alignSelf: "flex-start", mt: 2 }}>
-                <Button variant="contained" color="primary">
-                  Enroll
-                </Button>
               </div>
             </Grid>
 

@@ -10,29 +10,26 @@ import { auth } from "./firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 //
-import Appbar from "./components/AppBar";
 import Footer from "./components/Footer";
-import { Modal } from "./components";
+import { Modal, Navbar } from "./components";
 import { Container } from "@mui/system";
 import { toast } from "react-toastify";
+import Dashboard from "./pages/Dashboard";
 
-// Define lazy-loaded components
-const Landing = lazy(() => import("./pages/Landing"));
-// const AccountSignin = lazy(() => import("./pages/AccountSignin"));
-// const SignInPage = lazy(() => import("./pages/SignInPage"));
-// const SignUp = lazy(() => import("./pages/SignUpPage"));
-const Profile = lazy(() => import("./pages/ProfilePage"));
-const About = lazy(() => import("./pages/AboutPage"));
-const Cohort = lazy(() => import("./pages/CohortPage"));
-// const Tutor = lazy(() => import("./pages/TutorPage"));
-const CocCurricular = lazy(() => import("./pages/CoCurricularPage"));
-const StartLearning = lazy(() => import("./pages/StartLearningPage"));
-const Classroom = lazy(() => import("./pages/ClassroomPage"));
-const Error404 = lazy(() => import("./pages/Error404"));
+import AppRoutes from "./routes";
 
 function App() {
   const { user, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        dispatch(getUserProfile(user.uid));
+      }
+    });
+  }, []);
 
   // if no user always redirect to landing page
   useEffect(() => {
@@ -47,8 +44,6 @@ function App() {
     }
   }, [error]);
 
-  // console.log("user", user);
-  // console.log("error", error);
   return (
     <Suspense
       fallback={
@@ -65,19 +60,10 @@ function App() {
       }
     >
       <Container maxWidth="lg" sx={{ padding: 0 }}>
-        <Appbar />
+        <Navbar />
         <ToastContainer />
         <Modal />
-        <Routes>
-          <Route exact path="/" element={<Landing />} />
-          <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/about" element={<About />} />
-          <Route exact path="/cohort" element={<Cohort />} />
-          <Route exact path="/co-curricular" element={<CocCurricular />} />
-          <Route exact path="/start_learning" element={<StartLearning />} />
-          <Route exact path="/classroom" element={<Classroom />} />
-          <Route path="*" element={<Error404 />} />
-        </Routes>
+        <AppRoutes />
       </Container>
       <Footer />
     </Suspense>

@@ -10,7 +10,7 @@ const PersonalInfoCard = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getUserProfile(user.uid));
+      dispatch(getUserProfile(user?.uid));
     }
   }, [dispatch, user]);
 
@@ -20,7 +20,7 @@ const PersonalInfoCard = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <img
-              src={userProfile.photoURL}
+              src={userProfile?.photoURL || "avatar.png"}
               alt="Profile"
               width="100%"
               style={{
@@ -35,20 +35,22 @@ const PersonalInfoCard = () => {
               Personal Information
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Name: {userProfile.displayName}
+              Name: {userProfile?.displayName || "empty"}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Email: {userProfile.email}
+              Email: {userProfile?.email || "empty"}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              {userProfile.type}
+              {userProfile?.type || ""}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              Nationality: {userProfile.country?.name}
+              Nationality: {userProfile?.country["name"] || "empty"}
             </Typography>
             <Typography variant="body1" gutterBottom>
               Joined{" "}
-              {userProfile.createdAt && formatTimestamp(userProfile.createdAt)}
+              {(userProfile?.createdAt &&
+                formatTimestamp(userProfile?.createdAt)) ||
+                "unknown"}
             </Typography>
           </Grid>
         </Grid>
