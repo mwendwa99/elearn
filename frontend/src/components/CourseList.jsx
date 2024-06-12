@@ -16,18 +16,14 @@ export default function CourseList({ title, description, image }) {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <div className="d-flex justify-content-between">
-              <Typography component="span" variant="h6" color="text.primary">
-                {title}
-              </Typography>
-            </div>
+            <Typography component="span" variant="h6" color="text.primary">
+              {title}
+            </Typography>
           }
           secondary={
-            <div className="d-flex flex-column">
-              <Typography component="span" variant="body2">
-                {description}
-              </Typography>
-            </div>
+            <Typography component="span" variant="body2">
+              {description}
+            </Typography>
           }
         />
       </ListItem>
