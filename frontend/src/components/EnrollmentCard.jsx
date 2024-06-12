@@ -1,18 +1,12 @@
-import { Typography, Box, Grid } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserCourses } from "../redux/courses/courseActions";
-import Card from "./Card";
 import CourseList from "./CourseList";
-import { useModal } from "../context/ModalContext";
-import { useNavigate } from "react-router-dom";
-import { Button } from "bootstrap";
 
 export default function EnrollmentCard() {
-  const { userCourses, courses } = useSelector((state) => state.course);
-  const { user } = useSelector((state) => state.auth);
+  const { userCourses } = useSelector((state) => state.course);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getUserCourses());
   }, [dispatch]);
@@ -46,10 +40,3 @@ export default function EnrollmentCard() {
     </Box>
   );
 }
-
-const styles = {
-  courseCard: {
-    borderRadius: "10px",
-    border: "1px solid #ccc",
-  },
-};
