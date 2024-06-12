@@ -70,6 +70,13 @@ function DrawerAppBar({ children, ...props }) {
             </ListItemButton>
           </ListItem>
         ))}
+        {user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={"dashboard"}>
+              <ListItemText primary={"Dashboard"} />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
@@ -140,6 +147,25 @@ function DrawerAppBar({ children, ...props }) {
                   {item}
                 </Button>
               ))}
+              {user && (
+                <Button
+                  variant="text"
+                  component={Link}
+                  to={`dashboard`}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: 0,
+                    color:
+                      location.pathname === "/dashboard" ? "#4883ff" : "black",
+                    borderBottom:
+                      location.pathname === "/dashboard"
+                        ? "2px solid #4883ff"
+                        : "none",
+                  }}
+                >
+                  Dashboard
+                </Button>
+              )}
             </Box>
           </Box>
           <Box sx={{ flexGrow: 0 }}>

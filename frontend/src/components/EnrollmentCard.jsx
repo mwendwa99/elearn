@@ -1,66 +1,42 @@
 import { Typography, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllCourses } from "../redux/courses/courseActions";
-import Card from "./Card";
-import { useModal } from "../context/ModalContext";
-import { useNavigate } from "react-router-dom";
-
-const CourseList = ({ courses, action }) => {
-  return (
-    <Box>
-      {courses.map((course, index) => (
-        <div key={index}>
-          <Card
-            title={course?.title}
-            tutor={course?.tutor}
-            start={course?.start}
-            price={course?.price}
-            image={course?.photoUrl}
-            subtitle={course?.subtitle}
-            description={course?.description}
-            action={action}
-          />
-        </div>
-      ))}
-    </Box>
-  );
-};
+import { getUserCourses } from "../redux/courses/courseActions";
+import CourseList from "./CourseList";
 
 export default function EnrollmentCard() {
-  const { courses } = useSelector((state) => state.course);
-  const { user } = useSelector((state) => state.auth);
+  const { userCourses } = useSelector((state) => state.course);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getAllCourses());
+    dispatch(getUserCourses());
   }, [dispatch]);
 
-  const checkIfUidExists = () => {
-    if (!courses) return false;
-    const uid = user.uid;
+  if (!userCourses || userCourses.length === 0)
+    return (
+      <Typography variant="body1">
+        You are not enrolled in any course, visit the dahsboard for more.
+      </Typography>
+    );
 
-    return courses.some((course) => course.users.uid === uid);
-  };
-
-  // console.log(checkIfUidExists());
+  // console.log({ userCourses });
+  // console.log({ courses });
 
   return (
     <Box sx={{ p: 2 }}>
-      <Typography variant="h5" color="text.primary">
+      <Typography variant="h5" color="text.primary" gutterBottom>
         Your Enrollments
       </Typography>
-      {checkIfUidExists() ? (
-        <Typography variant="body1">You are enrolled in a course</Typography>
-      ) : (
-        <>
-          <Typography variant="body1">
-            You are not enrolled in any course
-          </Typography>
-          <Typography variant="body1">Checkout these courses</Typography>
-          <CourseList courses={courses} action={() => navigate("dashboard")} />
-        </>
-      )}
+      <Box className="mt-2">
+        {userCourses.map((course, index) => (
+          <div key={index}>
+            <CourseList
+              title={course.title}
+              description={course.description}
+              image={course.photoUrl}
+            />
+          </div>
+        ))}
+      </Box>
     </Box>
   );
 }

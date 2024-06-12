@@ -19,7 +19,6 @@ export default function BasicMenu({ data }) {
   };
   const handleClose = (page) => {
     setAnchorEl(null);
-    const lowerCasePage = page.toLowerCase();
     // console.log(lowerCasePage);
 
     navigate(`/${page}`);

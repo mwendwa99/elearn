@@ -35,7 +35,7 @@ export default function BasicModal() {
       case "contact":
         return <ContactForm />;
       case "course":
-        return <CourseModal />;
+        return <CourseModal data={modalState.data} />;
       default:
         return null;
     }
