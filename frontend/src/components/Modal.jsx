@@ -25,7 +25,6 @@ const style = {
 
 export default function BasicModal() {
   const { modalState, closeModal } = useModal();
-  console.log(modalState);
 
   const renderForm = () => {
     switch (modalState.formType) {

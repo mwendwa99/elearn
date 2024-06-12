@@ -1,27 +1,51 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getAllCourses } from "../redux/courses/courseActions";
+import { getAllCourses, getUserCourses } from "../redux/courses/courseActions";
 import { useModal } from "../context/ModalContext";
-import { padding } from "@mui/system";
+import { clearError, clearMessage } from "../redux/courses/courseSlice";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { courses } = useSelector((state) => state.course);
   const { openModal } = useModal();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearMessage());
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserCourses());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getAllCourses());
   }, [dispatch]);
 
+  // Inside the Dashboard component or outside as a utility function
+  const isUserEnrolled = (courseId) => {
+    const userId = user.uid;
+    // return userCourses.some((userCourse) => userCourse === courseId);
+    return courses.some((course) => course.enrolledStudents.includes(userId));
+  };
+
+  // console.log(userCourses);
   // console.log(courses);
 
   return (
     <Container className="my-5">
-      <Typography variant="h5" color="text.primary">
-        Dashboard
-      </Typography>
-      <Typography variant="body1">Welcome to the dashboard</Typography>
+      <Box className="mb-2">
+        <Typography variant="h5" color="text.primary">
+          Dashboard
+        </Typography>
+        <Typography variant="body1">
+          Welcome to the dashboard. here are the available courses
+        </Typography>
+      </Box>
       <Grid container>
         {courses &&
           courses.map((course, index) => (
@@ -55,8 +79,9 @@ export default function Dashboard() {
                   color="primary"
                   onClick={() => openModal("course", { course })}
                   fullWidth
+                  disabled={isUserEnrolled(course.courseId)} // Disable if enrolled
                 >
-                  View Course
+                  {isUserEnrolled(course.courseId) ? "Enrolled" : "View Course"}
                 </Button>
               </Box>
             </Grid>
