@@ -22,6 +22,7 @@ export default function CourseList({ title, description, image }) {
           }
           secondary={
             <Typography component="span" variant="body2">
+              <br />
               {description}
             </Typography>
           }
