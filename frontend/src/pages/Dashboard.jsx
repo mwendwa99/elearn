@@ -26,11 +26,9 @@ export default function Dashboard() {
     dispatch(getAllCourses());
   }, [dispatch]);
 
-  // Inside the Dashboard component or outside as a utility function
-  const isUserEnrolled = (courseId) => {
-    const userId = user.uid;
-    // return userCourses.some((userCourse) => userCourse === courseId);
-    return courses.some((course) => course.enrolledStudents.includes(userId));
+  const isUserEnrolled = () => {
+    const userId = user?.uid;
+    return courses.some((course) => course?.enrolledStudents.includes(userId));
   };
 
   // console.log(userCourses);
@@ -79,9 +77,9 @@ export default function Dashboard() {
                   color="primary"
                   onClick={() => openModal("course", { course })}
                   fullWidth
-                  disabled={isUserEnrolled(course.courseId)} // Disable if enrolled
+                  disabled={isUserEnrolled()} // Disable if enrolled
                 >
-                  {isUserEnrolled(course.courseId) ? "Enrolled" : "View Course"}
+                  {isUserEnrolled() ? "Enrolled" : "View Course"}
                 </Button>
               </Box>
             </Grid>

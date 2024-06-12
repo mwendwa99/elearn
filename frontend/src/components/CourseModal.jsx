@@ -34,8 +34,8 @@ export default function CourseModal({ data }) {
   }, [error]);
 
   const handleEnroll = () => {
-    const courseId = data["course"].courseId;
-    const userId = user.uid;
+    const courseId = data?.course?.courseId;
+    const userId = user?.uid;
     dispatch(enrollToCourse({ userId, courseId }));
   };
 
