@@ -14,14 +14,18 @@ import Footer from "./components/Footer";
 import { Modal, Navbar } from "./components";
 import { Container } from "@mui/system";
 import { toast } from "react-toastify";
-import Dashboard from "./pages/Dashboard";
 
 import AppRoutes from "./routes";
+import { clearError } from "./redux/auth/authSlice";
 
 function App() {
   const { user, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearError());
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -50,6 +54,7 @@ function App() {
         <Box
           sx={{
             height: "100vh",
+            width: "100vw",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

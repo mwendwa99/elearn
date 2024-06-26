@@ -13,7 +13,7 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   class: classReducer,
   discount: discountReducer,
@@ -21,7 +21,14 @@ const rootReducer = combineReducers({
   course: courseReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const rootReducer = (state, action) => {
+  if (action.type === "auth/logout") {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, appReducer);
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware({
