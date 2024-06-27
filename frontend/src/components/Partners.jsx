@@ -1,62 +1,60 @@
 import React from "react";
-import { Box, Grid, Typography, Stack } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import cambridgesvg from "../assets/cambridge.svg";
 import ibsvg from "../assets/ib.svg";
-import googlesvg from "../assets/google.svg";
 
 const Partners = () => {
-  const partnerImages = [cambridgesvg, ibsvg, googlesvg];
+  const partnerImages = [cambridgesvg, ibsvg];
 
   return (
-    <Box>
-      <Grid
-        container
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          // flexDirection: { xs: "column", sm: "row" },
-        }}
-      >
-        <Grid item xs={6} sm={6} md={4}>
-          <Typography
-            variant="h2"
-            color="primary.main"
-            sx={{
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "34px",
-            }}
-          >
-            International
-          </Typography>
-          <Typography
-            variant="h3"
-            color="primary.dark"
-            sx={{
-              fontStyle: "normal",
-              fontWeight: 400,
-            }}
-          >
-            Recognition
-          </Typography>
-        </Grid>
-        <Grid item xs={8} sm={8} md={4}>
-          <Stack direction="row">
-            {partnerImages.map((image, index) => (
+    <Grid
+      container
+      width={"100%"}
+      spacing={0}
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"flex-start"}
+    >
+      <Grid item xs={12} sm={3}>
+        <Typography variant="h2" color="primary.main">
+          International
+        </Typography>
+        <Typography variant="h3" color="primary.dark">
+          Recognition
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={9}>
+        <Grid
+          container
+          spacing={0}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          {partnerImages.map((partner, index) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              key={index}
+              sx={{ textAlign: "left", mt: 2 }}
+            >
               <img
-                key={index}
-                src={image}
-                alt={`Partner ${index + 1}`}
-                width="50%"
-                height="70px"
-                style={{ margin: "1rem" }}
+                src={partner}
+                alt={`partner-${index}`}
+                style={{
+                  width: "100%",
+                  maxWidth: "300px",
+                  height: "auto",
+                  objectFit: "contain",
+                  margin: "5px 0",
+                }}
               />
-            ))}
-          </Stack>
+            </Grid>
+          ))}
         </Grid>
       </Grid>
-    </Box>
+    </Grid>
   );
 };
 

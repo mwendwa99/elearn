@@ -14,9 +14,8 @@ import { getDiscounts } from "../redux/discounts/discountActions";
 import { useModal } from "../context/ModalContext";
 
 import students from "../assets/students.webp";
-import Services from "../components/Services";
-import Carousel from "../components/Carousel";
 import Partners from "../components/Partners";
+import { SuccessStory, CourseCard } from "../components";
 
 export default function Landing() {
   const { openModal } = useModal();
@@ -101,32 +100,10 @@ export default function Landing() {
           <img src={students} alt="landing" width="100%" height="100%" />
         </Grid>
       </Grid>
-      <Grid container sx={{ padding: "1rem" }}>
-        <Grid item xs={8}>
-          <Partners />
-        </Grid>
+      <Grid container marginY={5} padding={2}>
+        <Partners />
       </Grid>
-      <Grid container sx={{ padding: "1rem" }}>
-        <Grid item xs={12}>
-          <Carousel discountData={discounts} />
-        </Grid>
-      </Grid>
-      <Grid container sx={{ padding: "1rem" }}>
-        <Grid item xs={12} md={12}>
-          <Typography
-            align="center"
-            gutterBottom
-            variant="h5"
-            color="text.primary"
-          >
-            Our Services
-          </Typography>
-          <Typography variant="h2" color="text.dark" align="center">
-            Fostering an engaging learning environment
-          </Typography>
-          <Services />
-        </Grid>
-      </Grid>
+
       {courses && (
         <Grid container sx={{ padding: "1rem" }}>
           <Grid item xs={12} md={12}>
@@ -144,14 +121,45 @@ export default function Landing() {
               Let's join our famous class, the knowledge provided will
               definitely be useful for you.
             </Typography>
-            <Carousel
-              courseData={courses}
-              loading={courseLoading}
-              error={courseError}
-            />
+          </Grid>
+          <Grid item xs={12} md={12} mt={2}>
+            <Grid container spacing={2}>
+              {[...Array(3)]
+                .flatMap(() => courses)
+                .map((course, index) => (
+                  <CourseCard key={index} course={course} />
+                ))}
+            </Grid>
           </Grid>
         </Grid>
       )}
+      <Grid container spacing={2} marginY={2} padding={2}>
+        <Grid item xs={12} md={12}>
+          <Typography gutterBottom variant="h5" color="text.primary">
+            Success Stories
+          </Typography>
+          <Typography gutterBottom variant="h2" color="text.main">
+            What Our Students Say
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="body1"
+            sx={{ color: "text.secondary" }}
+          >
+            Here are some of our students who have completed the course and are
+            satisfied with the results.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <SuccessStory />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <SuccessStory />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <SuccessStory />
+        </Grid>
+      </Grid>
     </>
   );
 }

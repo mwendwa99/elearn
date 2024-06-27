@@ -109,6 +109,9 @@ function DrawerAppBar({ children, ...props }) {
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
+            sx={{
+              display: { xs: "none", sm: "block" },
+            }}
           >
             <Box className="me-2">
               <img src="logo.svg" alt="logo" />
@@ -122,7 +125,12 @@ function DrawerAppBar({ children, ...props }) {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ mx: "auto", width: 300 }}>
+          <Box
+            sx={{
+              mx: "auto",
+              width: 300,
+            }}
+          >
             <Search />
           </Box>
           <Box
