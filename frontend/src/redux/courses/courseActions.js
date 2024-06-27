@@ -79,36 +79,6 @@ export const getUserCourses = createAsyncThunk(
   }
 );
 
-// export const getUserCourses = createAsyncThunk(
-//   "course/getUserCourses",
-//   async (userId, { rejectWithValue }) => {
-//     try {
-//       // Fetch the user document
-//       const userDocSnap = await getDoc(doc(db, "users", userId));
-//       const userData = userDocSnap.data();
-//       const enrolledCourses = userData.enrolledCourses;
-
-//       // Fetch all courses the user is enrolled in
-//       const userCourses = await Promise.all(
-//         enrolledCourses.map(async (courseId) => {
-//           const courseDocSnap = await getDoc(doc(db, "courses", courseId));
-//           return courseDocSnap.data();
-//         })
-//       );
-//       // Fetch tutors for each course and add as a tutor field
-//       const userCoursesWithTutors = await Promise.all(
-//         userCourses.map(fetchTutorForCourse)
-//       );
-
-//       return userCoursesWithTutors;
-
-//       // return userCourses;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
 export const getAllCourses = createAsyncThunk(
   "course/getAllCourses",
   async (_, { rejectWithValue }) => {

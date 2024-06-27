@@ -103,12 +103,14 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           display: "flex",
-          padding: "16px 28px",
+          padding: "10px 20px",
           justifyContent: "center",
           alignItems: "center",
           gap: "8px",
           textTransform: "capitalize",
           borderRadius: "8px",
+          marginLeft: 4,
+          marginRight: 4,
         },
         contained: {
           border: `1px solid var(--primary-1, #4883FF)`,
