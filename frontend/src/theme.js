@@ -109,8 +109,7 @@ const theme = createTheme({
           gap: "8px",
           textTransform: "capitalize",
           borderRadius: "8px",
-          marginLeft: 4,
-          marginRight: 4,
+          margin: "5px 0",
         },
         contained: {
           border: `1px solid var(--primary-1, #4883FF)`,

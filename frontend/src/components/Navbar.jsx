@@ -110,7 +110,7 @@ function DrawerAppBar({ children, ...props }) {
             alignItems={"center"}
             justifyContent={"center"}
             sx={{
-              display: { xs: "none", sm: "block" },
+              display: { xs: "none", sm: "flex" },
             }}
           >
             <Box className="me-2">

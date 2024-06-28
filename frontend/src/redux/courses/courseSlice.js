@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllCourses, enrollToCourse, getUserCourses } from "./courseActions";
+import {
+  getAllCourses,
+  enrollToCourse,
+  getUserCourses,
+  getCourseById,
+} from "./courseActions";
 
 const initialState = {
   courses: null,
+  course: null,
   loading: false,
   error: null,
   message: null,
@@ -56,6 +62,18 @@ export const courseSlice = createSlice({
         state.error = null;
       })
       .addCase(getUserCourses.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getCourseById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCourseById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.course = action.payload;
+        state.error = null;
+      })
+      .addCase(getCourseById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

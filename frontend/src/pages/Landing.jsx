@@ -82,6 +82,7 @@ export default function Landing() {
                 onClick={() => openModal("signup")}
                 variant="contained"
                 color="primary"
+                disableElevation
               >
                 Get Started
               </Button>
@@ -91,6 +92,7 @@ export default function Landing() {
               to="/about"
               variant="outlined"
               color="primary"
+              disableElevation
             >
               Learn More
             </Button>

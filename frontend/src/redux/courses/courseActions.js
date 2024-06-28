@@ -134,3 +134,31 @@ export const enrollToCourse = createAsyncThunk(
     }
   }
 );
+
+export const getCourseById = createAsyncThunk(
+  "course/getCourseById",
+  async ({ courseId }, { rejectWithValue, dispatch, getState }) => {
+    try {
+      const courseDocSnap = await getDoc(doc(db, "courses", courseId));
+      if (!courseDocSnap.exists()) {
+        toast.error("Course not found");
+        return rejectWithValue("Course not found");
+      }
+
+      const courseData = courseDocSnap.data();
+      const course = { ...courseData, id: courseId };
+
+      // Fetch tutor data for the course
+      const courseWithTutor = await fetchTutorForCourse(course);
+
+      // // Fetch user courses and check if user is enrolled in the course
+      // const userCourses = getState().course.userCourses;
+      // const isEnrolled = userCourses.some((course) => course.id === courseId);
+
+      // return { course: courseWithTutor, isEnrolled };
+      return courseWithTutor;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

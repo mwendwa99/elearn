@@ -29,7 +29,7 @@ const Partners = () => {
           spacing={0}
           display={"flex"}
           justifyContent={"center"}
-          alignItems={"center"}
+          alignItems={"flex-start"}
         >
           {partnerImages.map((partner, index) => (
             <Grid

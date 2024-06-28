@@ -1,4 +1,5 @@
 import { Box, Typography, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function CourseCard({ course }) {
   // console.log(course);
@@ -24,7 +25,17 @@ export default function CourseCard({ course }) {
           />
         </Box>
         <Box component="div" mt={2}>
-          <Typography gutterBottom variant="h5" color="text.primary">
+          <Typography
+            component={Link}
+            to={`/course/${course.id}`}
+            gutterBottom
+            variant="h5"
+            color="text.primary"
+            sx={{
+              cursor: "pointer",
+              textDecoration: "none",
+            }}
+          >
             {course.title}
           </Typography>
           <Typography gutterBottom variant="body2" color="text.secondary">
