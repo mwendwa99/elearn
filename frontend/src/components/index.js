@@ -7,3 +7,4 @@ export { default as PersonalInfoCard } from "./PersonalInfoCard.jsx";
 export { default as EnrollmentCard } from "./EnrollmentCard.jsx";
 export { default as SuccessStory } from "./SuccessStory.jsx";
 export { default as CourseCard } from "./CourseCard.jsx";
+export { default as Accordion } from "./Accordion.jsx";

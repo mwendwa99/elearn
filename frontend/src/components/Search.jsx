@@ -30,9 +30,11 @@ export default function SearchComponent() {
     setShowClearIcon(false);
   };
 
-  const filteredCourses = courses.filter((course) =>
-    course?.title?.toLowerCase().includes(search?.toLowerCase())
-  );
+  const filteredCourses =
+    courses &&
+    courses.filter((course) =>
+      course?.title?.toLowerCase().includes(search?.toLowerCase())
+    );
 
   const showBox = search && filteredCourses.length > 0;
 

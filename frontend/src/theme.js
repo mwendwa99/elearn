@@ -21,6 +21,7 @@ const theme = createTheme({
       fontSize: "1.5rem",
       fontWeight: 600,
       color: "#101828",
+      textTransform: "capitalize",
     },
     h4: {
       fontSize: "1.25rem",
