@@ -28,6 +28,11 @@ export default function Landing() {
   const { discounts } = useSelector((state) => state.discount);
   const dispatch = useDispatch();
 
+  //scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     dispatch(getAllCourses());
   }, [dispatch]);

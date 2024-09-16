@@ -104,27 +104,36 @@ function DrawerAppBar({ children, ...props }) {
             <MenuIcon />
           </IconButton>
 
-          <Box
-            component="div"
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            sx={{
-              display: { xs: "none", sm: "flex" },
-            }}
+          <Link
+            to="/"
+            style={{ textDecoration: "none" }} // Apply textDecoration to the Link
           >
-            <Box className="me-2">
-              <img src="logo.svg" alt="logo" />
+            <Box
+              component="div"
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{
+                display: { xs: "none", sm: "flex" },
+              }}
+            >
+              <Box className="me-2">
+                <img src="logo.svg" alt="logo" />
+              </Box>
+              <Box component="div">
+                <Typography
+                  variant="body2"
+                  align="left"
+                  sx={{ textDecoration: "none" }} // Ensure no underline for this text
+                >
+                  StaryDreams
+                </Typography>
+                <Typography variant="body2" align="left">
+                  Engage. Empower. Excel
+                </Typography>
+              </Box>
             </Box>
-            <Box component="div">
-              <Typography variant="body2" align="left">
-                StaryDreams
-              </Typography>
-              <Typography variant="body2" align="left">
-                Engage. Empower. Excel
-              </Typography>
-            </Box>
-          </Box>
+          </Link>
           <Box
             sx={{
               mx: "auto",

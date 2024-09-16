@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCourses } from "../redux/courses/courseActions";
+import { Link } from "react-router-dom";
 
 export default function SearchComponent() {
   const [showClearIcon, setShowClearIcon] = useState(false);
@@ -71,7 +72,7 @@ export default function SearchComponent() {
           mt={1}
           sx={{
             bgcolor: "#fafafa",
-            border: "1px solid #101828",
+            border: "1px solid #c3c3c3",
             borderRadius: "0px 0px 10px 10px",
             padding: "10px",
             maxHeight: "200px",
@@ -81,17 +82,25 @@ export default function SearchComponent() {
           }}
         >
           {filteredCourses.map((course) => (
-            <Typography
-              key={course.id}
-              variant="body1"
-              onClick={() => alert(`clicked ${course.title}`)}
-              sx={{
-                cursor: "pointer",
-                padding: "5px",
+            <Link
+              to={`/course/${course.id}`}
+              style={{ textDecoration: "none" }}
+              onClick={() => {
+                setSearch(""); // Clear search input
+                setShowClearIcon(false); // Hide the clear icon
               }}
             >
-              {course.title}
-            </Typography>
+              <Typography
+                key={course.id}
+                variant="body1"
+                sx={{
+                  cursor: "pointer",
+                  padding: "5px",
+                }}
+              >
+                {course.title}
+              </Typography>
+            </Link>
           ))}
         </Box>
       )}

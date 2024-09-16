@@ -12,12 +12,18 @@ import { useEffect } from "react";
 import { getCourseById } from "../redux/courses/courseActions";
 import { Check, PlayArrow, Reviews, Star } from "@mui/icons-material";
 import { Accordion } from "../components";
+import { toast } from "react-toastify";
 
 export default function CoursePage() {
   const { id } = useParams();
   const { course, loading, error } = useSelector((state) => state.course);
 
   const dispatch = useDispatch();
+
+  //scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     dispatch(getCourseById({ courseId: id }));
@@ -35,7 +41,7 @@ export default function CoursePage() {
   // console.log("loading", loading);
   // console.log("error", error);
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className="my-5">
       <Grid
         container
         sx={{
@@ -57,6 +63,7 @@ export default function CoursePage() {
               objectFit: "cover",
               width: "100%",
               height: { xs: "150px", sm: "200px", md: "300px" },
+              borderRadius: 2,
             }}
           />
         </Grid>
@@ -109,7 +116,12 @@ export default function CoursePage() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
-          <Button variant="contained" color="primary" fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={() => toast.success("Request sent!")}
+          >
             Purchase this course
           </Button>
         </Grid>
@@ -129,26 +141,22 @@ export default function CoursePage() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" align="left" color="text.main">
-                  <Check /> Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Est, culpa.
+                  <Check /> Access to video lessons and tutorials.
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" align="left" color="text.main">
-                  <Check /> Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Est, culpa.
+                  <Check /> Personalized assignments and quizzes.
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" align="left" color="text.main">
-                  <Check /> Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Est, culpa.
+                  <Check /> 24/7 support from instructors.
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" align="left" color="text.main">
-                  <Check /> Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Est, culpa.
+                  <Check /> Certificate of completion upon finishing.
                 </Typography>
               </Grid>
             </Grid>
@@ -166,14 +174,15 @@ export default function CoursePage() {
                 Course Overview
               </Typography>
               <Typography variant="body1" align="left" color="text.main">
-                10 sections &bull; 2 hours &bull; All levels
+                10 sections &bull; 2 hours of content &bull; Suitable for all
+                levels
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Accordion title="Section 1" />
+              <Accordion title="Section 1: Introduction to the Course" />
             </Grid>
           </Grid>
-        </Grid>
+        </Grid>{" "}
         <Grid item xs={12} sm={12}>
           <Typography
             variant="h3"
@@ -237,16 +246,20 @@ export default function CoursePage() {
                 color="text.main"
                 gutterBottom
               >
-                {tutor} is a professional tutor with over 10 years of experience
-                teaching students of all levels. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Est, culpa. Lorem ipsum dolor sit,
-                amet consectetur adipisicing elit. Fugit expedita maxime sunt
-                placeat ab beatae dolor animi aut aspernatur culpa.
+                {tutor} Ms. Gina is a professional tutor with over 10 years of
+                experience teaching students of all levels. She specializes in
+                personalized learning approaches that cater to each
+                student&apos;s unique needs and learning style. Her passion for
+                education and commitment to student success have helped many
+                students achieve their academic goals. Ms. Gina has a proven
+                track record of guiding students through challenging subjects,
+                building their confidence, and ensuring they reach their full
+                potential.
               </Typography>
 
-              <Button variant="contained" color="primary" fullWidth>
+              {/* <Button variant="contained" color="primary" fullWidth>
                 View Profile
-              </Button>
+              </Button> */}
             </Grid>
           </Grid>
         </Grid>

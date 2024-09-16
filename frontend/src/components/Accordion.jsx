@@ -16,6 +16,7 @@ export default function AccordionTransition() {
   return (
     <div>
       <Accordion
+        elevation={0}
         expanded={expanded}
         onChange={handleExpansion}
         slots={{ transition: Fade }}
@@ -27,34 +28,41 @@ export default function AccordionTransition() {
           },
         }}
       >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography>Custom transition using Fade</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          <Typography>Default transition using Collapse</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            <Typography>Analyzing Literary Themes</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Literary themes are the underlying messages or central ideas that
+              run through a work of literature. Understanding how to identify
+              and analyze themes is essential in literary criticism, as it helps
+              to uncover the deeper meanings in texts.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2-content"
+            id="panel2-header"
+          >
+            <Typography>Exploring Phonetics in Linguistics</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Phonetics is the branch of linguistics that studies the sounds of
+              human speech. It involves analyzing how sounds are produced,
+              transmitted, and received, and is a fundamental aspect of
+              linguistic studies.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
       </Accordion>
     </div>
   );
