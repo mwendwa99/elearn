@@ -41,7 +41,7 @@ export default function CoursePage() {
   // console.log("loading", loading);
   // console.log("error", error);
   return (
-    <Container maxWidth="md" className="my-5">
+    <Container maxWidth="xl" className="my-5">
       <Grid
         container
         sx={{
@@ -54,7 +54,7 @@ export default function CoursePage() {
         }}
         spacing={2}
       >
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12}>
           <Box
             component="img"
             src={photoUrl}
