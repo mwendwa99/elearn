@@ -79,36 +79,6 @@ export const getUserCourses = createAsyncThunk(
   }
 );
 
-// export const getUserCourses = createAsyncThunk(
-//   "course/getUserCourses",
-//   async (userId, { rejectWithValue }) => {
-//     try {
-//       // Fetch the user document
-//       const userDocSnap = await getDoc(doc(db, "users", userId));
-//       const userData = userDocSnap.data();
-//       const enrolledCourses = userData.enrolledCourses;
-
-//       // Fetch all courses the user is enrolled in
-//       const userCourses = await Promise.all(
-//         enrolledCourses.map(async (courseId) => {
-//           const courseDocSnap = await getDoc(doc(db, "courses", courseId));
-//           return courseDocSnap.data();
-//         })
-//       );
-//       // Fetch tutors for each course and add as a tutor field
-//       const userCoursesWithTutors = await Promise.all(
-//         userCourses.map(fetchTutorForCourse)
-//       );
-
-//       return userCoursesWithTutors;
-
-//       // return userCourses;
-//     } catch (error) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
 export const getAllCourses = createAsyncThunk(
   "course/getAllCourses",
   async (_, { rejectWithValue }) => {
@@ -160,6 +130,34 @@ export const enrollToCourse = createAsyncThunk(
       return getUserCourses(userId);
     } catch (error) {
       console.error("Error enrolling in course:", error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getCourseById = createAsyncThunk(
+  "course/getCourseById",
+  async ({ courseId }, { rejectWithValue, dispatch, getState }) => {
+    try {
+      const courseDocSnap = await getDoc(doc(db, "courses", courseId));
+      if (!courseDocSnap.exists()) {
+        toast.error("Course not found");
+        return rejectWithValue("Course not found");
+      }
+
+      const courseData = courseDocSnap.data();
+      const course = { ...courseData, id: courseId };
+
+      // Fetch tutor data for the course
+      const courseWithTutor = await fetchTutorForCourse(course);
+
+      // // Fetch user courses and check if user is enrolled in the course
+      // const userCourses = getState().course.userCourses;
+      // const isEnrolled = userCourses.some((course) => course.id === courseId);
+
+      // return { course: courseWithTutor, isEnrolled };
+      return courseWithTutor;
+    } catch (error) {
       return rejectWithValue(error.message);
     }
   }

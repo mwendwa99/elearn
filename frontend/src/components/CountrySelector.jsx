@@ -43,6 +43,8 @@ function CountrySelector(props) {
           filterOptions={filterOptions}
           options={countryList}
           getOptionLabel={(option) => option.name}
+          //use isOptionEqualToValue to compare the selected option with the value
+          isOptionEqualToValue={(option, value) => option.code === value.code}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -55,6 +57,7 @@ function CountrySelector(props) {
           }}
           renderOption={(props, option) => (
             <Box
+              key={option.code}
               component="li"
               sx={{
                 typography: "body2",

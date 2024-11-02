@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { TextField, IconButton } from "@mui/material";
+import {
+  TextField,
+  IconButton,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { CircularProgress } from "@mui/material";
 import { useModal } from "../context/ModalContext";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { loginWithEmail } from "../redux/auth/authActions";
+// import { clearError } from "../redux/auth/authSlice";
 
 function Copyright(props) {
   return (
@@ -34,16 +37,16 @@ export default function SignIn() {
   const { user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(clearError());
+  // }, []);
+
   useEffect(() => {
     if (user) {
       toast.success("Logged in successfully");
       closeModal();
     }
   }, [user]);
-
-  // console.log("usasaser", user);
-  // console.log(loading);
-  // console.log("error", error);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -111,7 +114,12 @@ export default function SignIn() {
             ),
           }}
         />
-        <Button type="submit" fullWidth variant="contained">
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          endIcon={loading && <CircularProgress size={20} color="primary" />}
+        >
           Log In
         </Button>
       </Box>
@@ -120,6 +128,12 @@ export default function SignIn() {
         onClick={() => openModal("signup")}
         component={"a"}
         className="link-primary cursor-pointer my-2"
+        style={{
+          cursor: "pointer",
+          color: "blue",
+          textDecoration: "none",
+          my: 2,
+        }}
       >
         Don't have an account? Sign Up
       </Typography>

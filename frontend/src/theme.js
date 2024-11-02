@@ -21,6 +21,7 @@ const theme = createTheme({
       fontSize: "1.5rem",
       fontWeight: 600,
       color: "#101828",
+      textTransform: "capitalize",
     },
     h4: {
       fontSize: "1.25rem",
@@ -103,12 +104,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           display: "flex",
-          padding: "16px 28px",
+          padding: "10px 20px",
           justifyContent: "center",
           alignItems: "center",
           gap: "8px",
           textTransform: "capitalize",
           borderRadius: "8px",
+          margin: "5px 0",
         },
         contained: {
           border: `1px solid var(--primary-1, #4883FF)`,

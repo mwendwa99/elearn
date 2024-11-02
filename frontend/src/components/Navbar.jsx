@@ -18,9 +18,10 @@ import { Stack } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useModal } from "../context/ModalContext";
 import Menu from "./Menu";
+import Search from "./Search";
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Co-curricular"];
+const navItems = ["Categories", "Join as a Tutor"];
 const settings = ["Profile"];
 
 function DrawerAppBar({ children, ...props }) {
@@ -47,8 +48,13 @@ function DrawerAppBar({ children, ...props }) {
         alignItems={"center"}
         justifyContent={"center"}
         spacing={0}
+        component={Link}
+        to="/"
+        className="text-decoration-none"
       >
-        <img src="logo.svg" alt="logo" className="me-2" />
+        <Box className="me-2">
+          <img src="logo.svg" alt="logo" />
+        </Box>
         <Stack direction="column" spacing={0}>
           <Typography variant="body2" align="left">
             StaryDream
@@ -93,29 +99,51 @@ function DrawerAppBar({ children, ...props }) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
-          <Stack
-            direction="row"
-            alignItems={"center"}
-            justifyContent={"center"}
-            spacing={0}
+
+          <Link
+            to="/"
+            style={{ textDecoration: "none" }} // Apply textDecoration to the Link
           >
-            <img src="logo.svg" alt="logo" className="me-2" />
-            <Stack direction="column" spacing={0}>
-              <Typography variant="body2" align="left">
-                StaryDream
-              </Typography>
-              <Typography variant="body2" align="left">
-                Engage. Empower. Excel
-              </Typography>
-            </Stack>
-          </Stack>
+            <Box
+              component="div"
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{
+                display: { xs: "none", sm: "flex" },
+              }}
+            >
+              <Box className="me-2">
+                <img src="logo.svg" alt="logo" />
+              </Box>
+              <Box component="div">
+                <Typography
+                  variant="body2"
+                  align="left"
+                  sx={{ textDecoration: "none" }} // Ensure no underline for this text
+                >
+                  StaryDreams
+                </Typography>
+                <Typography variant="body2" align="left">
+                  Engage. Empower. Excel
+                </Typography>
+              </Box>
+            </Box>
+          </Link>
           <Box
             sx={{
-              flex: 1,
+              mx: "auto",
+              width: 300,
+            }}
+          >
+            <Search />
+          </Box>
+          <Box
+            sx={{
               display: { xs: "none", sm: "flex" },
               justifyContent: "center",
             }}
@@ -128,7 +156,9 @@ function DrawerAppBar({ children, ...props }) {
                   component={Link}
                   to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                   sx={{
-                    fontSize: "14px",
+                    fontSize: "12px",
+                    m: 1,
+                    p: 0,
                     borderRadius: 0,
                     color:
                       location.pathname === "/" && item === "Home"
@@ -168,6 +198,7 @@ function DrawerAppBar({ children, ...props }) {
               )}
             </Box>
           </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             {user ? (
               <Menu data={settings} />

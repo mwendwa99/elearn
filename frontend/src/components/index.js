@@ -5,3 +5,6 @@ export { default as Navbar } from "./Navbar.jsx";
 export { default as VerticalTabs } from "./VerticalTabs.jsx";
 export { default as PersonalInfoCard } from "./PersonalInfoCard.jsx";
 export { default as EnrollmentCard } from "./EnrollmentCard.jsx";
+export { default as SuccessStory } from "./SuccessStory.jsx";
+export { default as CourseCard } from "./CourseCard.jsx";
+export { default as Accordion } from "./Accordion.jsx";

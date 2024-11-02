@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import { TextField, IconButton, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { CircularProgress } from "@mui/material";
 import { useModal } from "../context/ModalContext";
 import { createUser } from "../redux/auth/authActions";
+// import { clearError } from "../redux/auth/authSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import UserTypeSelector from "./UserTypeSelector";
@@ -34,11 +34,15 @@ function Copyright(props) {
 export default function SignUp() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
   const [userType, setUserType] = useState("");
   const [countryCode, setCountryCode] = useState("");
+
+  // useEffect(() => {
+  //   dispatch(clearError());
+  // }, []);
 
   useEffect(() => {
     if (error) {
@@ -88,8 +92,6 @@ export default function SignUp() {
     // );
 
     dispatch(createUser({ email, password, fullNames, type, country }));
-
-    toast.success("Account created successfully");
 
     openModal("login");
   };
@@ -196,7 +198,12 @@ export default function SignUp() {
             ),
           }}
         />
-        <Button type="submit" fullWidth variant="contained">
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          endIcon={loading && <CircularProgress size={20} color="primary" />}
+        >
           Register
         </Button>
       </Box>
