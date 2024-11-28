@@ -27,14 +27,6 @@ function App() {
     dispatch(clearError());
   }, []);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        dispatch(getUserProfile(user.uid));
-      }
-    });
-  }, []);
-
   // if no user always redirect to landing page
   useEffect(() => {
     if (!user) {

@@ -98,7 +98,6 @@ export default function SignUp() {
 
   // console.log("user", user);
   // console.log("loading", loading);
-  console.log("error", error);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

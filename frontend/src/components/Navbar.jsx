@@ -31,6 +31,8 @@ function DrawerAppBar({ children, ...props }) {
   const location = useLocation();
   const { openModal } = useModal();
 
+  console.log(user);
+
   useEffect(() => {
     if (error) {
       console.log(error);

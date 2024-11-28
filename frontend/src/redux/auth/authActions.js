@@ -76,22 +76,23 @@ export const createUser = createAsyncThunk(
   "auth/createUser",
   async (
     { email, password, fullNames, type, country },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
-      ).then((userCredential) => {
-        toast.success(
-          `${userCredential.user.email} has been created successfully!`
-        );
-        return userCredential;
-      });
+      );
+
+      // Notify successful account creation
+      toast.success(
+        `${userCredential.user.email} has been created successfully!`
+      );
 
       const userDocRef = doc(db, "users", userCredential.user.uid);
       const userDoc = await getDoc(userDocRef);
+
       if (!userDoc.exists()) {
         await setDoc(userDocRef, {
           email: userCredential.user.email,
@@ -106,9 +107,14 @@ export const createUser = createAsyncThunk(
         });
       }
 
-      return userDoc.data();
+      // Fetch user profile immediately and add to app state
+      const userProfile = await dispatch(
+        getUserProfile(userCredential.user.uid)
+      ).unwrap(); // Use `unwrap` to handle result cleanly
+
+      return userProfile; // Return the user profile to the app
     } catch (error) {
-      return rejectWithValue(error.code);
+      return rejectWithValue(error.message || error.code);
     }
   }
 );
