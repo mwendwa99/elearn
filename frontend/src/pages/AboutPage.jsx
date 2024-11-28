@@ -17,41 +17,30 @@ const AboutPage = () => {
       <Grid container spacing={4} sx={{ mt: 6 }}>
         <Grid item xs={12} md={6}>
           <Typography color="primary" variant="body1" sx={{ fontWeight: 600 }}>
-            Mission Statement
+            Mission
           </Typography>
           <Typography
             color="text.secondary"
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            At StaryDream School, our mission is to provide high-quality
-            academic and extra-curricular learning opportunities to students
-            worldwide, catering to multiple curriculums. Through our online
-            platform, we aim to create a global community of learners who can
-            socialize and learn from each other. We strive to offer flexible,
-            accessible, and personalized education that enables students to
-            reach their full potential.
+            To empower creators from all backgrounds to share their expertise
+            with the world through an innovative and inclusive platform,
+            transforming knowledge into opportunity and success for everyone
+            involved.
           </Typography>
           <Typography color="primary" variant="body1" sx={{ fontWeight: 600 }}>
-            Vision Statement
+            Vision
           </Typography>
           <Typography
             color="text.secondary"
             variant="body2"
             sx={{ marginBottom: 4 }}
           >
-            Our vision at The StaryDream School is to become a leading global
-            online school that provides students with an excellent education,
-            regardless of their location. We envision a world where every
-            student has access to high-quality education that is tailored to
-            their needs, interests, and learning styles. We aim to create a
-            platform that enables parents and students to receive proper
-            educational guidance from the comfort of their homes. Through our
-            innovative approach, we hope to foster a love for learning, global
-            socialization, and a passion for lifelong education. Additionally,
-            we are committed to developing our students' character by providing
-            them with a weekly character trait to work on, promoting personal
-            growth and contributing to a better society.
+            To inspire a global movement of learning without limits, where
+            innovation connects people, inclusivity drives collaboration, and
+            empowerment transforms lives through accessible and
+            diverse education.
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>

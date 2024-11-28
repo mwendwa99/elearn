@@ -55,7 +55,7 @@ export default function Landing() {
         }}
       >
         <Grid item xs={12} md={6}>
-          <Typography variant="h1" align="left" color="text.main">
+          <Typography variant="h2" align="left" color="text.main">
             Up your{" "}
             <Box component="span" color="text.primary">
               Skills

@@ -21,7 +21,7 @@ import Menu from "./Menu";
 import Search from "./Search";
 
 const drawerWidth = 240;
-const navItems = ["Categories", "Join as a Tutor"];
+const navItems = ["About"];
 const settings = ["Profile"];
 
 function DrawerAppBar({ children, ...props }) {
